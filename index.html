@@ -61,14 +61,14 @@
         </nav>
 
         <main class="flex-grow container mx-auto p-4 md:p-8">
-            <!-- User View -->
-            <div id="user-view">
+            
+            <!-- Home Page View -->
+            <div id="home-page">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                     <!-- Donation Form -->
                     <div class="glass-card p-6 md:p-8">
                         <h2 class="text-2xl font-bold mb-6 text-gray-900" data-key="formTitle">Make a Donation</h2>
                         <form id="donation-form" class="space-y-4">
-                            <!-- Form inputs -->
                             <div><label for="donorName" class="block text-sm font-medium" data-key="donorNameLabel">Donor Name</label><input type="text" id="donorName" name="donorName" required class="mt-1 block w-full p-2 bg-white border rounded-md"></div>
                             <div><label for="address" class="block text-sm font-medium" data-key="addressLabel">Address</label><textarea id="address" name="address" rows="3" required class="mt-1 block w-full p-2 bg-white border rounded-md"></textarea></div>
                             <div><label for="phone" class="block text-sm font-medium" data-key="phoneLabel">Phone Number</label><input type="tel" id="phone" name="phone" required class="mt-1 block w-full p-2 bg-white border rounded-md"></div>
@@ -79,22 +79,48 @@
                         </form>
                     </div>
 
-                    <!-- QR Code -->
-                    <div class="glass-card p-6 md:p-8 flex flex-col items-center justify-center">
-                        <h2 class="text-2xl font-bold mb-4 text-center" data-key="paymentTitle">Scan to Pay</h2>
-                        <img src="https://placehold.co/300x300/FFFFFF/000000?text=Scan+UPI+QR+Code" alt="UPI QR Code" class="rounded-lg shadow-lg">
-                        <p class="mt-4 text-center text-gray-700" data-key="paymentInstructions">After payment, please enter the UPI Transaction ID in the form and submit your details.</p>
+                    <!-- QR Code & Page Links -->
+                    <div class="space-y-8">
+                        <div class="glass-card p-6 md:p-8 flex flex-col items-center justify-center">
+                            <h2 class="text-2xl font-bold mb-4 text-center" data-key="paymentTitle">Scan to Pay</h2>
+                            <img src="https://placehold.co/300x300/FFFFFF/000000?text=Scan+UPI+QR+Code" alt="UPI QR Code" class="rounded-lg shadow-lg">
+                            <p class="mt-4 text-center text-gray-700" data-key="paymentInstructions">After payment, please enter the UPI Transaction ID in the form and submit your details.</p>
+                        </div>
+                        <div class="glass-card p-6 md:p-8">
+                             <h2 class="text-2xl font-bold mb-4 text-center" data-key="exploreHeader">Explore More</h2>
+                             <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                                <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white font-bold py-3 px-4 rounded-lg" data-key="photosTab">Temple Photos</button>
+                                <button id="go-to-events-btn" class="w-full bg-orange-500 text-white font-bold py-3 px-4 rounded-lg" data-key="eventsTab">Special Days</button>
+                             </div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- User Tabs for Photos & Events -->
-                <div class="glass-card p-6 md:p-8 mt-8">
-                    <div class="border-b mb-6"><nav class="-mb-px flex space-x-8"><button id="user-photos-tab-btn" class="user-tab py-4 px-1 border-b-2 font-medium text-sm border-orange-500 text-orange-800" data-key="photosTab">Temple Photos</button><button id="user-events-tab-btn" class="user-tab py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-600" data-key="eventsTab">Special Days</button></nav></div>
-                    <div>
-                        <div id="user-photos-content" class="user-tab-content"><div id="user-photo-gallery" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div></div>
-                        <div id="user-events-content" class="user-tab-content hidden"><div id="user-events-list" class="space-y-4"></div></div>
-                    </div>
-                </div>
+            <!-- Temple Photos Page -->
+            <div id="photos-page" class="hidden">
+                 <div class="glass-card p-6 md:p-8">
+                     <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-3xl font-bold" data-key="photosTab">Temple Photos</h2>
+                        <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md" data-key="backToHomeBtn">Back to Home</button>
+                     </div>
+                     <div id="full-photo-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <!-- Photos will be dynamically inserted here -->
+                     </div>
+                 </div>
+            </div>
+
+            <!-- Special Events Page -->
+            <div id="events-page" class="hidden">
+                <div class="glass-card p-6 md:p-8">
+                     <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-3xl font-bold" data-key="eventsTab">Special Days</h2>
+                        <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md" data-key="backToHomeBtn">Back to Home</button>
+                     </div>
+                     <div id="full-events-list" class="space-y-4">
+                        <!-- Events will be dynamically inserted here -->
+                     </div>
+                 </div>
             </div>
 
             <!-- Admin View -->
@@ -125,23 +151,15 @@
 
     <script type="module">
         // --- Supabase Configuration ---
-        // >>>>>>>>>>>> IMPORTANT / முக்கியம் <<<<<<<<<<<<<
-        // 1. Go to supabase.com, create a new project.
-        // 2. Go to Project Settings (gear icon) -> API.
-        // 3. Copy your Project URL and anon public key and paste them here.
-        
-        // 1. supabase.com சென்று, ஒரு புதிய ப்ராஜெக்டை உருவாக்கவும்.
-        // 2. ப்ராஜெக்ட் செட்டிங்ஸ் (Settings) -> API என்பதற்குச் செல்லவும்.
-        // 3. உங்கள் Project URL மற்றும் anon public key-ஐ காப்பி செய்து, கீழே பேஸ்ட் செய்யவும்.
-        const supabaseUrl = 'https://royiudsepvlawxvfljpl.supabase.co'; // Paste your URL here / உங்கள் URL-ஐ இங்கே பேஸ்ட் செய்யவும்
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJveWl1ZHNlcHZsYXd4dmZsanBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc2MDY0NDMsImV4cCI6MjA3MzE4MjQ0M30.a0ZVyU9fCn3oI8IiI7s_SsXUydE3T6iwCBYgLD0_Ot4'; // Paste your anon key here / உங்கள் anon key-ஐ இங்கே பேஸ்ட் செய்யவும்
+        const supabaseUrl = 'https://royiudsepvlawxvfljpl.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJveWl1ZHNlcHZsYXd4dmZsanBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc2MDY0NDMsImV4cCI6MjA3MzE4MjQ0M30.a0ZVyU9fCn3oI8IiI7s_SsXUydE3T6iwCBYgLD0_Ot4';
 
         const { createClient } = supabase;
-        const supabase = createClient(supabaseUrl, supabaseKey);
+        const supabaseClient = createClient(supabaseUrl, supabaseKey);
 
         const translations = {
-            en: { headerTitle: "Arulmigu Narayana Swamy Temple Donation Portal", adminLoginLink: "Admin Login", formTitle: "Make a Donation", donorNameLabel: "Donor Name", addressLabel: "Address", phoneLabel: "Phone Number", emailLabel: "Email ID", amountLabel: "Donation Amount (₹)", transactionIdLabel: "UPI Transaction ID", transactionIdPlaceholder: "Enter ID from your UPI app", submitBtn: "Submit Donation", paymentTitle: "Scan to Pay", paymentInstructions: "After payment, please enter the UPI Transaction ID in the form and submit your details.", adminDashboardTitle: "Admin Dashboard", logoutBtn: "Logout", donorsTab: "Donors", photosTab: "Temple Photos", uploadPhotosTab: "Upload Photos", eventsTab: "Special Days", manageEventsTab: "Manage Events", donorsListTitle: "Donors List", donorHeaderName: "Name", donorHeaderDetails: "Contact Details", donorHeaderAmount: "Amount", donorHeaderTransaction: "Transaction ID", noDonations: "No donations yet.", photoGalleryTitle: "Upload Temple Photos", photoManageInfo: "Uploaded photos will be visible to all users on the main page.", uploadLabel: "Upload Photo", uploadBtn: "Upload", noPhotos: "No photos uploaded yet.", specialDaysTitle: "Manage Special Days & Events", eventManageInfo: "Added events will be visible to all users on the main page.", addEventTitle: "Add New Event", eventDateLabel: "Event Date", eventDescLabel: "Event Description", eventDescPlaceholder: "E.g., Special Pooja for Vaikunta Ekadasi", addEventBtn: "Add Event", noEvents: "No events scheduled yet.", footerText: `${new Date().getFullYear()} Arulmigu Narayana Swamy Temple. All Rights Reserved.`, passwordPrompt: "Enter admin password:", wrongPassword: "Wrong password. Access denied.", donationSuccess: "Thank you for your generous donation! Your details have been saved.", fillFields: "Please fill all required fields.", photoUploadSuccess: "Photo uploaded successfully!", eventAddedSuccess: "Event added successfully!", alertOkBtn: "OK", printBtn: "Print", exportBtn: "Export to Excel", dataError: "Could not connect to the database. Please check your connection or Supabase config.", passwordModalTitle: "Admin Login", cancelBtn: "Cancel", loginBtn: "Login" },
-            ta: { headerTitle: "அருள்மிகு நாராயண சுவாமி திருக்கோவில் நன்கொடை தளம்", adminLoginLink: "நிர்வாகி உள்நுழைவு", formTitle: "நன்கொடை அளியுங்கள்", donorNameLabel: "நன்கொடையாளர் பெயர்", addressLabel: "முகவரி", phoneLabel: "தொலைபேசி எண்", emailLabel: "மின்னஞ்சல் முகவரி", amountLabel: "நன்கொடைத் தொகை (₹)", transactionIdLabel: "UPI பரிவர்த்தனை ஐடி", transactionIdPlaceholder: "UPI செயலியில் இருந்து ஐடியை உள்ளிடவும்", submitBtn: "நன்கொடையை சமர்ப்பிக்கவும்", paymentTitle: "பணம் செலுத்த ஸ்கேன் செய்யவும்", paymentInstructions: "பணம் செலுத்திய பிறகு, UPI பரிவர்த்தனை ஐடியை படிவத்தில் உள்ளிட்டு உங்கள் விவரங்களைச் சமர்ப்பிக்கவும்.", adminDashboardTitle: "நிர்வாகி டாஷ்போர்டு", logoutBtn: "வெளியேறு", donorsTab: "நன்கொடையாளர்கள்", photosTab: "கோவில் புகைப்படங்கள்", uploadPhotosTab: "புகைப்படங்களை பதிவேற்றவும்", eventsTab: "சிறப்பு நாட்கள்", manageEventsTab: "நிகழ்வுகளை நிர்வங்கிக்கவும்", donorsListTitle: "நன்கொடையாளர் பட்டியல்", donorHeaderName: "பெயர்", donorHeaderDetails: "தொடர்பு விவரங்கள்", donorHeaderAmount: "தொகை", donorHeaderTransaction: "பரிவர்த்தனை ஐடி", noDonations: "இன்னும் நன்கொடைகள் வரவில்லை.", photoGalleryTitle: "கோவில் புகைப்படங்களை பதிவேற்றவும்", photoManageInfo: "பதிவேற்றிய புகைப்படங்கள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", uploadLabel: "புகைப்படத்தை பதிவேற்றவும்", uploadBtn: "பதிவேற்று", noPhotos: "புகைப்படங்கள் இன்னும் பதிவேற்றப்படவில்லை.", specialDaysTitle: "சிறப்பு நாட்கள் & நிகழ்வுகளை நிர்வங்கிக்கவும்", eventManageInfo: "சேர்க்கப்பட்ட நிகழ்வுகள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", addEventTitle: "புதிய நிகழ்வைச் சேர்க்கவும்", eventDateLabel: "நிகழ்வு தேதி", eventDescLabel: "நிகழ்வு விளக்கம்", eventDescPlaceholder: "எ.கா., வைகுண்ட ஏகாதசி சிறப்பு பூஜை", addEventBtn: "நிகழ்வைச் சேர்", noEvents: "இன்னும் நிகழ்வுகள் திட்டமிடப்படவில்லை.", footerText: `${new Date().getFullYear()} அருள்மிகு நாராயண சுவாமி திருக்கோவில். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.`, passwordPrompt: "நிர்வாகி கடவுச்சொல்லை உள்ளிடவும்:", wrongPassword: "தவறான கடவுச்சொல். அணுகல் மறுக்கப்பட்டது.", donationSuccess: "உங்கள் தாராளமான நன்கொடைக்கு நன்றி! உங்கள் விவரங்கள் சேமிக்கப்பட்டுவிட்டன.", fillFields: "தேவையான அனைத்து புலங்களையும் நிரப்பவும்.", photoUploadSuccess: "புகைப்படம் வெற்றிகரமாக பதிவேற்றப்பட்டது!", eventAddedSuccess: "நிகழ்வு வெற்றிகரமாக சேர்க்கப்பட்டது!", alertOkBtn: "சரி", printBtn: "அச்சிடுக", exportBtn: "Excel-க்கு ஏற்றுமதி செய்", dataError: "டேட்டாபேஸுடன் இணைக்க முடியவில்லை. உங்கள் இணைப்பு அல்லது Supabase কনফিগারেশন சரிபார்க்கவும்.", passwordModalTitle: "நிர்வாகி உள்நுழைவு", cancelBtn: "ரத்துசெய்", loginBtn: "உள்நுழை" }
+            en: { headerTitle: "Arulmigu Narayana Swamy Temple Donation Portal", exploreHeader: "Explore More", backToHomeBtn: "Back to Home", adminLoginLink: "Admin Login", formTitle: "Make a Donation", donorNameLabel: "Donor Name", addressLabel: "Address", phoneLabel: "Phone Number", emailLabel: "Email ID", amountLabel: "Donation Amount (₹)", transactionIdLabel: "UPI Transaction ID", transactionIdPlaceholder: "Enter ID from your UPI app", submitBtn: "Submit Donation", paymentTitle: "Scan to Pay", paymentInstructions: "After payment, please enter the UPI Transaction ID in the form and submit your details.", adminDashboardTitle: "Admin Dashboard", logoutBtn: "Logout", donorsTab: "Donors", photosTab: "Temple Photos", uploadPhotosTab: "Upload Photos", eventsTab: "Special Days", manageEventsTab: "Manage Events", donorsListTitle: "Donors List", donorHeaderName: "Name", donorHeaderDetails: "Contact Details", donorHeaderAmount: "Amount", donorHeaderTransaction: "Transaction ID", noDonations: "No donations yet.", photoGalleryTitle: "Upload Temple Photos", photoManageInfo: "Uploaded photos will be visible to all users on the main page.", uploadLabel: "Upload Photo", uploadBtn: "Upload", noPhotos: "No photos uploaded yet.", specialDaysTitle: "Manage Special Days & Events", eventManageInfo: "Added events will be visible to all users on the main page.", addEventTitle: "Add New Event", eventDateLabel: "Event Date", eventDescLabel: "Event Description", eventDescPlaceholder: "E.g., Special Pooja for Vaikunta Ekadasi", addEventBtn: "Add Event", noEvents: "No events scheduled yet.", footerText: `${new Date().getFullYear()} Arulmigu Narayana Swamy Temple. All Rights Reserved.`, passwordPrompt: "Enter admin password:", wrongPassword: "Wrong password. Access denied.", donationSuccess: "Thank you for your generous donation! Your details have been saved.", fillFields: "Please fill all required fields.", photoUploadSuccess: "Photo uploaded successfully!", eventAddedSuccess: "Event added successfully!", alertOkBtn: "OK", printBtn: "Print", exportBtn: "Export to Excel", dataError: "Could not connect to the database. Please check your connection or Supabase config.", passwordModalTitle: "Admin Login", cancelBtn: "Cancel", loginBtn: "Login" },
+            ta: { headerTitle: "அருள்மிகு நாராயண சுவாமி திருக்கோவில் நன்கொடை தளம்", exploreHeader: "மேலும் பார்க்க", backToHomeBtn: "முகப்புக்குச் செல்லவும்", adminLoginLink: "நிர்வாகி உள்நுழைவு", formTitle: "நன்கொடை அளியுங்கள்", donorNameLabel: "நன்கொடையாளர் பெயர்", addressLabel: "முகவரி", phoneLabel: "தொலைபேசி எண்", emailLabel: "மின்னஞ்சல் முகவரி", amountLabel: "நன்கொடைத் தொகை (₹)", transactionIdLabel: "UPI பரிவர்த்தனை ஐடி", transactionIdPlaceholder: "UPI செயலியில் இருந்து ஐடியை உள்ளிடவும்", submitBtn: "நன்கொடையை சமர்ப்பிக்கவும்", paymentTitle: "பணம் செலுத்த ஸ்கேன் செய்யவும்", paymentInstructions: "பணம் செலுத்திய பிறகு, UPI பரிவர்த்தனை ஐடியை படிவத்தில் உள்ளிட்டு உங்கள் விவரங்களைச் சமர்ப்பிக்கவும்.", adminDashboardTitle: "நிர்வாகி டாஷ்போர்டு", logoutBtn: "வெளியேறு", donorsTab: "நன்கொடையாளர்கள்", photosTab: "கோவில் புகைப்படங்கள்", uploadPhotosTab: "புகைப்படங்களை பதிவேற்றவும்", eventsTab: "சிறப்பு நாட்கள்", manageEventsTab: "நிகழ்வுகளை நிர்வங்கிக்கவும்", donorsListTitle: "நன்கொடையாளர் பட்டியல்", donorHeaderName: "பெயர்", donorHeaderDetails: "தொடர்பு விவரங்கள்", donorHeaderAmount: "தொகை", donorHeaderTransaction: "பரிவர்த்தனை ஐடி", noDonations: "இன்னும் நன்கொடைகள் வரவில்லை.", photoGalleryTitle: "கோவில் புகைப்படங்களை பதிவேற்றவும்", photoManageInfo: "பதிவேற்றிய புகைப்படங்கள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", uploadLabel: "புகைப்படத்தை பதிவேற்றவும்", uploadBtn: "பதிவேற்று", noPhotos: "புகைப்படங்கள் இன்னும் பதிவேற்றப்படவில்லை.", specialDaysTitle: "சிறப்பு நாட்கள் & நிகழ்வுகளை நிர்வகிக்கவும்", eventManageInfo: "சேர்க்கப்பட்ட நிகழ்வுகள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", addEventTitle: "புதிய நிகழ்வைச் சேர்க்கவும்", eventDateLabel: "நிகழ்வு தேதி", eventDescLabel: "நிகழ்வு விளக்கம்", eventDescPlaceholder: "எ.கா., வைகுண்ட ஏகாதசி சிறப்பு பூஜை", addEventBtn: "நிகழ்வைச் சேர்", noEvents: "இன்னும் நிகழ்வுகள் திட்டமிடப்படவில்லை.", footerText: `${new Date().getFullYear()} அருள்மிகு நாராயண சுவாமி திருக்கோவில். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.`, passwordPrompt: "நிர்வாகி கடவுச்சொல்லை உள்ளிடவும்:", wrongPassword: "தவறான கடவுச்சொல். அணுகல் மறுக்கப்பட்டது.", donationSuccess: "உங்கள் தாராளமான நன்கொடைக்கு நன்றி! உங்கள் விவரங்கள் சேமிக்கப்பட்டுவிட்டன.", fillFields: "தேவையான அனைத்து புலங்களையும் நிரப்பவும்.", photoUploadSuccess: "புகைப்படம் வெற்றிகரமாக பதிவேற்றப்பட்டது!", eventAddedSuccess: "நிகழ்வு வெற்றிகரமாக சேர்க்கப்பட்டது!", alertOkBtn: "சரி", printBtn: "அச்சிடுக", exportBtn: "Excel-க்கு ஏற்றுமதி செய்", dataError: "டேட்டாபேஸுடன் இணைக்க முடியவில்லை. உங்கள் இணைப்பு அல்லது Supabase কনফিগারেশন சரிபார்க்கவும்.", passwordModalTitle: "நிர்வாகி உள்நுழைவு", cancelBtn: "ரத்துசெய்", loginBtn: "உள்நுழை" }
         };
 
         let currentLanguage = 'en';
@@ -159,16 +177,23 @@
         const switchLanguage = (lang) => {
             currentLanguage = lang;
             document.documentElement.lang = lang;
-            document.querySelectorAll('[data-key]').forEach(el => el.textContent = translations[lang][el.dataset.key]);
+            document.querySelectorAll('[data-key]').forEach(el => el.textContent = translations[lang][el.dataset.key] || el.textContent);
             document.querySelectorAll('[placeholder-key]').forEach(el => el.placeholder = translations[lang][el.getAttribute('placeholder-key')]);
             renderEvents(cachedEvents);
         };
 
-        const switchTab = (prefix, name) => {
-            document.querySelectorAll(`.${prefix}-tab-content`).forEach(c => c.classList.add('hidden'));
-            document.querySelectorAll(`.${prefix}-tab`).forEach(t => t.classList.remove('border-orange-500', 'text-orange-800', 'text-orange-600'));
+        const showPage = (pageId) => {
+            ['home-page', 'photos-page', 'events-page', 'admin-view'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(pageId).classList.remove('hidden');
+        };
+
+        const switchAdminTab = (name) => {
+            document.querySelectorAll(`.admin-tab-content`).forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll(`.admin-tab`).forEach(t => t.classList.remove('border-orange-500', 'text-orange-600'));
             document.getElementById(`${name}-content`).classList.remove('hidden');
-            document.getElementById(`${name}-tab-btn`).classList.add('border-orange-500', prefix === 'user' ? 'text-orange-800' : 'text-orange-600');
+            document.getElementById(`${name}-tab-btn`).classList.add('border-orange-500', 'text-orange-600');
         };
 
         const renderDonors = (data) => {
@@ -178,13 +203,13 @@
         };
         
         const renderPhotos = (data) => {
-            const gallery = document.getElementById('user-photo-gallery');
+            const gallery = document.getElementById('full-photo-gallery');
             gallery.innerHTML = data.length ? data.map(p => `<img src="${p.url}" class="w-full h-48 object-cover rounded-lg">`).join('') : `<p class="col-span-full text-center">${translations[currentLanguage].noPhotos}</p>`;
         };
 
         const renderEvents = (data) => {
             cachedEvents = data;
-            const list = document.getElementById('user-events-list');
+            const list = document.getElementById('full-events-list');
             const sorted = data.sort((a,b) => new Date(a.date) - new Date(b.date));
             list.innerHTML = sorted.length ? sorted.map(e => `<div class="bg-white/50 p-4 rounded-lg"><p class="font-bold text-orange-700">${new Date(e.date).toLocaleDateString(currentLanguage === 'ta' ? 'ta-IN' : 'en-US', { timeZone: 'UTC' })}</p><p>${e.description}</p></div>`).join('') : `<p class="text-center">${translations[currentLanguage].noEvents}</p>`;
         };
@@ -196,36 +221,41 @@
             document.getElementById('ta-lang-btn').addEventListener('click', () => switchLanguage('ta'));
             document.getElementById('admin-login-link').addEventListener('click', (e) => { e.preventDefault(); passwordModal.classList.remove('hidden'); });
             document.getElementById('password-cancel-btn').addEventListener('click', () => passwordModal.classList.add('hidden'));
-            document.getElementById('password-form').addEventListener('submit', (e) => { e.preventDefault(); if (document.getElementById('admin-password').value === 'password123') { document.getElementById('user-view').classList.add('hidden'); document.getElementById('admin-view').classList.remove('hidden'); passwordModal.classList.add('hidden'); } else { showAlert('wrongPassword'); } });
-            document.getElementById('logout-btn').addEventListener('click', () => { document.getElementById('user-view').classList.remove('hidden'); document.getElementById('admin-view').classList.add('hidden'); });
-            ['user-photos', 'user-events'].forEach(t => document.getElementById(`${t}-tab-btn`).addEventListener('click', () => switchTab('user', t)));
-            ['donors', 'photos', 'events'].forEach(t => document.getElementById(`${t}-tab-btn`).addEventListener('click', () => switchTab('admin', t)));
+            document.getElementById('password-form').addEventListener('submit', (e) => { e.preventDefault(); if (document.getElementById('admin-password').value === 'password123') { showPage('admin-view'); passwordModal.classList.add('hidden'); } else { showAlert('wrongPassword'); } });
+            document.getElementById('logout-btn').addEventListener('click', () => showPage('home-page'));
+            
+            document.getElementById('go-to-photos-btn').addEventListener('click', () => showPage('photos-page'));
+            document.getElementById('go-to-events-btn').addEventListener('click', () => showPage('events-page'));
+            document.querySelectorAll('.back-to-home-btn').forEach(btn => btn.addEventListener('click', () => showPage('home-page')));
+
+            ['donors', 'photos', 'events'].forEach(t => document.getElementById(`${t}-tab-btn`).addEventListener('click', () => switchAdminTab(t)));
             
             switchLanguage('en');
 
             if (supabaseUrl === 'YOUR_SUPABASE_URL' || supabaseKey === 'YOUR_SUPABASE_ANON_KEY') {
                 console.warn("Supabase config is a placeholder. Please update it.");
+                showAlert('dataError');
                 return;
             }
 
             // Fetch initial data
-            const { data: initialDonations } = await supabase.from('donations').select();
+            const { data: initialDonations } = await supabaseClient.from('donations').select();
             if (initialDonations) renderDonors(initialDonations);
-            const { data: initialPhotos } = await supabase.from('photos').select();
+            const { data: initialPhotos } = await supabaseClient.from('photos').select();
             if (initialPhotos) renderPhotos(initialPhotos);
-            const { data: initialEvents } = await supabase.from('events').select();
+            const { data: initialEvents } = await supabaseClient.from('events').select();
             if (initialEvents) renderEvents(initialEvents);
 
             // Listen for realtime changes
-            supabase.channel('public:donations').on('postgres_changes', { event: '*', schema: 'public', table: 'donations' }, async () => { const { data } = await supabase.from('donations').select(); if(data) renderDonors(data); }).subscribe();
-            supabase.channel('public:photos').on('postgres_changes', { event: '*', schema: 'public', table: 'photos' }, async () => { const { data } = await supabase.from('photos').select(); if(data) renderPhotos(data); }).subscribe();
-            supabase.channel('public:events').on('postgres_changes', { event: '*', schema: 'public', table: 'events' }, async () => { const { data } = await supabase.from('events').select(); if(data) renderEvents(data); }).subscribe();
+            supabaseClient.channel('public-donations').on('postgres_changes', { event: '*', schema: 'public', table: 'donations' }, async () => { const { data } = await supabaseClient.from('donations').select(); if(data) renderDonors(data); }).subscribe();
+            supabaseClient.channel('public-photos').on('postgres_changes', { event: '*', schema: 'public', table: 'photos' }, async () => { const { data } = await supabaseClient.from('photos').select(); if(data) renderPhotos(data); }).subscribe();
+            supabaseClient.channel('public-events').on('postgres_changes', { event: '*', schema: 'public', table: 'events' }, async () => { const { data } = await supabaseClient.from('events').select(); if(data) renderEvents(data); }).subscribe();
             
             // Form Submissions
             document.getElementById('donation-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const formData = new FormData(e.target);
-                const { error } = await supabase.from('donations').insert(Object.fromEntries(formData.entries()));
+                const { error } = await supabaseClient.from('donations').insert(Object.fromEntries(formData.entries()));
                 if(error) { showAlert('dataError'); console.error(error); } else { showAlert('donationSuccess'); e.target.reset(); }
             });
 
@@ -235,7 +265,7 @@
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = async (event) => {
-                        const { error } = await supabase.from('photos').insert({ url: event.target.result });
+                        const { error } = await supabaseClient.from('photos').insert({ url: event.target.result });
                         if(error) { showAlert('dataError'); console.error(error); } else { showAlert('photoUploadSuccess'); e.target.reset(); }
                     };
                     reader.readAsDataURL(file);
@@ -245,7 +275,7 @@
             document.getElementById('event-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const data = { date: document.getElementById('eventDate').value, description: document.getElementById('eventDescription').value };
-                const { error } = await supabase.from('events').insert(data);
+                const { error } = await supabaseClient.from('events').insert(data);
                 if(error) { showAlert('dataError'); console.error(error); } else { showAlert('eventAddedSuccess'); e.target.reset(); }
             });
         }
@@ -254,5 +284,4 @@
     </script>
 </body>
 </html>
-
 
