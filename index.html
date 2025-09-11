@@ -8,61 +8,23 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Inter for English, Noto Sans Tamil for Tamil -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
-        /* Apply fonts based on language */
-        body {
-            font-family: 'Inter', sans-serif;
-            transition: background-image 0.5s ease-in-out;
-        }
-        
-        [lang="ta"] body, [lang="ta"] button, [lang="ta"] input, [lang="ta"] h1, [lang="ta"] h2, [lang="ta"] h3, [lang="ta"] p, [lang="ta"] label, [lang="ta"] a, [lang="ta"] th, [lang="ta"] td, [lang="ta"] span {
-            font-family: 'Noto Sans Tamil', sans-serif;
-        }
-
-        /* Background Image Styling */
-        .background-container {
-            background-image: url('https://placehold.co/1920x1080/FFF8E1/A67B5B?text=Temple+Background');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        /* Header Image Styling */
-        .header-image {
-            background-image: url('https://placehold.co/1200x300/E67E22/FFFFFF?text=Arulmigu+Narayana+Swamy+Temple');
-            background-size: cover;
-            background-position: center;
-            height: 250px;
-        }
-
-        /* Footer Image Styling */
-        .footer-image {
-            background-image: url('https://placehold.co/1200x150/34495E/FFFFFF?text=Temple+Art+Footer');
-            background-size: cover;
-            background-position: center;
-            height: 100px;
-        }
-        
-        /* Glassmorphism effect for containers */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Hide scrollbar but allow scrolling */
+        body { font-family: 'Inter', sans-serif; }
+        [lang="ta"] body, [lang="ta"] button, [lang="ta"] input, [lang="ta"] h1, [lang="ta"] h2, [lang="ta"] h3, [lang="ta"] p, [lang="ta"] label, [lang="ta"] a, [lang="ta"] th, [lang="ta"] td, [lang="ta"] span { font-family: 'Noto Sans Tamil', sans-serif; }
+        .background-container { background-image: url('https://placehold.co/1920x1080/FFF8E1/A67B5B?text=Temple+Background'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .header-image { background-image: url('https://placehold.co/1200x300/E67E22/FFFFFF?text=Arulmigu+Narayana+Swamy+Temple'); background-size: cover; background-position: center; height: 250px; }
+        .footer-image { background-image: url('https://placehold.co/1200x150/34495E/FFFFFF?text=Temple+Art+Footer'); background-size: cover; background-position: center; height: 100px; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* Print-specific styles */
         @media print {
             body * { visibility: hidden; }
             #donors-print-area, #donors-print-area * { visibility: visible; }
@@ -85,17 +47,15 @@
             </div>
         </header>
 
-        <!-- Language and Admin Toggle -->
+        <!-- Navigation -->
         <nav class="sticky top-0 z-40 bg-white/30 backdrop-blur-md shadow-md no-print">
             <div class="container mx-auto px-4 py-2 flex justify-between items-center">
                 <div class="flex items-center space-x-2">
-                    <button id="en-lang-btn" class="lang-btn en-btn px-4 py-2 bg-orange-500 text-white rounded-md shadow-sm hover:bg-orange-600 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-400">English</button>
-                    <button id="ta-lang-btn" class="lang-btn ta-btn px-4 py-2 bg-gray-500 text-white rounded-md shadow-sm hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400">தமிழ்</button>
+                    <button id="en-lang-btn" class="px-4 py-2 bg-orange-500 text-white rounded-md">English</button>
+                    <button id="ta-lang-btn" class="px-4 py-2 bg-gray-500 text-white rounded-md">தமிழ்</button>
                 </div>
                 <div>
-                    <a href="#" id="admin-login-link" class="text-sm font-medium text-orange-700 hover:text-orange-900 transition-colors" data-key="adminLoginLink">
-                        Admin Login
-                    </a>
+                    <a href="#" id="admin-login-link" class="text-sm font-medium text-orange-700" data-key="adminLoginLink">Admin Login</a>
                 </div>
             </div>
         </nav>
@@ -106,461 +66,193 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                     <!-- Donation Form -->
                     <div class="glass-card p-6 md:p-8">
-                        <h2 id="form-title" class="text-2xl font-bold mb-6 text-gray-900" data-key="formTitle">Make a Donation</h2>
+                        <h2 class="text-2xl font-bold mb-6 text-gray-900" data-key="formTitle">Make a Donation</h2>
                         <form id="donation-form" class="space-y-4">
-                            <div>
-                                <label for="donorName" class="block text-sm font-medium text-gray-700" data-key="donorNameLabel">Donor Name</label>
-                                <input type="text" id="donorName" name="donorName" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
-                            </div>
-                            <div>
-                                <label for="address" class="block text-sm font-medium text-gray-700" data-key="addressLabel">Address</label>
-                                <textarea id="address" name="address" rows="3" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></textarea>
-                            </div>
-                            <div>
-                                <label for="phone" class="block text-sm font-medium text-gray-700" data-key="phoneLabel">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
-                            </div>
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700" data-key="emailLabel">Email ID</label>
-                                <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
-                            </div>
-                             <div>
-                                <label for="amount" class="block text-sm font-medium text-gray-700" data-key="amountLabel">Donation Amount (₹)</label>
-                                <input type="number" id="amount" name="amount" min="1" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
-                            </div>
-                             <div>
-                                <label for="transactionId" class="block text-sm font-medium text-gray-700" data-key="transactionIdLabel">UPI Transaction ID</label>
-                                <input type="text" id="transactionId" name="transactionId" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" placeholder-key="transactionIdPlaceholder">
-                            </div>
-                            <button type="submit" id="submit-btn" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-green-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" data-key="submitBtn">
-                                Submit Donation
-                            </button>
+                            <!-- Form inputs -->
+                            <div><label for="donorName" class="block text-sm font-medium" data-key="donorNameLabel">Donor Name</label><input type="text" id="donorName" name="donorName" required class="mt-1 block w-full p-2 bg-white border rounded-md"></div>
+                            <div><label for="address" class="block text-sm font-medium" data-key="addressLabel">Address</label><textarea id="address" name="address" rows="3" required class="mt-1 block w-full p-2 bg-white border rounded-md"></textarea></div>
+                            <div><label for="phone" class="block text-sm font-medium" data-key="phoneLabel">Phone Number</label><input type="tel" id="phone" name="phone" required class="mt-1 block w-full p-2 bg-white border rounded-md"></div>
+                            <div><label for="email" class="block text-sm font-medium" data-key="emailLabel">Email ID</label><input type="email" id="email" name="email" required class="mt-1 block w-full p-2 bg-white border rounded-md"></div>
+                            <div><label for="amount" class="block text-sm font-medium" data-key="amountLabel">Donation Amount (₹)</label><input type="number" id="amount" name="amount" min="1" required class="mt-1 block w-full p-2 bg-white border rounded-md"></div>
+                            <div><label for="transactionId" class="block text-sm font-medium" data-key="transactionIdLabel">UPI Transaction ID</label><input type="text" id="transactionId" name="transactionId" required class="mt-1 block w-full p-2 bg-white border rounded-md" placeholder-key="transactionIdPlaceholder"></div>
+                            <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg" data-key="submitBtn">Submit Donation</button>
                         </form>
                     </div>
 
-                    <!-- QR Code and Instructions -->
+                    <!-- QR Code -->
                     <div class="glass-card p-6 md:p-8 flex flex-col items-center justify-center">
-                        <h2 id="payment-title" class="text-2xl font-bold mb-4 text-gray-900 text-center" data-key="paymentTitle">Scan to Pay</h2>
-                        <img src="https://placehold.co/300x300/FFFFFF/000000?text=Scan+UPI+QR+Code" alt="UPI QR Code" class="rounded-lg shadow-lg border-4 border-white">
-                        <p id="payment-instructions" class="mt-4 text-center text-gray-700" data-key="paymentInstructions">
-                            After payment, please enter the UPI Transaction ID in the form and submit your details.
-                        </p>
+                        <h2 class="text-2xl font-bold mb-4 text-center" data-key="paymentTitle">Scan to Pay</h2>
+                        <img src="https://placehold.co/300x300/FFFFFF/000000?text=Scan+UPI+QR+Code" alt="UPI QR Code" class="rounded-lg shadow-lg">
+                        <p class="mt-4 text-center text-gray-700" data-key="paymentInstructions">After payment, please enter the UPI Transaction ID in the form and submit your details.</p>
                     </div>
                 </div>
 
-                 <!-- User View Tabs for Photos and Events -->
+                <!-- User Tabs for Photos & Events -->
                 <div class="glass-card p-6 md:p-8 mt-8">
-                     <div class="border-b border-gray-200/50 mb-6">
-                        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-                            <button id="user-photos-tab-btn" class="user-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-orange-500 text-orange-800" data-key="photosTab">Temple Photos</button>
-                            <button id="user-events-tab-btn" class="user-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-600 hover:text-gray-800 hover:border-gray-400" data-key="eventsTab">Special Days</button>
-                        </nav>
-                    </div>
-                    <!-- User Tab Content -->
+                    <div class="border-b mb-6"><nav class="-mb-px flex space-x-8"><button id="user-photos-tab-btn" class="user-tab py-4 px-1 border-b-2 font-medium text-sm border-orange-500 text-orange-800" data-key="photosTab">Temple Photos</button><button id="user-events-tab-btn" class="user-tab py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-600" data-key="eventsTab">Special Days</button></nav></div>
                     <div>
-                        <div id="user-photos-content" class="user-tab-content">
-                             <div id="user-photo-gallery" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                <!-- Photos will be rendered here by JS -->
-                            </div>
-                        </div>
-                        <div id="user-events-content" class="user-tab-content hidden">
-                            <div id="user-events-list" class="space-y-4">
-                                 <!-- Events will be rendered here by JS -->
-                            </div>
-                        </div>
+                        <div id="user-photos-content" class="user-tab-content"><div id="user-photo-gallery" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div></div>
+                        <div id="user-events-content" class="user-tab-content hidden"><div id="user-events-list" class="space-y-4"></div></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Admin View (Hidden by default) -->
+            <!-- Admin View -->
             <div id="admin-view" class="hidden no-print">
-                 <div class="glass-card p-6 md:p-8">
-                     <div class="flex justify-between items-start mb-6">
-                        <h2 id="admin-dashboard-title" class="text-3xl font-bold text-gray-900" data-key="adminDashboardTitle">Admin Dashboard</h2>
-                        <button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 transition" data-key="logoutBtn">Logout</button>
-                     </div>
-                    <!-- Admin Tabs -->
-                    <div class="border-b border-gray-200">
-                        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-                            <button id="donors-tab-btn" class="admin-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-orange-500 text-orange-600" data-key="donorsTab">Donors</button>
-                            <button id="photos-tab-btn" class="admin-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-key="uploadPhotosTab">Upload Photos</button>
-                            <button id="events-tab-btn" class="admin-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-key="manageEventsTab">Manage Events</button>
-                        </nav>
-                    </div>
-
-                    <!-- Tab Content -->
+                <div class="glass-card p-6 md:p-8">
+                    <div class="flex justify-between items-start mb-6"><h2 class="text-3xl font-bold" data-key="adminDashboardTitle">Admin Dashboard</h2><button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded-md" data-key="logoutBtn">Logout</button></div>
+                    <div class="border-b"><nav class="-mb-px flex space-x-8"><button id="donors-tab-btn" class="admin-tab py-4 px-1 border-b-2 font-medium text-sm border-orange-500 text-orange-600" data-key="donorsTab">Donors</button><button id="photos-tab-btn" class="admin-tab py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500" data-key="uploadPhotosTab">Upload Photos</button><button id="events-tab-btn" class="admin-tab py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500" data-key="manageEventsTab">Manage Events</button></nav></div>
                     <div class="mt-6">
-                        <div id="donors-content" class="admin-tab-content">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 id="donors-list-title" class="text-xl font-semibold text-gray-800" data-key="donorsListTitle">Donors List</h3>
-                                <div class="space-x-2">
-                                     <button id="print-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition" data-key="printBtn">Print</button>
-                                     <button id="export-btn" class="bg-green-500 text-white px-4 py-2 rounded-md shadow hover:bg-green-600 transition" data-key="exportBtn">Export to Excel</button>
-                                </div>
-                            </div>
-                             <div id="donors-print-area" class="overflow-x-auto bg-white rounded-lg shadow">
-                                 <table class="min-w-full divide-y divide-gray-200">
-                                     <thead class="bg-gray-50">
-                                         <tr>
-                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-key="donorHeaderName">Name</th>
-                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-key="donorHeaderDetails">Contact Details</th>
-                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-key="donorHeaderAmount">Amount</th>
-                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-key="donorHeaderTransaction">Transaction ID</th>
-                                         </tr>
-                                     </thead>
-                                     <tbody id="donors-table-body" class="bg-white divide-y divide-gray-200"></tbody>
-                                 </table>
-                             </div>
-                        </div>
-
-                        <div id="photos-content" class="admin-tab-content hidden">
-                            <h3 class="text-xl font-semibold mb-4 text-gray-800" data-key="photoGalleryTitle">Upload Temple Photos</h3>
-                            <form id="photo-upload-form" class="mb-6 p-4 bg-gray-50 rounded-lg border flex flex-col md:flex-row items-center gap-4">
-                                <div class="flex-grow w-full">
-                                    <label for="photoFile" class="sr-only" data-key="uploadLabel">Upload Photo</label>
-                                    <input type="file" id="photoFile" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"/>
-                                </div>
-                                <button type="submit" id="upload-btn" class="w-full md:w-auto bg-orange-500 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-orange-600 transition" data-key="uploadBtn">Upload</button>
-                            </form>
-                            <p class="text-sm text-gray-600" data-key="photoManageInfo">Uploaded photos will be visible to all users on the main page.</p>
-                        </div>
-                        
-                        <div id="events-content" class="admin-tab-content hidden">
-                            <h3 class="text-xl font-semibold mb-4 text-gray-800" data-key="specialDaysTitle">Manage Special Days & Events</h3>
-                            <form id="event-form" class="mb-6 p-4 bg-gray-50 rounded-lg border space-y-3">
-                                <h4 class="font-medium text-gray-700" data-key="addEventTitle">Add New Event</h4>
-                                <div>
-                                    <label for="eventDate" class="sr-only" data-key="eventDateLabel">Event Date</label>
-                                    <input type="date" id="eventDate" required class="w-full p-2 border rounded-md" placeholder-key="eventDateLabel">
-                                </div>
-                                <div>
-                                    <label for="eventDescription" class="sr-only" data-key="eventDescLabel">Event Description</label>
-                                    <textarea id="eventDescription" rows="3" required class="w-full p-2 border rounded-md" placeholder-key="eventDescPlaceholder"></textarea>
-                                </div>
-                                <button type="submit" id="add-event-btn" class="w-full bg-orange-500 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-orange-600 transition" data-key="addEventBtn">Add Event</button>
-                            </form>
-                             <p class="text-sm text-gray-600" data-key="eventManageInfo">Added events will be visible to all users on the main page.</p>
-                        </div>
+                        <div id="donors-content" class="admin-tab-content"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-semibold" data-key="donorsListTitle">Donors List</h3><div class="space-x-2"><button id="print-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md" data-key="printBtn">Print</button><button id="export-btn" class="bg-green-500 text-white px-4 py-2 rounded-md" data-key="exportBtn">Export to Excel</button></div></div><div id="donors-print-area" class="overflow-x-auto bg-white rounded-lg shadow"><table class="min-w-full"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium uppercase" data-key="donorHeaderName">Name</th><th class="px-6 py-3 text-left text-xs font-medium uppercase" data-key="donorHeaderDetails">Contact</th><th class="px-6 py-3 text-left text-xs font-medium uppercase" data-key="donorHeaderAmount">Amount</th><th class="px-6 py-3 text-left text-xs font-medium uppercase" data-key="donorHeaderTransaction">Txn ID</th></tr></thead><tbody id="donors-table-body" class="divide-y"></tbody></table></div></div>
+                        <div id="photos-content" class="admin-tab-content hidden"><h3 class="text-xl font-semibold mb-4" data-key="photoGalleryTitle">Upload Photos</h3><form id="photo-upload-form" class="mb-6 p-4 bg-gray-50 rounded-lg border flex gap-4"><div class="flex-grow"><input type="file" id="photoFile" accept="image/*" class="w-full text-sm"/></div><button type="submit" class="bg-orange-500 text-white font-bold py-2 px-6 rounded-lg" data-key="uploadBtn">Upload</button></form><p class="text-sm text-gray-600" data-key="photoManageInfo">Uploaded photos will be visible to all users.</p></div>
+                        <div id="events-content" class="admin-tab-content hidden"><h3 class="text-xl font-semibold mb-4" data-key="specialDaysTitle">Manage Events</h3><form id="event-form" class="mb-6 p-4 bg-gray-50 rounded-lg border space-y-3"><h4 class="font-medium" data-key="addEventTitle">Add New Event</h4><div><input type="date" id="eventDate" required class="w-full p-2 border rounded-md"></div><div><textarea id="eventDescription" rows="3" required class="w-full p-2 border rounded-md" placeholder-key="eventDescPlaceholder"></textarea></div><button type="submit" class="w-full bg-orange-500 text-white font-bold py-2 px-6 rounded-lg" data-key="addEventBtn">Add Event</button></form><p class="text-sm text-gray-600" data-key="eventManageInfo">Added events will be visible to all users.</p></div>
                     </div>
-                 </div>
+                </div>
             </div>
         </main>
-        
+
         <!-- Footer -->
         <footer class="footer-image mt-auto no-print relative">
-             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4">
-                 <p class="text-white text-center text-sm">&copy; <span data-key="footerText">2025 Arulmigu Narayana Swamy Temple. All Rights Reserved.</span></p>
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4">
+                <p class="text-white text-center text-sm">&copy; <span data-key="footerText"></span></p>
             </div>
         </footer>
 
-        <!-- Custom Modals -->
-        <div id="alert-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 no-print">
-            <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-center">
-                <p id="alert-message" class="text-lg mb-4"></p>
-                <button id="alert-ok-btn" class="bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600" data-key="alertOkBtn">OK</button>
-            </div>
-        </div>
-
-        <div id="password-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 no-print">
-            <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm">
-                <h3 class="text-lg font-bold mb-4" data-key="passwordModalTitle">Admin Login</h3>
-                <form id="password-form">
-                    <label for="admin-password" class="block text-sm font-medium text-gray-700" data-key="passwordPrompt">Enter admin password:</label>
-                    <input type="password" id="admin-password" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
-                    <div class="mt-4 flex justify-end space-x-2">
-                        <button type="button" id="password-cancel-btn" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400" data-key="cancelBtn">Cancel</button>
-                        <button type="submit" id="password-submit-btn" class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600" data-key="loginBtn">Login</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
+        <!-- Modals -->
+        <div id="alert-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center"><div class="bg-white rounded-lg p-6 w-full max-w-sm text-center"><p id="alert-message" class="text-lg mb-4"></p><button id="alert-ok-btn" class="bg-orange-500 text-white px-6 py-2 rounded-md" data-key="alertOkBtn">OK</button></div></div>
+        <div id="password-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center"><div class="bg-white rounded-lg p-6 w-full max-w-sm"><h3 class="text-lg font-bold mb-4" data-key="passwordModalTitle">Admin Login</h3><form id="password-form"><label for="admin-password" class="block text-sm" data-key="passwordPrompt">Enter password:</label><input type="password" id="admin-password" class="mt-1 block w-full p-2 border rounded-md"><div class="mt-4 flex justify-end space-x-2"><button type="button" id="password-cancel-btn" class="px-4 py-2 bg-gray-300 rounded-md" data-key="cancelBtn">Cancel</button><button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-md" data-key="loginBtn">Login</button></div></form></div></div>
     </div>
 
-    <!-- Firebase SDK -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // --- Firebase Configuration ---
+        // --- Supabase Configuration ---
         // >>>>>>>>>>>> IMPORTANT / முக்கியம் <<<<<<<<<<<<<
-        // To make this work on GitHub or any other hosting, you need a free Firebase account.
-        // 1. Go to firebase.google.com and create a new project.
-        // 2. In your project, go to Project Settings (gear icon) -> General.
-        // 3. Under "Your apps", click the web icon (</>) to create a new web app.
-        // 4. Copy the firebaseConfig object that it gives you and paste it here, replacing the placeholder below.
+        // 1. Go to supabase.com, create a new project.
+        // 2. Go to Project Settings (gear icon) -> API.
+        // 3. Copy your Project URL and anon public key and paste them here.
         
-        // இந்த இணையதளத்தை GitHub-ல் இயக்க, உங்களுக்கு Firebase கணக்கு தேவை.
-        // 1. firebase.google.com சென்று, ஒரு புதிய ப்ராஜெக்டை உருவாக்கவும்.
-        // 2. ப்ராஜெக்ட் செட்டிங்ஸ் (Settings) -> General என்பதற்குச் செல்லவும்.
-        // 3. "Your apps"-ன் கீழ், web icon (</>) என்பதைச் சொடுக்கி, புதிய web app-ஐ உருவாக்கவும்.
-        // 4. அங்கு கொடுக்கப்படும் firebaseConfig ஆப்ஜெக்டை காப்பி செய்து, கீழே உள்ள placeholder-ஐ நீக்கிவிட்டு இங்கே பேஸ்ட் செய்யவும்.
+        // 1. supabase.com சென்று, ஒரு புதிய ப்ராஜெக்டை உருவாக்கவும்.
+        // 2. ப்ராஜெக்ட் செட்டிங்ஸ் (Settings) -> API என்பதற்குச் செல்லவும்.
+        // 3. உங்கள் Project URL மற்றும் anon public key-ஐ காப்பி செய்து, கீழே பேஸ்ட் செய்யவும்.
+        const supabaseUrl = 'https://royiudsepvlawxvfljpl.supabase.co'; // Paste your URL here / உங்கள் URL-ஐ இங்கே பேஸ்ட் செய்யவும்
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJveWl1ZHNlcHZsYXd4dmZsanBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc2MDY0NDMsImV4cCI6MjA3MzE4MjQ0M30.a0ZVyU9fCn3oI8IiI7s_SsXUydE3T6iwCBYgLD0_Ot4'; // Paste your anon key here / உங்கள் anon key-ஐ இங்கே பேஸ்ட் செய்யவும்
 
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        
-        const appId = firebaseConfig.projectId || 'default-app-id';
-
+        const { createClient } = supabase;
+        const supabase = createClient(supabaseUrl, supabaseKey);
 
         const translations = {
-            en: { headerTitle: "Arulmigu Narayana Swamy Temple Donation Portal", adminLoginLink: "Admin Login", formTitle: "Make a Donation", donorNameLabel: "Donor Name", addressLabel: "Address", phoneLabel: "Phone Number", emailLabel: "Email ID", amountLabel: "Donation Amount (₹)", transactionIdLabel: "UPI Transaction ID", transactionIdPlaceholder: "Enter ID from your UPI app", submitBtn: "Submit Donation", paymentTitle: "Scan to Pay", paymentInstructions: "After payment, please enter the UPI Transaction ID in the form and submit your details.", adminDashboardTitle: "Admin Dashboard", logoutBtn: "Logout", donorsTab: "Donors", photosTab: "Temple Photos", uploadPhotosTab: "Upload Photos", eventsTab: "Special Days", manageEventsTab: "Manage Events", donorsListTitle: "Donors List", donorHeaderName: "Name", donorHeaderDetails: "Contact Details", donorHeaderAmount: "Amount", donorHeaderTransaction: "Transaction ID", noDonations: "No donations yet.", photoGalleryTitle: "Upload Temple Photos", photoManageInfo: "Uploaded photos will be visible to all users on the main page.", uploadLabel: "Upload Photo", uploadBtn: "Upload", noPhotos: "No photos uploaded yet.", specialDaysTitle: "Manage Special Days & Events", eventManageInfo: "Added events will be visible to all users on the main page.", addEventTitle: "Add New Event", eventDateLabel: "Event Date", eventDescLabel: "Event Description", eventDescPlaceholder: "E.g., Special Pooja for Vaikunta Ekadasi", addEventBtn: "Add Event", noEvents: "No events scheduled yet.", footerText: `${new Date().getFullYear()} Arulmigu Narayana Swamy Temple. All Rights Reserved.`, passwordPrompt: "Enter admin password:", wrongPassword: "Wrong password. Access denied.", donationSuccess: "Thank you for your generous donation! Your details have been saved.", fillFields: "Please fill all required fields.", photoUploadSuccess: "Photo uploaded successfully!", eventAddedSuccess: "Event added successfully!", alertOkBtn: "OK", printBtn: "Print", exportBtn: "Export to Excel", dataError: "Could not connect to the database. Please check your connection or Firebase config.", passwordModalTitle: "Admin Login", cancelBtn: "Cancel", loginBtn: "Login" },
-            ta: { headerTitle: "அருள்மிகு நாராயண சுவாமி திருக்கோவில் நன்கொடை தளம்", adminLoginLink: "நிர்வாகி உள்நுழைவு", formTitle: "நன்கொடை அளியுங்கள்", donorNameLabel: "நன்கொடையாளர் பெயர்", addressLabel: "முகவரி", phoneLabel: "தொலைபேசி எண்", emailLabel: "மின்னஞ்சல் முகவரி", amountLabel: "நன்கொடைத் தொகை (₹)", transactionIdLabel: "UPI பரிவர்த்தனை ஐடி", transactionIdPlaceholder: "UPI செயலியில் இருந்து ஐடியை உள்ளிடவும்", submitBtn: "நன்கொடையை சமர்ப்பிக்கவும்", paymentTitle: "பணம் செலுத்த ஸ்கேன் செய்யவும்", paymentInstructions: "பணம் செலுத்திய பிறகு, UPI பரிவர்த்தனை ஐடியை படிவத்தில் உள்ளிட்டு உங்கள் விவரங்களைச் சமர்ப்பிக்கவும்.", adminDashboardTitle: "நிர்வாகி டாஷ்போர்டு", logoutBtn: "வெளியேறு", donorsTab: "நன்கொடையாளர்கள்", photosTab: "கோவில் புகைப்படங்கள்", uploadPhotosTab: "புகைப்படங்களை பதிவேற்றவும்", eventsTab: "சிறப்பு நாட்கள்", manageEventsTab: "நிகழ்வுகளை நிர்வகிக்கவும்", donorsListTitle: "நன்கொடையாளர் பட்டியல்", donorHeaderName: "பெயர்", donorHeaderDetails: "தொடர்பு விவரங்கள்", donorHeaderAmount: "தொகை", donorHeaderTransaction: "பரிவர்த்தனை ஐடி", noDonations: "இன்னும் நன்கொடைகள் வரவில்லை.", photoGalleryTitle: "கோவில் புகைப்படங்களை பதிவேற்றவும்", photoManageInfo: "பதிவேற்றிய புகைப்படங்கள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", uploadLabel: "புகைப்படத்தை பதிவேற்றவும்", uploadBtn: "பதிவேற்று", noPhotos: "புகைப்படங்கள் இன்னும் பதிவேற்றப்படவில்லை.", specialDaysTitle: "சிறப்பு நாட்கள் & நிகழ்வுகளை நிர்வகிக்கவும்", eventManageInfo: "சேர்க்கப்பட்ட நிகழ்வுகள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", addEventTitle: "புதிய நிகழ்வைச் சேர்க்கவும்", eventDateLabel: "நிகழ்வு தேதி", eventDescLabel: "நிகழ்வு விளக்கம்", eventDescPlaceholder: "எ.கா., வைகுண்ட ஏகாதசி சிறப்பு பூஜை", addEventBtn: "நிகழ்வைச் சேர்", noEvents: "இன்னும் நிகழ்வுகள் திட்டமிடப்படவில்லை.", footerText: `${new Date().getFullYear()} அருள்மிகு நாராயண சுவாமி திருக்கோவில். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.`, passwordPrompt: "நிர்வாகி கடவுச்சொல்லை உள்ளிடவும்:", wrongPassword: "தவறான கடவுச்சொல். அணுகல் மறுக்கப்பட்டது.", donationSuccess: "உங்கள் தாராளமான நன்கொடைக்கு நன்றி! உங்கள் விவரங்கள் சேமிக்கப்பட்டுவிட்டன.", fillFields: "தேவையான அனைத்து புலங்களையும் நிரப்பவும்.", photoUploadSuccess: "புகைப்படம் வெற்றிகரமாக பதிவேற்றப்பட்டது!", eventAddedSuccess: "நிகழ்வு வெற்றிகரமாக சேர்க்கப்பட்டது!", alertOkBtn: "சரி", printBtn: "அச்சிடுக", exportBtn: "Excel-க்கு ஏற்றுமதி செய்", dataError: "டேட்டாபேஸுடன் இணைக்க முடியவில்லை. உங்கள் இணைப்பு அல்லது Firebase কনফিগারেশন சரிபார்க்கவும்.", passwordModalTitle: "நிர்வாகி உள்நுழைவு", cancelBtn: "ரத்துசெய்", loginBtn: "உள்நுழை" }
+            en: { headerTitle: "Arulmigu Narayana Swamy Temple Donation Portal", adminLoginLink: "Admin Login", formTitle: "Make a Donation", donorNameLabel: "Donor Name", addressLabel: "Address", phoneLabel: "Phone Number", emailLabel: "Email ID", amountLabel: "Donation Amount (₹)", transactionIdLabel: "UPI Transaction ID", transactionIdPlaceholder: "Enter ID from your UPI app", submitBtn: "Submit Donation", paymentTitle: "Scan to Pay", paymentInstructions: "After payment, please enter the UPI Transaction ID in the form and submit your details.", adminDashboardTitle: "Admin Dashboard", logoutBtn: "Logout", donorsTab: "Donors", photosTab: "Temple Photos", uploadPhotosTab: "Upload Photos", eventsTab: "Special Days", manageEventsTab: "Manage Events", donorsListTitle: "Donors List", donorHeaderName: "Name", donorHeaderDetails: "Contact Details", donorHeaderAmount: "Amount", donorHeaderTransaction: "Transaction ID", noDonations: "No donations yet.", photoGalleryTitle: "Upload Temple Photos", photoManageInfo: "Uploaded photos will be visible to all users on the main page.", uploadLabel: "Upload Photo", uploadBtn: "Upload", noPhotos: "No photos uploaded yet.", specialDaysTitle: "Manage Special Days & Events", eventManageInfo: "Added events will be visible to all users on the main page.", addEventTitle: "Add New Event", eventDateLabel: "Event Date", eventDescLabel: "Event Description", eventDescPlaceholder: "E.g., Special Pooja for Vaikunta Ekadasi", addEventBtn: "Add Event", noEvents: "No events scheduled yet.", footerText: `${new Date().getFullYear()} Arulmigu Narayana Swamy Temple. All Rights Reserved.`, passwordPrompt: "Enter admin password:", wrongPassword: "Wrong password. Access denied.", donationSuccess: "Thank you for your generous donation! Your details have been saved.", fillFields: "Please fill all required fields.", photoUploadSuccess: "Photo uploaded successfully!", eventAddedSuccess: "Event added successfully!", alertOkBtn: "OK", printBtn: "Print", exportBtn: "Export to Excel", dataError: "Could not connect to the database. Please check your connection or Supabase config.", passwordModalTitle: "Admin Login", cancelBtn: "Cancel", loginBtn: "Login" },
+            ta: { headerTitle: "அருள்மிகு நாராயண சுவாமி திருக்கோவில் நன்கொடை தளம்", adminLoginLink: "நிர்வாகி உள்நுழைவு", formTitle: "நன்கொடை அளியுங்கள்", donorNameLabel: "நன்கொடையாளர் பெயர்", addressLabel: "முகவரி", phoneLabel: "தொலைபேசி எண்", emailLabel: "மின்னஞ்சல் முகவரி", amountLabel: "நன்கொடைத் தொகை (₹)", transactionIdLabel: "UPI பரிவர்த்தனை ஐடி", transactionIdPlaceholder: "UPI செயலியில் இருந்து ஐடியை உள்ளிடவும்", submitBtn: "நன்கொடையை சமர்ப்பிக்கவும்", paymentTitle: "பணம் செலுத்த ஸ்கேன் செய்யவும்", paymentInstructions: "பணம் செலுத்திய பிறகு, UPI பரிவர்த்தனை ஐடியை படிவத்தில் உள்ளிட்டு உங்கள் விவரங்களைச் சமர்ப்பிக்கவும்.", adminDashboardTitle: "நிர்வாகி டாஷ்போர்டு", logoutBtn: "வெளியேறு", donorsTab: "நன்கொடையாளர்கள்", photosTab: "கோவில் புகைப்படங்கள்", uploadPhotosTab: "புகைப்படங்களை பதிவேற்றவும்", eventsTab: "சிறப்பு நாட்கள்", manageEventsTab: "நிகழ்வுகளை நிர்வங்கிக்கவும்", donorsListTitle: "நன்கொடையாளர் பட்டியல்", donorHeaderName: "பெயர்", donorHeaderDetails: "தொடர்பு விவரங்கள்", donorHeaderAmount: "தொகை", donorHeaderTransaction: "பரிவர்த்தனை ஐடி", noDonations: "இன்னும் நன்கொடைகள் வரவில்லை.", photoGalleryTitle: "கோவில் புகைப்படங்களை பதிவேற்றவும்", photoManageInfo: "பதிவேற்றிய புகைப்படங்கள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", uploadLabel: "புகைப்படத்தை பதிவேற்றவும்", uploadBtn: "பதிவேற்று", noPhotos: "புகைப்படங்கள் இன்னும் பதிவேற்றப்படவில்லை.", specialDaysTitle: "சிறப்பு நாட்கள் & நிகழ்வுகளை நிர்வங்கிக்கவும்", eventManageInfo: "சேர்க்கப்பட்ட நிகழ்வுகள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", addEventTitle: "புதிய நிகழ்வைச் சேர்க்கவும்", eventDateLabel: "நிகழ்வு தேதி", eventDescLabel: "நிகழ்வு விளக்கம்", eventDescPlaceholder: "எ.கா., வைகுண்ட ஏகாதசி சிறப்பு பூஜை", addEventBtn: "நிகழ்வைச் சேர்", noEvents: "இன்னும் நிகழ்வுகள் திட்டமிடப்படவில்லை.", footerText: `${new Date().getFullYear()} அருள்மிகு நாராயண சுவாமி திருக்கோவில். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.`, passwordPrompt: "நிர்வாகி கடவுச்சொல்லை உள்ளிடவும்:", wrongPassword: "தவறான கடவுச்சொல். அணுகல் மறுக்கப்பட்டது.", donationSuccess: "உங்கள் தாராளமான நன்கொடைக்கு நன்றி! உங்கள் விவரங்கள் சேமிக்கப்பட்டுவிட்டன.", fillFields: "தேவையான அனைத்து புலங்களையும் நிரப்பவும்.", photoUploadSuccess: "புகைப்படம் வெற்றிகரமாக பதிவேற்றப்பட்டது!", eventAddedSuccess: "நிகழ்வு வெற்றிகரமாக சேர்க்கப்பட்டது!", alertOkBtn: "சரி", printBtn: "அச்சிடுக", exportBtn: "Excel-க்கு ஏற்றுமதி செய்", dataError: "டேட்டாபேஸுடன் இணைக்க முடியவில்லை. உங்கள் இணைப்பு அல்லது Supabase কনফিগারেশন சரிபார்க்கவும்.", passwordModalTitle: "நிர்வாகி உள்நுழைவு", cancelBtn: "ரத்துசெய்", loginBtn: "உள்நுழை" }
         };
 
-        // --- Global State & Elements ---
         let currentLanguage = 'en';
         let allDonations = [];
-        let cachedEvents = []; 
+        let cachedEvents = [];
         const alertModal = document.getElementById('alert-modal');
-        const alertMessage = document.getElementById('alert-message');
         const passwordModal = document.getElementById('password-modal');
-
-        // --- Functions ---
-        const showAlert = (messageKey) => {
-            alertMessage.textContent = translations[currentLanguage][messageKey];
+        
+        const showAlert = (key) => {
+            document.getElementById('alert-message').textContent = translations[currentLanguage][key];
             alertModal.classList.remove('hidden');
             alertModal.classList.add('flex');
-        };
-
-        const closeAlert = () => {
-            alertModal.classList.add('hidden');
-            alertModal.classList.remove('flex');
         };
 
         const switchLanguage = (lang) => {
             currentLanguage = lang;
             document.documentElement.lang = lang;
-            
-            document.getElementById('en-lang-btn').classList.toggle('bg-orange-500', lang === 'en');
-            document.getElementById('en-lang-btn').classList.toggle('bg-gray-500', lang !== 'en');
-            document.getElementById('ta-lang-btn').classList.toggle('bg-orange-500', lang === 'ta');
-            document.getElementById('ta-lang-btn').classList.toggle('bg-gray-500', lang !== 'ta');
-
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.dataset.key;
-                if (translations[lang][key]) { el.textContent = translations[lang][key]; }
-            });
-            document.querySelectorAll('[placeholder-key]').forEach(el => {
-                const key = el.getAttribute('placeholder-key');
-                if (translations[lang][key]) { el.placeholder = translations[lang][key]; }
-            });
-            renderEvents(cachedEvents); 
-        };
-        
-        const showAdminLoginPrompt = (e) => {
-            e.preventDefault();
-            passwordModal.classList.remove('hidden');
-            passwordModal.classList.add('flex');
-            document.getElementById('admin-password').focus();
+            document.querySelectorAll('[data-key]').forEach(el => el.textContent = translations[lang][el.dataset.key]);
+            document.querySelectorAll('[placeholder-key]').forEach(el => el.placeholder = translations[lang][el.getAttribute('placeholder-key')]);
+            renderEvents(cachedEvents);
         };
 
-        const closePasswordModal = () => {
-            passwordModal.classList.add('hidden');
-            passwordModal.classList.remove('flex');
-            document.getElementById('password-form').reset();
-        };
-        
-        const handlePasswordSubmit = (e) => {
-            e.preventDefault();
-            const password = document.getElementById('admin-password').value;
-             if (password === 'password123') {
-                document.getElementById('user-view').classList.add('hidden');
-                document.getElementById('admin-view').classList.remove('hidden');
-                closePasswordModal();
-            } else {
-                showAlert('wrongPassword');
-            }
+        const switchTab = (prefix, name) => {
+            document.querySelectorAll(`.${prefix}-tab-content`).forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll(`.${prefix}-tab`).forEach(t => t.classList.remove('border-orange-500', 'text-orange-800', 'text-orange-600'));
+            document.getElementById(`${name}-content`).classList.remove('hidden');
+            document.getElementById(`${name}-tab-btn`).classList.add('border-orange-500', prefix === 'user' ? 'text-orange-800' : 'text-orange-600');
         };
 
-        const logoutAdmin = () => {
-            document.getElementById('admin-view').classList.add('hidden');
-            document.getElementById('user-view').classList.remove('hidden');
-        };
-
-        const switchTab = (tabPrefix, tabName) => {
-            document.querySelectorAll(`.${tabPrefix}-tab-content`).forEach(c => c.classList.add('hidden'));
-            document.querySelectorAll(`.${tabPrefix}-tab`).forEach(t => {
-                t.classList.remove('border-orange-500', 'text-orange-800', 'text-orange-600');
-                t.classList.add('border-transparent', 'text-gray-600', 'text-gray-500');
-            });
-            document.getElementById(`${tabName}-content`).classList.remove('hidden');
-            const activeTabBtn = document.getElementById(`${tabName}-tab-btn`);
-            activeTabBtn.classList.remove('text-gray-600', 'text-gray-500');
-            activeTabBtn.classList.add('border-orange-500', tabPrefix === 'user' ? 'text-orange-800' : 'text-orange-600');
-        };
-
-        const renderDonors = (donations) => {
-            allDonations = donations;
+        const renderDonors = (data) => {
+            allDonations = data;
             const tbody = document.getElementById('donors-table-body');
-            tbody.innerHTML = '';
-            if (!donations || donations.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-4" data-key="noDonations">${translations[currentLanguage].noDonations}</td></tr>`;
-                return;
-            }
-            donations.forEach(d => {
-                tbody.innerHTML += `<tr class="text-sm">
-                        <td class="px-6 py-4"><div class="font-medium text-gray-900">${d.donorName}</div><div class="text-gray-500">${d.address}</div></td>
-                        <td class="px-6 py-4"><div class="text-gray-900">${d.phone}</div><div class="text-gray-500">${d.email}</div></td>
-                        <td class="px-6 py-4 text-gray-900">₹${d.amount}</td>
-                        <td class="px-6 py-4 text-gray-500">${d.transactionId}</td></tr>`;
-            });
+            tbody.innerHTML = data.length ? data.map(d => `<tr><td class="p-2">${d.donorName}<br>${d.address}</td><td class="p-2">${d.phone}<br>${d.email}</td><td class="p-2">₹${d.amount}</td><td class="p-2">${d.transactionId}</td></tr>`).join('') : `<tr><td colspan="4" class="text-center p-4">${translations[currentLanguage].noDonations}</td></tr>`;
         };
-
-        const renderPhotos = (photos) => {
+        
+        const renderPhotos = (data) => {
             const gallery = document.getElementById('user-photo-gallery');
-            gallery.innerHTML = '';
-            if (!photos || photos.length === 0) {
-                gallery.innerHTML = `<p class="col-span-full text-center py-4" data-key="noPhotos">${translations[currentLanguage].noPhotos}</p>`;
-                return;
-            }
-            photos.forEach(photo => {
-                gallery.innerHTML += `<div class="relative group"><img src="${photo.url}" alt="Temple Photo" class="w-full h-48 object-cover rounded-lg shadow-md transition-transform transform group-hover:scale-105"></div>`;
-            });
+            gallery.innerHTML = data.length ? data.map(p => `<img src="${p.url}" class="w-full h-48 object-cover rounded-lg">`).join('') : `<p class="col-span-full text-center">${translations[currentLanguage].noPhotos}</p>`;
         };
 
-        const renderEvents = (events) => {
-            cachedEvents = events;
+        const renderEvents = (data) => {
+            cachedEvents = data;
             const list = document.getElementById('user-events-list');
-            list.innerHTML = '';
-            if (!events || events.length === 0) {
-                list.innerHTML = `<p class="text-center py-4" data-key="noEvents">${translations[currentLanguage].noEvents}</p>`;
-                return;
-            }
-            const sorted = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
-            sorted.forEach(event => {
-                const date = new Date(event.date).toLocaleDateString(currentLanguage === 'ta' ? 'ta-IN' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
-                list.innerHTML += `<div class="bg-white/50 p-4 rounded-lg shadow border-l-4 border-orange-400"><p class="font-bold text-orange-700">${date}</p><p class="text-gray-600 mt-1">${event.description}</p></div>`;
-            });
+            const sorted = data.sort((a,b) => new Date(a.date) - new Date(b.date));
+            list.innerHTML = sorted.length ? sorted.map(e => `<div class="bg-white/50 p-4 rounded-lg"><p class="font-bold text-orange-700">${new Date(e.date).toLocaleDateString(currentLanguage === 'ta' ? 'ta-IN' : 'en-US', { timeZone: 'UTC' })}</p><p>${e.description}</p></div>`).join('') : `<p class="text-center">${translations[currentLanguage].noEvents}</p>`;
         };
 
-        const printDonors = () => window.print();
-
-        const exportToCSV = () => {
-            if (allDonations.length === 0) return;
-            const headers = ["Donor Name", "Address", "Phone", "Email", "Amount", "Transaction ID"];
-            let csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\r\n";
-            allDonations.forEach(d => {
-                const row = [d.donorName, `"${d.address.replace(/"/g, '""')}"`, d.phone, d.email, d.amount, d.transactionId];
-                csvContent += row.join(",") + "\r\n";
-            });
-            const link = document.createElement("a");
-            link.setAttribute("href", encodeURI(csvContent));
-            link.setAttribute("download", "donations.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        };
-
-        // --- Firebase dependent functions ---
-        let handleDonationSubmit, handlePhotoSubmit, handleEventSubmit;
-
-        // --- Initialization ---
-        function initialize() {
-            // Attach UI Event Listeners first, they don't depend on Firebase
+        async function initialize() {
+            // UI Listeners
+            document.getElementById('alert-ok-btn').addEventListener('click', () => alertModal.classList.add('hidden'));
             document.getElementById('en-lang-btn').addEventListener('click', () => switchLanguage('en'));
             document.getElementById('ta-lang-btn').addEventListener('click', () => switchLanguage('ta'));
-            document.getElementById('admin-login-link').addEventListener('click', showAdminLoginPrompt);
-            document.getElementById('logout-btn').addEventListener('click', logoutAdmin);
-            document.getElementById('alert-ok-btn').addEventListener('click', closeAlert);
-            document.getElementById('password-cancel-btn').addEventListener('click', closePasswordModal);
-            document.getElementById('password-form').addEventListener('submit', handlePasswordSubmit);
-            document.getElementById('user-photos-tab-btn').addEventListener('click', () => switchTab('user', 'user-photos'));
-            document.getElementById('user-events-tab-btn').addEventListener('click', () => switchTab('user', 'user-events'));
-            document.getElementById('donors-tab-btn').addEventListener('click', () => switchTab('admin', 'donors'));
-            document.getElementById('photos-tab-btn').addEventListener('click', () => switchTab('admin', 'photos'));
-            document.getElementById('events-tab-btn').addEventListener('click', () => switchTab('admin', 'events'));
-            document.getElementById('print-btn').addEventListener('click', printDonors);
-            document.getElementById('export-btn').addEventListener('click', exportToCSV);
+            document.getElementById('admin-login-link').addEventListener('click', (e) => { e.preventDefault(); passwordModal.classList.remove('hidden'); });
+            document.getElementById('password-cancel-btn').addEventListener('click', () => passwordModal.classList.add('hidden'));
+            document.getElementById('password-form').addEventListener('submit', (e) => { e.preventDefault(); if (document.getElementById('admin-password').value === 'password123') { document.getElementById('user-view').classList.add('hidden'); document.getElementById('admin-view').classList.remove('hidden'); passwordModal.classList.add('hidden'); } else { showAlert('wrongPassword'); } });
+            document.getElementById('logout-btn').addEventListener('click', () => { document.getElementById('user-view').classList.remove('hidden'); document.getElementById('admin-view').classList.add('hidden'); });
+            ['user-photos', 'user-events'].forEach(t => document.getElementById(`${t}-tab-btn`).addEventListener('click', () => switchTab('user', t)));
+            ['donors', 'photos', 'events'].forEach(t => document.getElementById(`${t}-tab-btn`).addEventListener('click', () => switchTab('admin', t)));
             
-            switchLanguage('en'); // Set default language immediately
+            switchLanguage('en');
 
-            async function connectFirebase() {
-                try {
-                    const app = initializeApp(firebaseConfig);
-                    const db = getFirestore(app);
-                    const auth = getAuth(app);
+            if (supabaseUrl === 'YOUR_SUPABASE_URL' || supabaseKey === 'YOUR_SUPABASE_ANON_KEY') {
+                console.warn("Supabase config is a placeholder. Please update it.");
+                return;
+            }
 
-                    const donationsCol = collection(db, `donations`);
-                    const photosCol = collection(db, `photos`);
-                    const eventsCol = collection(db, `events`);
+            // Fetch initial data
+            const { data: initialDonations } = await supabase.from('donations').select();
+            if (initialDonations) renderDonors(initialDonations);
+            const { data: initialPhotos } = await supabase.from('photos').select();
+            if (initialPhotos) renderPhotos(initialPhotos);
+            const { data: initialEvents } = await supabase.from('events').select();
+            if (initialEvents) renderEvents(initialEvents);
 
-                    await signInAnonymously(auth);
+            // Listen for realtime changes
+            supabase.channel('public:donations').on('postgres_changes', { event: '*', schema: 'public', table: 'donations' }, async () => { const { data } = await supabase.from('donations').select(); if(data) renderDonors(data); }).subscribe();
+            supabase.channel('public:photos').on('postgres_changes', { event: '*', schema: 'public', table: 'photos' }, async () => { const { data } = await supabase.from('photos').select(); if(data) renderPhotos(data); }).subscribe();
+            supabase.channel('public:events').on('postgres_changes', { event: '*', schema: 'public', table: 'events' }, async () => { const { data } = await supabase.from('events').select(); if(data) renderEvents(data); }).subscribe();
+            
+            // Form Submissions
+            document.getElementById('donation-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const { error } = await supabase.from('donations').insert(Object.fromEntries(formData.entries()));
+                if(error) { showAlert('dataError'); console.error(error); } else { showAlert('donationSuccess'); e.target.reset(); }
+            });
 
-                    // Now that we have a connection, define the submit handlers
-                    handleDonationSubmit = async (e) => {
-                        e.preventDefault();
-                        const formData = new FormData(e.target);
-                        const data = { ...Object.fromEntries(formData.entries()), createdAt: serverTimestamp() };
-                        if (Object.values(data).some(v => !v || v === '')) { showAlert('fillFields'); return; }
-                        try {
-                            await addDoc(donationsCol, data);
-                            showAlert('donationSuccess');
-                            e.target.reset();
-                        } catch (error) { console.error("Error adding donation:", error); showAlert('dataError'); }
+            document.getElementById('photo-upload-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const file = document.getElementById('photoFile').files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = async (event) => {
+                        const { error } = await supabase.from('photos').insert({ url: event.target.result });
+                        if(error) { showAlert('dataError'); console.error(error); } else { showAlert('photoUploadSuccess'); e.target.reset(); }
                     };
-
-                    handlePhotoSubmit = (e) => {
-                        e.preventDefault();
-                        const file = document.getElementById('photoFile').files[0];
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = async (event) => {
-                                try {
-                                    await addDoc(photosCol, { url: event.target.result, createdAt: serverTimestamp() });
-                                    showAlert('photoUploadSuccess');
-                                    e.target.reset();
-                                } catch (error) { console.error("Error adding photo:", error); showAlert('dataError'); }
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    };
-
-                    handleEventSubmit = async (e) => {
-                        e.preventDefault();
-                        const date = document.getElementById('eventDate').value;
-                        const description = document.getElementById('eventDescription').value;
-                        if (date && description) {
-                            try {
-                                await addDoc(eventsCol, { date, description, createdAt: serverTimestamp() });
-                                showAlert('eventAddedSuccess');
-                                e.target.reset();
-                            } catch (error) { console.error("Error adding event:", error); showAlert('dataError'); }
-                        } else { showAlert('fillFields'); }
-                    };
-
-                    // Attach Firebase-dependent event listeners
-                    document.getElementById('donation-form').addEventListener('submit', handleDonationSubmit);
-                    document.getElementById('photo-upload-form').addEventListener('submit', handlePhotoSubmit);
-                    document.getElementById('event-form').addEventListener('submit', handleEventSubmit);
-
-                    // Setup real-time listeners
-                    onSnapshot(query(donationsCol), (snapshot) => renderDonors(snapshot.docs.map(doc => doc.data())));
-                    onSnapshot(query(photosCol), (snapshot) => renderPhotos(snapshot.docs.map(doc => doc.data())));
-                    onSnapshot(query(eventsCol), (snapshot) => renderEvents(snapshot.docs.map(doc => doc.data())));
-
-                } catch (error) {
-                    console.error("Firebase Initialization failed:", error);
-                    showAlert('dataError');
+                    reader.readAsDataURL(file);
                 }
-            }
+            });
 
-            // Only connect if the config placeholder has been changed
-            if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
-                connectFirebase();
-            } else {
-                console.warn("Firebase config is a placeholder. Please update it with your project details.");
-            }
+            document.getElementById('event-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const data = { date: document.getElementById('eventDate').value, description: document.getElementById('eventDescription').value };
+                const { error } = await supabase.from('events').insert(data);
+                if(error) { showAlert('dataError'); console.error(error); } else { showAlert('eventAddedSuccess'); e.target.reset(); }
+            });
         }
         
         document.addEventListener('DOMContentLoaded', initialize);
     </script>
 </body>
 </html>
+
 
