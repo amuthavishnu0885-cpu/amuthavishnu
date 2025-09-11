@@ -293,16 +293,6 @@
             firebaseConfig = {}; // Fallback to an empty config
         }
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-
-        // --- Collections ---
-        const donationsCol = collection(db, `/artifacts/${appId}/public/data/donations`);
-        const photosCol = collection(db, `/artifacts/${appId}/public/data/photos`);
-        const eventsCol = collection(db, `/artifacts/${appId}/public/data/events`);
-
         const translations = {
             en: { headerTitle: "Arulmigu Narayana Swamy Temple Donation Portal", adminLoginLink: "Admin Login", formTitle: "Make a Donation", donorNameLabel: "Donor Name", addressLabel: "Address", phoneLabel: "Phone Number", emailLabel: "Email ID", amountLabel: "Donation Amount (₹)", transactionIdLabel: "UPI Transaction ID", transactionIdPlaceholder: "Enter ID from your UPI app", submitBtn: "Submit Donation", paymentTitle: "Scan to Pay", paymentInstructions: "After payment, please enter the UPI Transaction ID in the form and submit your details.", adminDashboardTitle: "Admin Dashboard", logoutBtn: "Logout", donorsTab: "Donors", photosTab: "Temple Photos", uploadPhotosTab: "Upload Photos", eventsTab: "Special Days", manageEventsTab: "Manage Events", donorsListTitle: "Donors List", donorHeaderName: "Name", donorHeaderDetails: "Contact Details", donorHeaderAmount: "Amount", donorHeaderTransaction: "Transaction ID", noDonations: "No donations yet.", photoGalleryTitle: "Upload Temple Photos", photoManageInfo: "Uploaded photos will be visible to all users on the main page.", uploadLabel: "Upload Photo", uploadBtn: "Upload", noPhotos: "No photos uploaded yet.", specialDaysTitle: "Manage Special Days & Events", eventManageInfo: "Added events will be visible to all users on the main page.", addEventTitle: "Add New Event", eventDateLabel: "Event Date", eventDescLabel: "Event Description", eventDescPlaceholder: "E.g., Special Pooja for Vaikunta Ekadasi", addEventBtn: "Add Event", noEvents: "No events scheduled yet.", footerText: `${new Date().getFullYear()} Arulmigu Narayana Swamy Temple. All Rights Reserved.`, passwordPrompt: "Enter admin password:", wrongPassword: "Wrong password. Access denied.", donationSuccess: "Thank you for your generous donation! Your details have been saved.", fillFields: "Please fill all required fields.", photoUploadSuccess: "Photo uploaded successfully!", eventAddedSuccess: "Event added successfully!", alertOkBtn: "OK", printBtn: "Print", exportBtn: "Export to Excel", dataError: "Could not connect to the database. Please check your connection.", passwordModalTitle: "Admin Login", cancelBtn: "Cancel", loginBtn: "Login" },
             ta: { headerTitle: "அருள்மிகு நாராயண சுவாமி திருக்கோவில் நன்கொடை தளம்", adminLoginLink: "நிர்வாகி உள்நுழைவு", formTitle: "நன்கொடை அளியுங்கள்", donorNameLabel: "நன்கொடையாளர் பெயர்", addressLabel: "முகவரி", phoneLabel: "தொலைபேசி எண்", emailLabel: "மின்னஞ்சல் முகவரி", amountLabel: "நன்கொடைத் தொகை (₹)", transactionIdLabel: "UPI பரிவர்த்தனை ஐடி", transactionIdPlaceholder: "UPI செயலியில் இருந்து ஐடியை உள்ளிடவும்", submitBtn: "நன்கொடையை சமர்ப்பிக்கவும்", paymentTitle: "பணம் செலுத்த ஸ்கேன் செய்யவும்", paymentInstructions: "பணம் செலுத்திய பிறகு, UPI பரிவர்த்தனை ஐடியை படிவத்தில் உள்ளிட்டு உங்கள் விவரங்களைச் சமர்ப்பிக்கவும்.", adminDashboardTitle: "நிர்வாகி டாஷ்போர்டு", logoutBtn: "வெளியேறு", donorsTab: "நன்கொடையாளர்கள்", photosTab: "கோவில் புகைப்படங்கள்", uploadPhotosTab: "புகைப்படங்களை பதிவேற்றவும்", eventsTab: "சிறப்பு நாட்கள்", manageEventsTab: "நிகழ்வுகளை நிர்வகிக்கவும்", donorsListTitle: "நன்கொடையாளர் பட்டியல்", donorHeaderName: "பெயர்", donorHeaderDetails: "தொடர்பு விவரங்கள்", donorHeaderAmount: "தொகை", donorHeaderTransaction: "பரிவர்த்தனை ஐடி", noDonations: "இன்னும் நன்கொடைகள் வரவில்லை.", photoGalleryTitle: "கோவில் புகைப்படங்களை பதிவேற்றவும்", photoManageInfo: "பதிவேற்றிய புகைப்படங்கள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", uploadLabel: "புகைப்படத்தை பதிவேற்றவும்", uploadBtn: "பதிவேற்று", noPhotos: "புகைப்படங்கள் இன்னும் பதிவேற்றப்படவில்லை.", specialDaysTitle: "சிறப்பு நாட்கள் & நிகழ்வுகளை நிர்வகிக்கவும்", eventManageInfo: "சேர்க்கப்பட்ட நிகழ்வுகள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", addEventTitle: "புதிய நிகழ்வைச் சேர்க்கவும்", eventDateLabel: "நிகழ்வு தேதி", eventDescLabel: "நிகழ்வு விளக்கம்", eventDescPlaceholder: "எ.கா., வைகுண்ட ஏகாதசி சிறப்பு பூஜை", addEventBtn: "நிகழ்வைச் சேர்", noEvents: "இன்னும் நிகழ்வுகள் திட்டமிடப்படவில்லை.", footerText: `${new Date().getFullYear()} அருள்மிகு நாராயண சுவாமி திருக்கோவில். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.`, passwordPrompt: "நிர்வாகி கடவுச்சொல்லை உள்ளிடவும்:", wrongPassword: "தவறான கடவுச்சொல். அணுகல் மறுக்கப்பட்டது.", donationSuccess: "உங்கள் தாராளமான நன்கொடைக்கு நன்றி! உங்கள் விவரங்கள் சேமிக்கப்பட்டுவிட்டன.", fillFields: "தேவையான அனைத்து புலங்களையும் நிரப்பவும்.", photoUploadSuccess: "புகைப்படம் வெற்றிகரமாக பதிவேற்றப்பட்டது!", eventAddedSuccess: "நிகழ்வு வெற்றிகரமாக சேர்க்கப்பட்டது!", alertOkBtn: "சரி", printBtn: "அச்சிடுக", exportBtn: "Excel-க்கு ஏற்றுமதி செய்", dataError: "டேட்டாபேஸுடன் இணைக்க முடியவில்லை. உங்கள் இணைப்பைச் சரிபார்க்கவும்.", passwordModalTitle: "நிர்வாகி உள்நுழைவு", cancelBtn: "ரத்துசெய்", loginBtn: "உள்நுழை" }
@@ -494,8 +484,10 @@
         };
 
         // --- Initialization ---
-        async function initialize() {
-            // Attach Event Listeners that don't depend on Firebase first
+        function initialize() {
+            let app, db, auth, donationsCol, photosCol, eventsCol;
+
+            // Attach UI Event Listeners first, they don't depend on Firebase
             document.getElementById('en-lang-btn').addEventListener('click', () => switchLanguage('en'));
             document.getElementById('ta-lang-btn').addEventListener('click', () => switchLanguage('ta'));
             document.getElementById('admin-login-link').addEventListener('click', showAdminLoginPrompt);
@@ -513,24 +505,37 @@
             document.getElementById('donation-form').addEventListener('submit', handleDonationSubmit);
             document.getElementById('photo-upload-form').addEventListener('submit', handlePhotoSubmit);
             document.getElementById('event-form').addEventListener('submit', handleEventSubmit);
+            
+            switchLanguage('en'); // Set default language immediately
 
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
+            async function connectFirebase() {
+                try {
+                    app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    auth = getAuth(app);
+
+                    donationsCol = collection(db, `/artifacts/${appId}/public/data/donations`);
+                    photosCol = collection(db, `/artifacts/${appId}/public/data/photos`);
+                    eventsCol = collection(db, `/artifacts/${appId}/public/data/events`);
+
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+
+                    // Setup real-time listeners
+                    onSnapshot(query(donationsCol), (snapshot) => renderDonors(snapshot.docs.map(doc => doc.data())));
+                    onSnapshot(query(photosCol), (snapshot) => renderPhotos(snapshot.docs.map(doc => doc.data())));
+                    onSnapshot(query(eventsCol), (snapshot) => renderEvents(snapshot.docs.map(doc => doc.data())));
+
+                } catch (error) {
+                    console.error("Firebase Initialization failed:", error);
+                    showAlert('dataError');
                 }
-
-                // Setup real-time listeners
-                onSnapshot(query(donationsCol), (snapshot) => renderDonors(snapshot.docs.map(doc => doc.data())));
-                onSnapshot(query(photosCol), (snapshot) => renderPhotos(snapshot.docs.map(doc => doc.data())));
-                onSnapshot(query(eventsCol), (snapshot) => renderEvents(snapshot.docs.map(doc => doc.data())));
-
-            } catch (error) {
-                console.error("Firebase Initialization failed:", error);
-                showAlert('dataError');
             }
-             switchLanguage('en'); // Set default language
+
+            connectFirebase();
         }
         
         document.addEventListener('DOMContentLoaded', initialize);
