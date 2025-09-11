@@ -280,7 +280,7 @@
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Firebase Configuration ---
@@ -306,7 +306,6 @@
             appId: "YOUR_APP_ID"
         };
         
-        // You don't need to change this line. / இந்த வரியை மாற்ற வேண்டாம்.
         const appId = firebaseConfig.projectId || 'default-app-id';
 
 
@@ -488,9 +487,9 @@
                     const db = getFirestore(app);
                     const auth = getAuth(app);
 
-                    const donationsCol = collection(db, `/artifacts/${appId}/public/data/donations`);
-                    const photosCol = collection(db, `/artifacts/${appId}/public/data/photos`);
-                    const eventsCol = collection(db, `/artifacts/${appId}/public/data/events`);
+                    const donationsCol = collection(db, `donations`);
+                    const photosCol = collection(db, `photos`);
+                    const eventsCol = collection(db, `events`);
 
                     await signInAnonymously(auth);
 
