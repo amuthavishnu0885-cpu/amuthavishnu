@@ -16,8 +16,6 @@
 </head>
 <body class="bg-orange-50 min-h-screen">
 
-<!-- NOTE: This file uses the modular Firebase JS SDK. Replace firebaseConfig below. -->
-
 <div id="app" class="max-w-6xl mx-auto p-6">
   <header class="mb-6">
     <div class="header-image bg-[url('https://placehold.co/1200x300/E67E22/FFFFFF?text=.')] bg-cover bg-center h-48 rounded-lg relative">
@@ -29,8 +27,8 @@
 
   <nav class="mb-6 flex justify-between items-center no-print">
     <div class="flex gap-2">
-      <button id="en-lang-btn" class="px-4 py-2 bg-orange-500 text-white rounded-md">English</button>
-      <button id="ta-lang-btn" class="px-4 py-2 bg-green-600 text-white rounded-md">தமிழ்</button>
+      <button id="en-lang-btn" class="px-4 py-2 bg-orange-500 text-white rounded-md" data-key="englishBtn">English</button>
+      <button id="ta-lang-btn" class="px-4 py-2 bg-green-600 text-white rounded-md" data-key="tamilBtn">தமிழ்</button>
     </div>
     <div>
       <a href="#" id="admin-login-link" class="text-sm font-medium text-orange-700" data-key="adminLoginLink">Admin Login</a>
@@ -44,13 +42,13 @@
         <section class="glass-card">
           <h2 class="text-2xl font-bold mb-4" data-key="formTitle">Make a Donation</h2>
           <form id="donation-form" class="space-y-3">
-            <div><label class="block text-sm font-medium" data-key="donorNameLabel">Donor Name</label><input id="donorName" required class="mt-1 block w-full p-2 border rounded-md"></div>
-            <div><label class="block text-sm font-medium" data-key="addressLabel">Address</label><textarea id="address" rows="2" class="mt-1 block w-full p-2 border rounded-md"></textarea></div>
-            <div><label class="block text-sm font-medium" data-key="phoneLabel">Phone Number</label><input id="phone" type="tel" class="mt-1 block w-full p-2 border rounded-md"></div>
-            <div><label class="block text-sm font-medium" data-key="emailLabel">Email ID</label><input id="email" type="email" class="mt-1 block w-full p-2 border rounded-md"></div>
-            <div><label class="block text-sm font-medium" data-key="amountLabel">Donation Amount (₹)</label><input id="amount" type="number" min="1" required class="mt-1 block w-full p-2 border rounded-md"></div>
-            <div><label class="block text-sm font-medium" data-key="transactionIdLabel">UPI Transaction ID</label><input id="transactionId" class="mt-1 block w-full p-2 border rounded-md" placeholder="Enter UPI txn ID"></div>
-            <div><label class="block text-sm font-medium">Date</label><input id="donationDate" type="date" class="mt-1 block w-full p-2 border rounded-md"></div>
+            <div><label class="block text-sm font-medium" data-key="donorNameLabel">Donor Name</label><input id="donorName" required placeholder-key="donorNamePlaceholder" class="mt-1 block w-full p-2 border rounded-md"></div>
+            <div><label class="block text-sm font-medium" data-key="addressLabel">Address</label><textarea id="address" rows="2" class="mt-1 block w-full p-2 border rounded-md" placeholder-key="addressPlaceholder"></textarea></div>
+            <div><label class="block text-sm font-medium" data-key="phoneLabel">Phone Number</label><input id="phone" type="tel" class="mt-1 block w-full p-2 border rounded-md" placeholder-key="phonePlaceholder"></div>
+            <div><label class="block text-sm font-medium" data-key="emailLabel">Email ID</label><input id="email" type="email" class="mt-1 block w-full p-2 border rounded-md" placeholder-key="emailPlaceholder"></div>
+            <div><label class="block text-sm font-medium" data-key="amountLabel">Donation Amount (₹)</label><input id="amount" type="number" min="1" required class="mt-1 block w-full p-2 border rounded-md" placeholder-key="amountPlaceholder"></div>
+            <div><label class="block text-sm font-medium" data-key="transactionIdLabel">UPI Transaction ID</label><input id="transactionId" class="mt-1 block w-full p-2 border rounded-md" placeholder-key="transactionIdPlaceholder"></div>
+            <div><label class="block text-sm font-medium" data-key="dateLabel">Date</label><input id="donationDate" type="date" class="mt-1 block w-full p-2 border rounded-md"></div>
             <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg" data-key="submitBtn">Submit Donation</button>
           </form>
         </section>
@@ -58,15 +56,15 @@
         <aside class="space-y-6">
           <div class="glass-card text-center">
             <h3 class="text-xl font-bold mb-2" data-key="paymentTitle">Scan to Pay</h3>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAADp6ekhISHm5ubf398nJyfAwMC6urpKSko5OTnz8/MTEw/U1NRWVlZSUlI/Pz/b29vMzMxwcHCJiYlISEgYGBhubm5gYGDAwMBPT0+cnJx6enqysrKnp6eRkZFbW1tXV1dFRUUZsykYAAAIQElEQVR4nO2d63aqPBSGgwLjgqK4KoruGNH7P+WJvQeokG1Qp/Hq+v3PMUmyfQwhIUny+Ph4PP64v1xP67P6e1O+3I/rU/x1f9v+Y3/b/15/2/6/v1z/p325f1+n/T1/1d7v+j/t2/l1r7/t2z/tT/h98fHxenx8PP54v1xP67P6e1O+3I/rU/x1f9v+Y3/b/15/2/6/v1z/p325f1+n/T1/1d7v+j/t2/l1r7/t2z/tT/h9+ePj9fzweDweD88v61N/2h/2J3zaH/an/Gl/2p/wp/1pfxrW3/Wn/Wn/Wm//tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U" alt="QR" class="mx-auto rounded-lg shadow-lg w-48">
-            <p class="mt-3 text-sm">After payment, enter the UPI transaction id in the form.</p>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAADp6ekhISHm5ubf398nJyfAwMC6urpKSko5OTnz8/MTEw/U1NRWVlZSUlI/Pz/b29vMzMxwcHCJiYlISEgYGBhubm5gYGDAwMBPT0+cnJx6enqysrKnp6eRkZFbW1tXV1dFRUUZsykYAAAIQElEQVR4nO2d63aqPBSGgwLjgqK4KoruGNH7P+WJvQeokG1Qp/Hq+v3PMUmyfQwhIUny+Ph4PP64v1xP67P6e1O+3I/rU/x1f9v+Y3/b/15/2/6/v1z/p325f1+n/T1/1d7v+j/t2/l1r7/t2z/tT/h98fHxenx8PP54v1xP67P6e1O+3I/rU/x1f9v+Y3/b/15/2/6/v1z/p325f1+n/T1/1d7v+j/t2/l1r7/t2z/tT/h9+ePj9fzweDweD88v61N/2h/2J3zaH/an/Gl/2p/wp/1pfxrW3/Wn/Wn/Wm//tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/7U/70/60P+1P+9P+tD" alt="QR" class="mx-auto rounded-lg shadow-lg w-48">
+            <p class="mt-3 text-sm" data-key="paymentInstructions">After payment, enter the UPI transaction id in the form.</p>
           </div>
 
           <div class="glass-card">
             <h3 class="text-xl font-bold mb-2" data-key="exploreHeader">Explore More</h3>
             <div class="flex flex-col sm:flex-row gap-3">
-              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼 Temple Photos</button>
-              <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">✨ Special Days</button>
+              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg" data-key="photosTab">🖼 Temple Photos</button>
+              <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg" data-key="eventsTab">✨ Special Days</button>
             </div>
           </div>
         </aside>
@@ -77,8 +75,8 @@
     <div id="photos-page" class="hidden">
       <div class="glass-card mb-6">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">🖼 Temple Photos</h2>
-          <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
+          <h2 class="text-2xl font-bold" data-key="photosTabTitle">🖼 Temple Photos</h2>
+          <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md" data-key="backToHomeBtn">Back to Home</button>
         </div>
         <div id="main-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
       </div>
@@ -88,8 +86,8 @@
     <div id="events-page" class="hidden">
       <div class="glass-card mb-6">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">✨ Special Days</h2>
-          <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
+          <h2 class="text-2xl font-bold" data-key="eventsTabTitle">✨ Special Days</h2>
+          <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md" data-key="backToHomeBtn">Back to Home</button>
         </div>
         <div id="main-events" class="space-y-4"></div>
       </div>
@@ -99,36 +97,36 @@
     <div id="admin-view" class="hidden no-print">
       <div class="glass-card">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">Admin Dashboard</h2>
+          <h2 class="text-2xl font-bold" data-key="adminDashboardTitle">Admin Dashboard</h2>
           <div class="flex gap-2 items-center">
-            <button id="logout-btn" class="bg-red-500 text-white px-3 py-2 rounded-md">Logout</button>
+            <button id="logout-btn" class="bg-red-500 text-white px-3 py-2 rounded-md" data-key="logoutBtn">Logout</button>
           </div>
         </div>
 
         <div class="border-b mb-4">
           <nav class="flex gap-4">
-            <button id="donors-tab-btn" class="px-3 py-2 bg-orange-100 rounded-md text-orange-700">Donors</button>
-            <button id="photos-tab-btn" class="px-3 py-2 rounded-md">Upload Photos</button>
-            <button id="events-tab-btn" class="px-3 py-2 rounded-md">Manage Events</button>
+            <button id="donors-tab-btn" class="px-3 py-2 bg-orange-100 rounded-md text-orange-700" data-key="donorsTab">Donors</button>
+            <button id="photos-tab-btn" class="px-3 py-2 rounded-md" data-key="uploadPhotosTab">Upload Photos</button>
+            <button id="events-tab-btn" class="px-3 py-2 rounded-md" data-key="manageEventsTab">Manage Events</button>
           </nav>
         </div>
 
         <div id="donors-content">
           <div class="flex justify-between items-center mb-3">
-            <h3 class="font-semibold">Donors List</h3>
+            <h3 class="font-semibold" data-key="donorsListTitle">Donors List</h3>
             <div class="flex gap-2">
-              <button id="print-btn" class="bg-blue-500 text-white px-3 py-2 rounded-md">Print</button>
-              <button id="export-btn" class="bg-green-500 text-white px-3 py-2 rounded-md">Export CSV</button>
+              <button id="print-btn" class="bg-blue-500 text-white px-3 py-2 rounded-md" data-key="printBtn">Print</button>
+              <button id="export-btn" class="bg-green-500 text-white px-3 py-2 rounded-md" data-key="exportBtn">Export CSV</button>
             </div>
           </div>
           <div id="donors-print-area" class="overflow-x-auto bg-white rounded-lg shadow p-2">
             <table class="min-w-full text-left">
               <thead class="bg-gray-100">
                 <tr>
-                  <th class="p-2">Name</th>
-                  <th class="p-2">Contact</th>
-                  <th class="p-2">Amount</th>
-                  <th class="p-2">Txn ID</th>
+                  <th class="p-2" data-key="donorHeaderName">Name</th>
+                  <th class="p-2" data-key="donorHeaderDetails">Contact</th>
+                  <th class="p-2" data-key="donorHeaderAmount">Amount</th>
+                  <th class="p-2" data-key="donorHeaderTransaction">Txn ID</th>
                   <th class="p-2">Actions</th>
                 </tr>
               </thead>
@@ -138,22 +136,23 @@
         </div>
 
         <div id="photos-content" class="hidden">
-          <h3 class="font-semibold mb-2">Upload Photos</h3>
+          <h3 class="font-semibold mb-2" data-key="photoGalleryTitle">Upload Photos</h3>
           <form id="photo-upload-form" class="flex gap-2 mb-4">
             <input id="photoFile" type="file" accept="image/*" class="p-2 border rounded-md" />
-            <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md">Upload</button>
+            <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md" data-key="uploadBtn">Upload</button>
           </form>
-          <p class="text-sm text-gray-600">Uploaded photos will show on the main gallery.</p>
+          <p class="text-sm text-gray-600" data-key="photoManageInfo">Uploaded photos will show on the main gallery.</p>
         </div>
 
         <div id="events-content" class="hidden">
-          <h3 class="font-semibold mb-2">Manage Events</h3>
+          <h3 class="font-semibold mb-2" data-key="specialDaysTitle">Manage Events</h3>
           <form id="event-form" class="space-y-2 mb-4">
             <input id="eventDate" type="date" class="p-2 border rounded-md w-full" required />
-            <textarea id="eventDescription" rows="3" class="p-2 border rounded-md w-full" placeholder="E.g., Vaikunta Ekadasi special"></textarea>
-            <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md w-full">Add Event</button>
+            <textarea id="eventDescription" rows="3" class="p-2 border rounded-md w-full" placeholder-key="eventDescPlaceholder"></textarea>
+            <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md w-full" data-key="addEventBtn">Add Event</button>
           </form>
-          <p class="text-sm text-gray-600">Events are visible to all users.</p>
+          <div id="admin-events-list" class="space-y-2"></div>
+          <p class="text-sm text-gray-600" data-key="eventManageInfo">Events are visible to all users.</p>
         </div>
       </div>
     </div>
@@ -173,13 +172,13 @@
 
 <div id="password-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 max-w-sm">
-    <h3 class="text-lg font-bold mb-2">Admin Login</h3>
+    <h3 class="text-lg font-bold mb-2" data-key="passwordModalTitle">Admin Login</h3>
     <form id="password-form" class="space-y-3">
-      <label class="block">Enter password:</label>
+      <label class="block" data-key="passwordPrompt">Enter password:</label>
       <input id="admin-password" type="password" class="w-full p-2 border rounded-md" />
       <div class="flex justify-end gap-2">
-        <button type="button" id="password-cancel-btn" class="px-4 py-2 bg-gray-300 rounded-md">Cancel</button>
-        <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-md">Login</button>
+        <button type="button" id="password-cancel-btn" class="px-4 py-2 bg-gray-300 rounded-md" data-key="cancelBtn">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-md" data-key="loginBtn">Login</button>
       </div>
     </form>
   </div>
@@ -188,16 +187,14 @@
 <!-- Firebase + App Logic -->
 <script type="module">
   // ------------------------
-  // 1) IMPORT FIREBASE (modular SDK)
+  // IMPORTS
   // ------------------------
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getDatabase, ref, push, onValue, remove, set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+  import { getDatabase, ref, push, onValue, remove, get } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
   import { getStorage, ref as sref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
 
   // ------------------------
-  // 2) PASTE YOUR FIREBASE CONFIG HERE
-  // Replace every "PASTE_..." value with the values from Firebase console.
-  // Make sure databaseURL points to your Realtime Database (the URL shown in console).
+  // FIREBASE CONFIG - REPLACE THESE VALUES
   // ------------------------
   const firebaseConfig = {
   apiKey: "AIzaSyC7AcMsWETrrEwQTqVYL_QqFMzepMog",
@@ -210,18 +207,160 @@
 };
 
   // ------------------------
-  // 3) INIT FIREBASE SERVICES
+  // INIT
   // ------------------------
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
   const storage = getStorage(app);
 
   // ------------------------
-  // 4) UI ELEMENTS
+  // TRANSLATIONS
   // ------------------------
-  const translations = { en: {}, ta: {} }; // not used heavily here but kept for data-key mapping usage earlier
+  const translations = {
+    en: {
+      headerTitle: "Arulmigu Narayana Swamy Temple Donation Portal",
+      englishBtn: "English",
+      tamilBtn: "தமிழ்",
+      adminLoginLink: "Admin Login",
+      formTitle: "Make a Donation",
+      donorNameLabel: "Donor Name",
+      donorNamePlaceholder: "Enter full name",
+      addressLabel: "Address",
+      addressPlaceholder: "Address (optional)",
+      phoneLabel: "Phone Number",
+      phonePlaceholder: "Mobile number",
+      emailLabel: "Email ID",
+      emailPlaceholder: "Email (optional)",
+      amountLabel: "Donation Amount (₹)",
+      amountPlaceholder: "Enter amount",
+      transactionIdLabel: "UPI Transaction ID",
+      transactionIdPlaceholder: "Enter transaction ID from UPI",
+      dateLabel: "Date",
+      submitBtn: "Submit Donation",
+      paymentTitle: "Scan to Pay",
+      paymentInstructions: "After payment, enter the UPI transaction id in the form.",
+      exploreHeader: "Explore More",
+      photosTab: "🖼 Temple Photos",
+      eventsTab: "✨ Special Days",
+      photosTabTitle: "🖼 Temple Photos",
+      eventsTabTitle: "✨ Special Days",
+      backToHomeBtn: "Back to Home",
+      adminDashboardTitle: "Admin Dashboard",
+      logoutBtn: "Logout",
+      donorsTab: "Donors",
+      uploadPhotosTab: "Upload Photos",
+      manageEventsTab: "Manage Events",
+      donorsListTitle: "Donors List",
+      printBtn: "Print",
+      exportBtn: "Export CSV",
+      donorHeaderName: "Name",
+      donorHeaderDetails: "Contact",
+      donorHeaderAmount: "Amount",
+      donorHeaderTransaction: "Txn ID",
+      photoGalleryTitle: "Upload Photos",
+      uploadBtn: "Upload",
+      photoManageInfo: "Uploaded photos will show on the main gallery.",
+      specialDaysTitle: "Manage Events",
+      eventDescPlaceholder: "E.g., Vaikunta Ekadasi special",
+      addEventBtn: "Add Event",
+      eventManageInfo: "Events are visible to all users.",
+      noEvents: "No events scheduled yet.",
+      passwordModalTitle: "Admin Login",
+      passwordPrompt: "Enter password:",
+      cancelBtn: "Cancel",
+      loginBtn: "Login",
+      donationSaved: "Donation saved to cloud.",
+      eventAdded: "Event added to cloud.",
+      eventDeleted: "Event deleted.",
+      photoUploaded: "Photo uploaded to cloud.",
+      wrongPassword: "Wrong password. Access denied.",
+      noDonationsExport: "No donations to export."
+    },
+    ta: {
+      headerTitle: "அருள்மிகு நாராயண சுவாமி திருக்கோவில் நன்கொடை தளம்",
+      englishBtn: "English",
+      tamilBtn: "தமிழ்",
+      adminLoginLink: "நிர்வாகி உள்நுழைவு",
+      formTitle: "நன்கொடை அளியுங்கள்",
+      donorNameLabel: "நன்கொடையாளர் பெயர்",
+      donorNamePlaceholder: "முழுப் பெயரை உள்ளிடவும்",
+      addressLabel: "முகவரி",
+      addressPlaceholder: "முகவரி (விரும்பினால்)",
+      phoneLabel: "தொலைபேசி எண்",
+      phonePlaceholder: "மொபைல் எண்",
+      emailLabel: "மின்னஞ்சல் முகவரி",
+      emailPlaceholder: "மின்னஞ்சல் (விரும்பினால்)",
+      amountLabel: "நன்கொடைத் தொகை (₹)",
+      amountPlaceholder: "தொகையை உள்ளிடவும்",
+      transactionIdLabel: "UPI பரிவர்த்தனை ஐடி",
+      transactionIdPlaceholder: "UPI பரிவர்த்தனை ஐடியை உள்ளிடவும்",
+      dateLabel: "தேதி",
+      submitBtn: "நன்கொடையை சமர்ப்பிக்கவும்",
+      paymentTitle: "பணம் செலுத்த ஸ்கேன் செய்யவும்",
+      paymentInstructions: "பணம் செலுத்திய பிறகு, UPI பரிவர்த்தனை ஐடியை படிவத்தில் உள்ளிட்டு உங்கள் விவரங்களைச் சமர்ப்பிக்கவும்.",
+      exploreHeader: "மேலும் பார்க்க",
+      photosTab: "🖼 கோவில் புகைப்படங்கள்",
+      eventsTab: "✨ சிறப்பு நாட்கள்",
+      photosTabTitle: "🖼 கோவில் புகைப்படங்கள்",
+      eventsTabTitle: "✨ சிறப்பு நாட்கள்",
+      backToHomeBtn: "முகப்புக்குச் செல்லவும்",
+      adminDashboardTitle: "நிர்வாகி டாஷ்போர்டு",
+      logoutBtn: "வெளியேறு",
+      donorsTab: "நன்கொடையாளர்கள்",
+      uploadPhotosTab: "புகைப்படங்களை பதிவேற்றவும்",
+      manageEventsTab: "நிகழ்வுகளை நிர்வங்கிக்கவும்",
+      donorsListTitle: "நன்கொடையாளர் பட்டியல்",
+      printBtn: "அச்சிடுக",
+      exportBtn: "Excel-க்கு ஏற்றுமதி செய்",
+      donorHeaderName: "பெயர்",
+      donorHeaderDetails: "தொடர்பு",
+      donorHeaderAmount: "தொகை",
+      donorHeaderTransaction: "பரிவர்த்தனை ஐடி",
+      photoGalleryTitle: "புகைப்படங்களை பதிவேற்று",
+      uploadBtn: "பதிவேற்று",
+      photoManageInfo: "பதிவேற்றிய புகைப்படங்கள் முகப்பில் தோன்றும்.",
+      specialDaysTitle: "நிகழ்வுகளை நிர்வங்கிக்கவும்",
+      eventDescPlaceholder: "எ.கா., வைகுண்ட ஏகாதசி சிறப்பு பூஜை",
+      addEventBtn: "நிகழ்வைச் சேர்",
+      eventManageInfo: "சேர்க்கப்பட்ட நிகழ்வுகள் அனைத்துக்குமான பயனர்களுக்கும் தோன்றும்.",
+      noEvents: "இன்னும் நிகழ்வுகள் திட்டமிடப்படவில்லை.",
+      passwordModalTitle: "நிர்வாகி உள்நுழைவு",
+      passwordPrompt: "நிர்வாகி கடவுச்சொல்லை உள்ளிடவும்:",
+      cancelBtn: "ரத்துசெய்",
+      loginBtn: "உள்நுழை",
+      donationSaved: "நன்கொடை மேகம்-மேல் சேமிக்கப்பட்டது.",
+      eventAdded: "நிகழ்வு மேகம்-மேல் சேர்க்கப்பட்டது.",
+      eventDeleted: "நிகழ்வு நீக்கப்பட்டது.",
+      photoUploaded: "புகைப்படம் மேகத்தில் பதிவேற்றப்பட்டது.",
+      wrongPassword: "தவறான கடவுச்சொல். அணுகல் மறுக்கப்பட்டது.",
+      noDonationsExport: "ஏற்றுமதி செய்ய நன்கொடைகள் இல்லை."
+    }
+  };
+
   let currentLanguage = 'en';
 
+  // Helper to set text from translations
+  function switchLanguage(lang) {
+    currentLanguage = lang;
+    document.documentElement.lang = (lang === 'ta') ? 'ta' : 'en';
+    // Update data-key text contents
+    document.querySelectorAll('[data-key]').forEach(el => {
+      const key = el.dataset.key;
+      if (translations[lang][key] !== undefined) el.textContent = translations[lang][key];
+    });
+    // Update placeholders
+    document.querySelectorAll('[placeholder-key]').forEach(el => {
+      const pkey = el.getAttribute('placeholder-key');
+      if (translations[lang][pkey] !== undefined) el.placeholder = translations[lang][pkey];
+    });
+    // Rerender events for language-specific dates
+    renderPublicEventsLatest();
+    renderAdminEventsLatest();
+  }
+
+  // ------------------------
+  // UI elements
+  // ------------------------
   const alertModal = document.getElementById('alert-modal');
   const passwordModal = document.getElementById('password-modal');
   const showAlert = (msg) => {
@@ -229,14 +368,10 @@
     alertModal.classList.remove('hidden'); alertModal.classList.add('flex');
   };
 
-  // Buttons and pages
-  const showPage = (id) => {
-    ['home-page','photos-page','events-page','admin-view'].forEach(p => document.getElementById(p).classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-  };
+  document.getElementById('alert-ok-btn').addEventListener('click', ()=> alertModal.classList.add('hidden'));
 
   // ------------------------
-  // 5) DONATION: submit to Realtime Database
+  // DONATION SUBMIT
   // ------------------------
   document.getElementById('donation-form').addEventListener('submit', e => {
     e.preventDefault();
@@ -249,19 +384,18 @@
       transactionId: document.getElementById('transactionId').value || '',
       date: document.getElementById('donationDate').value || new Date().toISOString().slice(0,10)
     };
-    // push to /donations
     push(ref(db, 'donations'), data)
-      .then(() => showAlert('Donation submitted — saved to cloud.'))
-      .catch(e => showAlert('Error saving donation: ' + e.message));
+      .then(()=> showAlert(translations[currentLanguage].donationSaved))
+      .catch(e => showAlert('Error: ' + e.message));
     e.target.reset();
   });
 
   // ------------------------
-  // 6) LIVE LISTEN: Donors (populate admin table & client list)
+  // DONORS LIVE LIST (admin table)
   // ------------------------
   const donorsTableBody = document.getElementById('donors-table-body');
-  const donorsRef = ref(db, 'donations');
-  onValue(donorsRef, snapshot => {
+  const donationsRef = ref(db,'donations');
+  onValue(donationsRef, snapshot => {
     const data = snapshot.val();
     donorsTableBody.innerHTML = '';
     if (data) {
@@ -273,23 +407,22 @@
           <td class="p-2 border">${escapeHtml(d.phone||'')}<br><small>${escapeHtml(d.email||'')}</small></td>
           <td class="p-2 border">₹${escapeHtml(d.amount||'')}</td>
           <td class="p-2 border">${escapeHtml(d.transactionId||'')}</td>
-          <td class="p-2 border"><button data-key="${key}" class="delete-btn bg-red-500 text-white px-2 py-1 rounded">Delete</button></td>
+          <td class="p-2 border"><button data-key="${key}" class="delete-donation bg-red-500 text-white px-2 py-1 rounded">Delete</button></td>
         `;
         donorsTableBody.appendChild(tr);
       });
-      // wire delete buttons
-      document.querySelectorAll('.delete-btn').forEach(btn => {
+      document.querySelectorAll('.delete-donation').forEach(btn => {
         btn.addEventListener('click', () => {
           if (confirm('Delete this donation?')) remove(ref(db, 'donations/' + btn.dataset.key));
         });
       });
     } else {
-      donorsTableBody.innerHTML = '<tr><td colspan="5" class="p-4 text-gray-500">No donations yet.</td></tr>';
+      donorsTableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-gray-500">${translations[currentLanguage].noDonations || 'No donations yet.'}</td></tr>`;
     }
   });
 
   // ------------------------
-  // 7) PHOTOS: upload to Firebase Storage and save URL to /photos
+  // PHOTOS UPLOAD / GALLERY
   // ------------------------
   document.getElementById('photo-upload-form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -304,7 +437,7 @@
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(url => {
           push(ref(db, 'photos'), { url, name: file.name, uploadedAt: new Date().toISOString() })
-            .then(()=> showAlert('Photo uploaded to cloud.'))
+            .then(()=> showAlert(translations[currentLanguage].photoUploaded))
             .catch(e=> showAlert('Error saving photo meta: ' + e.message));
         });
       }
@@ -312,9 +445,8 @@
     e.target.reset();
   });
 
-  // Render gallery live
   const galleryEl = document.getElementById('main-gallery');
-  onValue(ref(db, 'photos'), snapshot => {
+  onValue(ref(db,'photos'), snapshot => {
     const data = snapshot.val();
     galleryEl.innerHTML = '';
     if (data) {
@@ -331,47 +463,105 @@
   });
 
   // ------------------------
-  // 8) EVENTS: save to /events and render
+  // EVENTS: add, render (public & admin), delete
   // ------------------------
+  // Add event
   document.getElementById('event-form').addEventListener('submit', e => {
     e.preventDefault();
     const data = { date: document.getElementById('eventDate').value, description: document.getElementById('eventDescription').value || '' };
-    push(ref(db, 'events'), data)
-      .then(()=> showAlert('Event added to cloud.'))
-      .catch(e => showAlert('Error adding event: ' + e.message));
+    push(ref(db,'events'), data)
+      .then(()=> showAlert(translations[currentLanguage].eventAdded))
+      .catch(e=> showAlert('Error: ' + e.message));
     e.target.reset();
   });
 
-  const eventsList = document.getElementById('main-events');
-  onValue(ref(db, 'events'), snapshot => {
-    const data = snapshot.val() || {};
-    const arr = Object.values(data).sort((a,b)=> new Date(a.date) - new Date(b.date));
-    eventsList.innerHTML = arr.length ? arr.map(e => `<div class="bg-white/60 p-3 rounded">${escapeHtml(new Date(e.date).toLocaleDateString())}<p>${escapeHtml(e.description)}</p></div>`).join('') : '<p class="text-center text-gray-500">No events scheduled yet.</p>';
+  // Keep latest snapshots for re-render in current language
+  let latestEventsSnapshot = null;
+
+  // Render public events (localized date)
+  function renderPublicEventsLatest() {
+    const list = document.getElementById('main-events');
+    const data = latestEventsSnapshot || {};
+    const arr = Object.keys(data).map(k => ({ key: k, ...data[k] })).sort((a,b)=> new Date(a.date) - new Date(b.date));
+    if (!arr.length) {
+      list.innerHTML = `<p class="text-center text-gray-500">${translations[currentLanguage].noEvents}</p>`;
+      return;
+    }
+    list.innerHTML = arr.map(e => {
+      const dateStr = e.date ? new Date(e.date).toLocaleDateString(currentLanguage === 'ta' ? 'ta-IN' : 'en-US') : '';
+      return `<div class="bg-white/60 p-3 rounded"><p class="font-bold text-orange-700">${escapeHtml(dateStr)}</p><p>${escapeHtml(e.description)}</p></div>`;
+    }).join('');
+  }
+
+  // Render admin events list with delete buttons
+  function renderAdminEventsLatest() {
+    const container = document.getElementById('admin-events-list');
+    const data = latestEventsSnapshot || {};
+    const arr = Object.keys(data).map(k => ({ key: k, ...data[k] })).sort((a,b)=> new Date(a.date) - new Date(b.date));
+    if (!arr.length) {
+      container.innerHTML = `<p class="text-gray-500">${translations[currentLanguage].noEvents}</p>`;
+      return;
+    }
+    container.innerHTML = arr.map(e => {
+      const dateStr = e.date ? new Date(e.date).toLocaleDateString(currentLanguage === 'ta' ? 'ta-IN' : 'en-US') : '';
+      return `<div class="flex items-start justify-between bg-white/70 p-3 rounded">
+                <div>
+                  <p class="font-bold text-orange-700">${escapeHtml(dateStr)}</p>
+                  <p>${escapeHtml(e.description)}</p>
+                </div>
+                <div>
+                  <button data-key="${e.key}" class="delete-event bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                </div>
+              </div>`;
+    }).join('');
+    // wire delete buttons
+    document.querySelectorAll('.delete-event').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (confirm('Delete this event?')) {
+          remove(ref(db,'events/' + btn.dataset.key))
+            .then(()=> showAlert(translations[currentLanguage].eventDeleted))
+            .catch(e=> showAlert('Error deleting: ' + e.message));
+        }
+      });
+    });
+  }
+
+  // Subscribe to events changes
+  const eventsRef = ref(db,'events');
+  onValue(eventsRef, snapshot => {
+    latestEventsSnapshot = snapshot.val() || {};
+    renderPublicEventsLatest();
+    renderAdminEventsLatest();
   });
 
   // ------------------------
-  // 9) ADMIN: simple password modal (client-side). For production use Firebase Auth.
+  // ADMIN LOGIN (simple client-side) - for production: use Firebase Auth
   // ------------------------
-  const adminPassword = 'password123'; // CHANGE THIS before sharing; better: implement Firebase Auth
+  const adminPassword = 'password123'; // change this if needed
   document.getElementById('admin-login-link').addEventListener('click', (ev) => { ev.preventDefault(); passwordModal.classList.remove('hidden'); passwordModal.classList.add('flex'); });
   document.getElementById('password-cancel-btn').addEventListener('click', ()=> passwordModal.classList.add('hidden'));
-  document.getElementById('password-form').addEventListener('submit', (e)=> {
+  document.getElementById('password-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const val = document.getElementById('admin-password').value;
     if (val === adminPassword) {
-      passwordModal.classList.add('hidden'); showPage('admin-view');
-      // set default admin tab
-      showAdminTab('donors');
-    } else showAlert('Wrong password. Access denied.');
+      passwordModal.classList.add('hidden'); showPage('admin-view'); showAdminTab('donors');
+    } else {
+      showAlert(translations[currentLanguage].wrongPassword);
+    }
   });
-  document.getElementById('logout-btn').addEventListener('click', ()=> showPage('home-page'));
 
-  // Admin tab switching
+  // ------------------------
+  // ADMIN UI TAB SWITCH
+  // ------------------------
+  function showPage(id) {
+    ['home-page','photos-page','events-page','admin-view'].forEach(p => document.getElementById(p).classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+  }
   function showAdminTab(name) {
     document.getElementById('donors-content').classList.toggle('hidden', name!=='donors');
     document.getElementById('photos-content').classList.toggle('hidden', name!=='photos');
     document.getElementById('events-content').classList.toggle('hidden', name!=='events');
-    // highlight buttons (simple)
+    // highlight
     ['donors-tab-btn','photos-tab-btn','events-tab-btn'].forEach(id => document.getElementById(id).classList.remove('bg-orange-100','text-orange-700'));
     if (name==='donors') document.getElementById('donors-tab-btn').classList.add('bg-orange-100','text-orange-700');
     if (name==='photos') document.getElementById('photos-tab-btn').classList.add('bg-orange-100','text-orange-700');
@@ -381,7 +571,7 @@
   document.getElementById('photos-tab-btn').addEventListener('click', ()=> showAdminTab('photos'));
   document.getElementById('events-tab-btn').addEventListener('click', ()=> showAdminTab('events'));
 
-  // Navigation buttons
+  // Navigation
   document.getElementById('go-to-photos-btn').addEventListener('click', ()=> showPage('photos-page'));
   document.getElementById('go-to-events-btn').addEventListener('click', ()=> showPage('events-page'));
   document.querySelectorAll('.back-to-home-btn').forEach(b=> b.addEventListener('click', ()=> showPage('home-page')));
@@ -389,15 +579,12 @@
   // Print & Export
   document.getElementById('print-btn').addEventListener('click', ()=> window.print());
   document.getElementById('export-btn').addEventListener('click', exportDonationsCSV);
-  document.getElementById('alert-ok-btn').addEventListener('click', ()=> alertModal.classList.add('hidden'));
 
-  // Export CSV: read snapshot once and download
-  import { get } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
   async function exportDonationsCSV() {
     try {
       const snap = await get(ref(db,'donations'));
       const data = snap.val();
-      if (!data) { showAlert('No donations to export.'); return; }
+      if (!data) { showAlert(translations[currentLanguage].noDonationsExport); return; }
       const rows = [['Donor Name','Address','Phone','Email','Amount','TxnID','Date']];
       Object.values(data).forEach(d => rows.push([d.donorName||'', d.address||'', d.phone||'', d.email||'', d.amount||'', d.transactionId||'', d.date||'']));
       const csv = rows.map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\r\n');
@@ -408,13 +595,20 @@
     } catch (e) { showAlert('Export failed: ' + e.message); }
   }
 
-  // helper escape
+  // ------------------------
+  // HELPERS
+  // ------------------------
   function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]); }); }
 
   // Footer year
   document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-  // initial page
+  // Wire language buttons
+  document.getElementById('en-lang-btn').addEventListener('click', ()=> switchLanguage('en'));
+  document.getElementById('ta-lang-btn').addEventListener('click', ()=> switchLanguage('ta'));
+
+  // Initial state
+  switchLanguage('en');
   showPage('home-page');
 </script>
 
