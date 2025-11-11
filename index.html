@@ -353,61 +353,17 @@
     });
     e.target.reset();
   });
-  // render gallery — robust version
-onValue(ref(db,'photos'), snapshot => {
-  try {
+// render gallery
+  onValue(ref(db,'photos'), snapshot => {
     const data = snapshot.val() || {};
-    console.log('photos snapshot:', data); // debug: check structure in console
-
     const gallery = document.getElementById('main-gallery');
-    if (!gallery) {
-      console.warn('No element with id "main-gallery" found in DOM.');
-      return;
-    }
-
-    gallery.innerHTML = ''; // clear
-
-    const entries = Object.entries(data || {});
-    if (entries.length === 0) {
-      gallery.innerHTML = '<p class="text-center col-span-full text-gray-500">No photos uploaded yet.</p>';
-      return;
-    }
-
-    // optional: sort by uploadedAt (newest first) if uploadedAt present
-    entries.sort((a,b) => {
-      const pa = a[1].uploadedAt || '';
-      const pb = b[1].uploadedAt || '';
-      return (pb.localeCompare(pa)); // newest first
-    });
-
-    entries.forEach(([key, p]) => {
-      const url = p.url || p.downloadURL || '';
-      if (!url) {
-        console.warn('photo entry missing url:', key, p);
-        return;
-      }
-      const link = document.createElement('a');
-      link.href = url;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.className = 'block';
-
+    gallery.innerHTML = '';
+    Object.values(data).forEach(p => {
       const img = document.createElement('img');
-      img.src = url;
-      img.alt = p.name || 'photo';
+      img.src = p.url; img.alt = p.name || 'photo';
       img.className = 'w-full h-48 object-cover rounded-lg shadow';
-      img.loading = 'lazy';
-
-      // append
-      link.appendChild(img);
-      gallery.appendChild(link);
+      gallery.appendChild(img);
     });
-
-  } catch (err) {
-    console.error('Error rendering gallery:', err);
-    document.getElementById('main-gallery').innerHTML = '<p class="text-center text-red-500">Could not load photos.</p>';
-  }
-});
     if (!Object.keys(data).length) gallery.innerHTML = '<p class="text-center col-span-full text-gray-500">No photos uploaded yet.</p>';
   });
 
@@ -499,6 +455,7 @@ onValue(ref(db,'photos'), snapshot => {
 </script>
 </body>
 </html>
+
 
 
 
