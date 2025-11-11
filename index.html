@@ -251,3 +251,123 @@
     </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donation Portal - Firebase Version</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    // ✅ Step 1: Import Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+    // ✅ Step 2: Paste your Firebase config here 👇
+    const firebaseConfig = {
+  apiKey: "AIzaSyC7AcMsWETrrEwQTqVYL_QqFMzepMog",
+  authDomain: "donation-portal-f4b2b.firebaseapp.com",
+  databaseURL: "https://donation-portal-f4b2b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "donation-portal-f4b2b",
+  storageBucket: "donation-portal-f4b2b.appspot.com",
+  messagingSenderId: "1105454748967",
+  appId: "1:1105454748967:web:aa9de7408b64d5d8cd28de"
+};
+
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Wait until DOM loads
+    window.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById("donationForm");
+      const donorList = document.getElementById("donorList");
+
+      // Add data to Firebase
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name").value;
+        const amount = document.getElementById("amount").value;
+        const date = document.getElementById("date").value;
+        if (name && amount && date) {
+          push(ref(db, "donations"), { name, amount, date });
+          form.reset();
+        }
+      });
+
+      // Fetch data live
+      const donationsRef = ref(db, "donations");
+      onValue(donationsRef, (snapshot) => {
+        donorList.innerHTML = "";
+        const data = snapshot.val();
+        if (data) {
+          let i = 1;
+          Object.keys(data).forEach((key) => {
+            const donor = data[key];
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td class="border p-2">${i++}</td>
+              <td class="border p-2">${donor.name}</td>
+              <td class="border p-2">${donor.amount}</td>
+              <td class="border p-2">${donor.date}</td>
+              <td class="border p-2">
+                <button onclick="deleteDonor('${key}')" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded">Delete</button>
+              </td>`;
+            donorList.appendChild(row);
+          });
+        } else {
+          donorList.innerHTML = "<tr><td colspan='5' class='p-4 text-gray-500'>No donations yet</td></tr>";
+        }
+      });
+
+      // Delete donor
+      window.deleteDonor = (key) => {
+        remove(ref(db, "donations/" + key));
+      };
+    });
+  </script>
+</head>
+
+<body class="p-6 bg-gray-100">
+  <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-6">
+    <h1 class="text-3xl font-bold text-center mb-4">💖 Cloud Donation Portal</h1>
+
+    <form id="donationForm" class="space-y-4">
+      <div>
+        <label class="block font-semibold">Donor Name:</label>
+        <input type="text" id="name" required class="w-full border rounded-lg p-2">
+      </div>
+      <div>
+        <label class="block font-semibold">Amount (₹):</label>
+        <input type="number" id="amount" required class="w-full border rounded-lg p-2">
+      </div>
+      <div>
+        <label class="block font-semibold">Date:</label>
+        <input type="date" id="date" required class="w-full border rounded-lg p-2">
+      </div>
+      <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-lg w-full">
+        💰 Add Donation
+      </button>
+    </form>
+
+    <hr class="my-6">
+    <h2 class="text-2xl font-semibold mb-2">🧾 Donor List (Cloud Stored)</h2>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full border text-center">
+        <thead class="bg-indigo-100">
+          <tr>
+            <th class="border p-2">#</th>
+            <th class="border p-2">Name</th>
+            <th class="border p-2">Amount (₹)</th>
+            <th class="border p-2">Date</th>
+            <th class="border p-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="donorList"></tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
