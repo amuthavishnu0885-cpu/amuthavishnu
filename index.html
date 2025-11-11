@@ -1,271 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arulmigu Narayana Swamy Temple - Donation Portal</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;500;700&display=swap" rel="stylesheet">
-        
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        [lang="ta"] body, [lang="ta"] button, [lang="ta"] input, [lang="ta"] h1, [lang="ta"] h2, [lang="ta"] h3, [lang="ta"] p, [lang="ta"] label, [lang="ta"] a, [lang="ta"] th, [lang="ta"] td, [lang="ta"] span { font-family: 'Noto Sans Tamil', sans-serif; }
-        .background-container { background-image: url('https://placehold.co/1920x1080/FFF8E1/A67B5B?text=Arulmigu+Narayana+Swamy+Temple'); background-size: cover; background-position: center; background-attachment: fixed; }
-        .header-image { background-image: url('https://placehold.co/1200x300/E67E22/FFFFFF?text=.'); background-size: cover; background-position: center; height: 250px; }
-        .footer-image { background-image: url('https://placehold.co/1200x150/34495E/FFFFFF?text=Arulmigu+Narayana+Swamy+Temple'); background-size: cover; background-position: center; height: 100px; }
-        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        @media print {
-            body * { visibility: hidden; }
-            #donors-print-area, #donors-print-area * { visibility: visible; }
-            #donors-print-area { position: absolute; left: 0; top: 0; width: 100%; }
-            table { width: 100%; border-collapse: collapse; }
-            th, td { border: 1px solid #ddd; padding: 8px; }
-            th { background-color: #f2f2f2; }
-        }
-    </style>
-</head>
-<body class="background-container bg-orange-50 text-gray-800">
-
-    <div id="app" class="min-h-screen flex flex-col">
-        <header class="header-image shadow-lg relative no-print">
-            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4">
-                <h1 id="header-title" class="text-3xl md:text-5xl font-bold text-white text-center tracking-wider" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.7);" data-key="headerTitle">
-                </h1>
-            </div>
-        </header>
-
-        <nav class="sticky top-0 z-40 bg-white/30 backdrop-blur-md shadow-md no-print">
-            <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <button id="en-lang-btn" class="px-4 py-2 bg-orange-500 text-white rounded-md">English</button>
-                    <button id="ta-lang-btn" class="px-4 py-2 bg-green-500 text-white rounded-md">தமிழ்</button>
-                </div>
-                <div>
-                    <a href="#" id="admin-login-link" class="text-sm font-medium text-orange-700" data-key="adminLoginLink">Admin Login</a>
-                </div>
-            </div>
-        </nav>
-
-        <main class="flex-grow container mx-auto p-4 md:p-8">
-            <div id="home-page">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                    <div class="glass-card p-6 md:p-8">
-                        <h2 class="text-2xl font-bold mb-6 text-gray-900" data-key="formTitle">Make a Donation</h2>
-                        <form id="donation-form" class="space-y-4">
-                            <div><label for="donorName" class="block text-sm font-medium" data-key="donorNameLabel">Donor Name</label><input type="text" id="donorName" name="donorName" required class="mt-1 block w-full p-2 bg-white border rounded-md"></div>
-                            <div><label for="address" class="block text-sm font-medium" data-key="addressLabel">Address</label><textarea id="address" name="address" rows="3" required class="mt-1 block w-full p-2 bg-white border rounded-md"></textarea></div>
-                            <div><label for="phone" class="block text-sm font-medium" data-key="phoneLabel">Phone Number</label><input type="tel" id="phone" name="phone" required class="mt-1 block w-full p-2 bg-white border rounded-md"></div>
-                            <div><label for="email" class="block text-sm font-medium" data-key="emailLabel">Email ID</label><input type="email" id="email" name="email" required class="mt-1 block w-full p-2 bg-white border rounded-md"></div>
-                            <div><label for="amount" class="block text-sm font-medium" data-key="amountLabel">Donation Amount (₹)</label><input type="number" id="amount" name="amount" min="1" required class="mt-1 block w-full p-2 bg-white border rounded-md"></div>
-                            <div><label for="transactionId" class="block text-sm font-medium" data-key="transactionIdLabel">UPI Transaction ID</label><input type="text" id="transactionId" name="transactionId" required class="mt-1 block w-full p-2 bg-white border rounded-md" placeholder-key="transactionIdPlaceholder"></div>
-                            <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg" data-key="submitBtn">Submit Donation</button>
-                        </form>
-                    </div>
-                    <div class="space-y-8">
-                        <div class="glass-card p-6 md:p-8 flex flex-col items-center justify-center">
-                            <h2 class="text-2xl font-bold mb-4 text-center" data-key="paymentTitle">Scan to Pay</h2>
-                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAADp6ekhISHm5ubf398nJyfAwMC6urpKSko5OTnz8/MTEw/U1NRWVlZSUlI/Pz/b29vMzMxwcHCJiYlISEgYGBhubm5gYGDAwMBPT0+cnJx6enqysrKnp6eRkZFbW1tXV1dFRUUZsykYAAAIQElEQVR4nO2d63aqPBSGgwLjgqK4KoruGNH7P+WJvQeokG1Qp/Hq+v3PMUmyfQwhIUny+Ph4PP64v1xP67P6e1O+3I/rU/x1f9v+Y3/b/15/2/6/v1z/p325f1+n/T1/1d7v+j/t2/l1r7/t2z/tT/h98fHxenx8PP54v1xP67P6e1O+3I/rU/x1f9v+Y3/b/15/2/6/v1z/p325f1+n/T1/1d7v+j/t2/l1r7/t2z/tT/h9+ePj9fzweDweD88v61N/2h/2J3zaH/an/Gl/2p/wp/1pfxrW3/Wn/Wn/Wm//tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/AAAAABJRU5ErkJggg==" alt="UPI QR Code" class="rounded-lg shadow-lg">
-                            <p class="mt-4 text-center text-gray-700" data-key="paymentInstructions">After payment, please enter the UPI Transaction ID in the form and submit your details.</p>
-                        </div>
-                        <div class="glass-card p-6 md:p-8">
-                             <h2 class="text-2xl font-bold mb-4 text-center" data-key="exploreHeader">Explore More</h2>
-                             <div class="flex flex-col sm:flex-row gap-4 mt-4">
-                                <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white font-bold py-3 px-4 rounded-lg" data-key="photosTab">🖼️Temple Photos📸</button>
-                                <button id="go-to-events-btn" class="w-full bg-orange-500 text-white font-bold py-3 px-4 rounded-lg" data-key="eventsTab">✨Special Days✨</button>
-                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="photos-page" class="hidden"><div class="glass-card p-6 md:p-8"><div class="flex justify-between items-center mb-6"><h2 class="text-3xl font-bold" data-key="photosTab">🖼️Temple Photos📸</h2><button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md" data-key="backToHomeBtn">Back to Home</button></div><div id="full-photo-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div></div></div>
-            <div id="events-page" class="hidden"><div class="glass-card p-6 md:p-8"><div class="flex justify-between items-center mb-6"><h2 class="text-3xl font-bold" data-key="eventsTab">✨Special Days✨</h2><button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md" data-key="backToHomeBtn">Back to Home</button></div><div id="full-events-list" class="space-y-4"></div></div></div>
-            <div id="admin-view" class="hidden no-print"><div class="glass-card p-6 md:p-8"><div class="flex justify-between items-start mb-6"><h2 class="text-3xl font-bold" data-key="adminDashboardTitle">Admin Dashboard</h2><button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded-md" data-key="logoutBtn">Logout</button></div><div class="border-b"><nav class="-mb-px flex space-x-8"><button id="donors-tab-btn" class="admin-tab py-4 px-1 border-b-2 font-medium text-sm border-orange-500 text-orange-600" data-key="donorsTab">Donors</button><button id="photos-tab-btn" class="admin-tab py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500" data-key="uploadPhotosTab">Upload Photos</button><button id="events-tab-btn" class="admin-tab py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500" data-key="manageEventsTab">Manage Events</button></nav></div><div class="mt-6"><div id="donors-content" class="admin-tab-content"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-semibold" data-key="donorsListTitle">Donors List</h3><div class="space-x-2"><button id="print-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md" data-key="printBtn">Print</button><button id="export-btn" class="bg-green-500 text-white px-4 py-2 rounded-md" data-key="exportBtn">Export to Excel</button></div></div><div id="donors-print-area" class="overflow-x-auto bg-white rounded-lg shadow"><table class="min-w-full"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium uppercase" data-key="donorHeaderName">Name</th><th class="px-6 py-3 text-left text-xs font-medium uppercase" data-key="donorHeaderDetails">Contact</th><th class="px-6 py-3 text-left text-xs font-medium uppercase" data-key="donorHeaderAmount">Amount</th><th class="px-6 py-3 text-left text-xs font-medium uppercase" data-key="donorHeaderTransaction">Txn ID</th></tr></thead><tbody id="donors-table-body" class="divide-y"></tbody></table></div></div><div id="photos-content" class="admin-tab-content hidden"><h3 class="text-xl font-semibold mb-4" data-key="photoGalleryTitle">Upload Photos</h3><form id="photo-upload-form" class="mb-6 p-4 bg-gray-50 rounded-lg border flex gap-4"><div class="flex-grow"><input type="file" id="photoFile" accept="image/*" class="w-full text-sm"/></div><button type="submit" class="bg-orange-500 text-white font-bold py-2 px-6 rounded-lg" data-key="uploadBtn">Upload</button></form><p class="text-sm text-gray-600" data-key="photoManageInfo">Uploaded photos will be visible to all users.</p></div><div id="events-content" class="admin-tab-content hidden"><h3 class="text-xl font-semibold mb-4" data-key="specialDaysTitle">Manage Events</h3><form id="event-form" class="mb-6 p-4 bg-gray-50 rounded-lg border space-y-3"><h4 class="font-medium" data-key="addEventTitle">Add New Event</h4><div><input type="date" id="eventDate" required class="w-full p-2 border rounded-md"></div><div><textarea id="eventDescription" rows="3" required class="w-full p-2 border rounded-md" placeholder-key="eventDescPlaceholder"></textarea></div><button type="submit" class="w-full bg-orange-500 text-white font-bold py-2 px-6 rounded-lg" data-key="addEventBtn">Add Event</button></form><p class="text-sm text-gray-600" data-key="eventManageInfo">Added events will be visible to all users.</p></div></div></div></div>
-        </main>
-
-        <footer class="footer-image mt-auto no-print relative"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4"><p class="text-white text-center text-sm">&copy; <span data-key="footerText"></span></p></div></footer>
-        <div id="alert-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center"><div class="bg-white rounded-lg p-6 w-full max-w-sm text-center"><p id="alert-message" class="text-lg mb-4"></p><button id="alert-ok-btn" class="bg-orange-500 text-white px-6 py-2 rounded-md" data-key="alertOkBtn">OK</button></div></div>
-        <div id="password-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center"><div class="bg-white rounded-lg p-6 w-full max-w-sm"><h3 class="text-lg font-bold mb-4" data-key="passwordModalTitle">Admin Login</h3><form id="password-form"><label for="admin-password" class="block text-sm" data-key="passwordPrompt">Enter password:</label><input type="password" id="admin-password" class="mt-1 block w-full p-2 border rounded-md"><div class="mt-4 flex justify-end space-x-2"><button type="button" id="password-cancel-btn" class="px-4 py-2 bg-gray-300 rounded-md" data-key="cancelBtn">Cancel</button><button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-md" data-key="loginBtn">Login</button></div></form></div></div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- DATA STORE (Temporary) ---
-            let donations = [];
-            let photos = [];
-            let events = [];
-
-            // --- TRANSLATIONS ---
-            const translations = {
-                en: { headerTitle: "Arulmigu Narayana Swamy Temple Donation Portal", exploreHeader: "Explore More", backToHomeBtn: "Back to Home", adminLoginLink: "Admin Login", formTitle: "Make a Donation", donorNameLabel: "Donor Name", addressLabel: "Address", phoneLabel: "Phone Number", emailLabel: "Email ID", amountLabel: "Donation Amount (₹)", transactionIdLabel: "UPI Transaction ID", transactionIdPlaceholder: "Enter ID from your UPI app", submitBtn: "Submit Donation", paymentTitle: "Scan to Pay", paymentInstructions: "After payment, please enter the UPI Transaction ID in the form and submit your details.", adminDashboardTitle: "Admin Dashboard", logoutBtn: "Logout", donorsTab: "Donors", photosTab: "Temple Photos", uploadPhotosTab: "Upload Photos", eventsTab: "Special Days", manageEventsTab: "Manage Events", donorsListTitle: "Donors List", donorHeaderName: "Name", donorHeaderDetails: "Contact Details", donorHeaderAmount: "Amount", donorHeaderTransaction: "Transaction ID", noDonations: "No donations yet.", photoGalleryTitle: "Upload Temple Photos", photoManageInfo: "Uploaded photos will be visible to all users on the main page.", uploadLabel: "Upload Photo", uploadBtn: "Upload", noPhotos: "No photos uploaded yet.", specialDaysTitle: "Manage Special Days & Events", eventManageInfo: "Added events will be visible to all users on the main page.", addEventTitle: "Add New Event", eventDateLabel: "Event Date", eventDescLabel: "Event Description", eventDescPlaceholder: "E.g., Special Pooja for Vaikunta Ekadasi", addEventBtn: "Add Event", noEvents: "No events scheduled yet.", footerText: `${new Date().getFullYear()} Arulmigu Narayana Swamy Temple. All Rights Reserved.`, passwordPrompt: "Enter admin password:", wrongPassword: "Wrong password. Access denied.", donationSuccess: "Thank you! Your donation details have been submitted for this session.", fillFields: "Please fill all required fields.", photoUploadSuccess: "Photo uploaded for this session!", eventAddedSuccess: "Event added for this session!", alertOkBtn: "OK", printBtn: "Print", exportBtn: "Export to Excel", dataError: "Could not connect to the database. Please check your Firebase config and Firestore rules.", passwordModalTitle: "Admin Login", cancelBtn: "Cancel", loginBtn: "Login" },
-                ta: { headerTitle: "அருள்மிகு நாராயண சுவாமி திருக்கோவில் நன்கொடை தளம்", exploreHeader: "மேலும் பார்க்க", backToHomeBtn: "முகப்புக்குச் செல்லவும்", adminLoginLink: "நிர்வாகி உள்நுழைவு", formTitle: "நன்கொடை அளியுங்கள்", donorNameLabel: "நன்கொடையாளர் பெயர்", addressLabel: "முகவரி", phoneLabel: "தொலைபேசி எண்", emailLabel: "மின்னஞ்சல் முகவரி", amountLabel: "நன்கொடைத் தொகை (₹)", transactionIdLabel: "UPI பரிவர்த்தனை ஐடி", transactionIdPlaceholder: "UPI செயலியில் இருந்து ஐடியை உள்ளிடவும்", submitBtn: "நன்கொடையை சமர்ப்பிக்கவும்", paymentTitle: "பணம் செலுத்த ஸ்கேன் செய்யவும்", paymentInstructions: "பணம் செலுத்திய பிறகு, UPI பரிவர்த்தனை ஐடியை படிவத்தில் உள்ளிட்டு உங்கள் விவரங்களைச் சமர்ப்பிக்கவும்.", adminDashboardTitle: "நிர்வாகி டாஷ்போர்டு", logoutBtn: "வெளியேறு", donorsTab: "நன்கொடையாளர்கள்", photosTab: "கோவில் புகைப்படங்கள்", uploadPhotosTab: "புகைப்படங்களை பதிவேற்றவும்", eventsTab: "சிறப்பு நாட்கள்", manageEventsTab: "நிகழ்வுகளை நிர்வங்கிக்கவும்", donorsListTitle: "நன்கொடையாளர் பட்டியல்", donorHeaderName: "பெயர்", donorHeaderDetails: "தொடர்பு விவரங்கள்", donorHeaderAmount: "தொகை", donorHeaderTransaction: "பரிவர்த்தனை ஐடி", noDonations: "இன்னும் நன்கொடைகள் வரவில்லை.", photoGalleryTitle: "கோவில் புகைப்படங்களை பதிவேற்றவும்", photoManageInfo: "பதிவேற்றிய புகைப்படங்கள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", uploadLabel: "புகைப்படத்தை பதிவேற்றவும்", uploadBtn: "பதிவேற்று", noPhotos: "புகைப்படங்கள் இன்னும் பதிவேற்றப்படவில்லை.", specialDaysTitle: "சிறப்பு நாட்கள் & நிகழ்வுகளை நிர்வங்கிக்கவும்", eventManageInfo: "சேர்க்கப்பட்ட நிகழ்வுகள் முகப்புப் பக்கத்தில் உள்ள அனைத்து பயனர்களுக்கும் தெரியும்.", addEventTitle: "புதிய நிகழ்வைச் சேர்க்கவும்", eventDateLabel: "நிகழ்வு தேதி", eventDescLabel: "நிகழ்வு விளக்கம்", eventDescPlaceholder: "எ.கா., வைகுண்ட ஏகாதசி சிறப்பு பூஜை", addEventBtn: "நிகழ்வைச் சேர்", noEvents: "இன்னும் நிகழ்வுகள் திட்டமிடப்படவில்லை.", footerText: `${new Date().getFullYear()} அருள்மிகு நாராயண சுவாமி திருக்கோவில். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.`, passwordPrompt: "நிர்வாகி கடவுச்சொல்லை உள்ளிடவும்:", wrongPassword: "தவறான கடவுச்சொல். அணுகல் மறுக்கப்பட்டது.", donationSuccess: "நன்றி! இந்த அமர்வுக்கு உங்கள் நன்கொடை விவரங்கள் சமர்ப்பிக்கப்பட்டன.", fillFields: "தேவையான அனைத்து புலங்களையும் நிரப்பவும்.", photoUploadSuccess: "இந்த அமர்வுக்கு புகைப்படம் பதிவேற்றப்பட்டது!", eventAddedSuccess: "இந்த அமர்வுக்கு நிகழ்வு சேர்க்கப்பட்டது!", alertOkBtn: "சரி", printBtn: "அச்சிடுக", exportBtn: "Excel-க்கு ஏற்றுமதி செய்", dataError: "டேட்டாபேஸுடன் இணைக்க முடியவில்லை. உங்கள் Firebase config மற்றும் Firestore விதிகளைச் சரிபார்க்கவும்.", passwordModalTitle: "நிர்வாகி உள்நுழைவு", cancelBtn: "ரத்துசெய்", loginBtn: "உள்நுழை" }
-            };
-
-            let currentLanguage = 'en';
-            const alertModal = document.getElementById('alert-modal');
-            const passwordModal = document.getElementById('password-modal');
-
-            const showAlert = (key) => {
-                document.getElementById('alert-message').textContent = translations[currentLanguage][key];
-                alertModal.classList.remove('hidden');
-                alertModal.classList.add('flex');
-            };
-
-            const switchLanguage = (lang) => {
-                currentLanguage = lang;
-                document.documentElement.lang = lang;
-                document.querySelectorAll('[data-key]').forEach(el => el.textContent = translations[lang][el.dataset.key] || el.textContent);
-                document.querySelectorAll('[placeholder-key]').forEach(el => el.placeholder = translations[lang][el.getAttribute('placeholder-key')]);
-                renderEvents();
-            };
-
-            const showPage = (pageId) => {
-                ['home-page', 'photos-page', 'events-page', 'admin-view'].forEach(id => document.getElementById(id).classList.add('hidden'));
-                document.getElementById(pageId).classList.remove('hidden');
-            };
-
-            const switchAdminTab = (name) => {
-                document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.add('hidden'));
-                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('border-orange-500', 'text-orange-600'));
-                document.getElementById(`${name}-content`).classList.remove('hidden');
-                document.getElementById(`${name}-tab-btn`).classList.add('border-orange-500', 'text-orange-600');
-            };
-
-            const renderDonors = () => {
-                const tbody = document.getElementById('donors-table-body');
-                tbody.innerHTML = donations.length ? donations.map(d => `<tr><td class="p-2">${d.donorName}<br>${d.address}</td><td class="p-2">${d.phone}<br>${d.email}</td><td class="p-2">₹${d.amount}</td><td class="p-2">${d.transactionId}</td></tr>`).join('') : `<tr><td colspan="4" class="text-center p-4">${translations[currentLanguage].noDonations}</td></tr>`;
-            };
-
-            const renderPhotos = () => {
-                const gallery = document.getElementById('full-photo-gallery');
-                gallery.innerHTML = photos.length ? photos.map(p => `<img src="${p}" class="w-full h-48 object-cover rounded-lg">`).join('') : `<p class="col-span-full text-center">${translations[currentLanguage].noPhotos}</p>`;
-            };
-
-            const renderEvents = () => {
-                const list = document.getElementById('full-events-list');
-                const sorted = events.sort((a,b) => new Date(a.date) - new Date(b.date));
-                list.innerHTML = sorted.length ? sorted.map(e => `<div class="bg-white/50 p-4 rounded-lg"><p class="font-bold text-orange-700">${new Date(e.date).toLocaleDateString(currentLanguage === 'ta' ? 'ta-IN' : 'en-US', { timeZone: 'UTC' })}</p><p>${e.description}</p></div>`).join('') : `<p class="text-center">${translations[currentLanguage].noEvents}</p>`;
-            };
-
-            const printDonors = () => {
-                window.print();
-            };
-
-            const exportToCSV = () => {
-                 if (donations.length === 0) {
-                    showAlert('noDonations');
-                    return;
-                }
-                let csvContent = "data:text/csv;charset=utf-8,";
-                const headers = ["Donor Name", "Address", "Phone", "Email", "Amount", "Transaction ID"];
-                csvContent += headers.join(",") + "\r\n";
-
-                donations.forEach(d => {
-                    const row = [
-                        `"${d.donorName.replace(/"/g, '""')}"`,
-                        `"${d.address.replace(/"/g, '""')}"`,
-                        d.phone,
-                        d.email,
-                        d.amount,
-                        d.transactionId
-                    ];
-                    csvContent += row.join(",") + "\r\n";
-                });
-
-                const encodedUri = encodeURI(csvContent);
-                const link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", "donations.csv");
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            };
-            
-            // Initial render
-            renderDonors();
-            renderPhotos();
-            renderEvents();
-
-            // --- EVENT LISTENERS ---
-            document.getElementById('alert-ok-btn').addEventListener('click', () => alertModal.classList.add('hidden'));
-            document.getElementById('en-lang-btn').addEventListener('click', () => switchLanguage('en'));
-            document.getElementById('ta-lang-btn').addEventListener('click', () => switchLanguage('ta'));
-            document.getElementById('admin-login-link').addEventListener('click', (e) => { e.preventDefault(); passwordModal.classList.remove('hidden'); });
-            document.getElementById('password-cancel-btn').addEventListener('click', () => passwordModal.classList.add('hidden'));
-            document.getElementById('password-form').addEventListener('submit', (e) => { e.preventDefault(); if (document.getElementById('admin-password').value === 'password123') { showPage('admin-view'); passwordModal.classList.add('hidden'); } else { showAlert('wrongPassword'); } });
-            document.getElementById('logout-btn').addEventListener('click', () => showPage('home-page'));
-            
-            document.getElementById('go-to-photos-btn').addEventListener('click', () => showPage('photos-page'));
-            document.getElementById('go-to-events-btn').addEventListener('click', () => showPage('events-page'));
-            document.querySelectorAll('.back-to-home-btn').forEach(btn => btn.addEventListener('click', () => showPage('home-page')));
-
-            ['donors', 'photos', 'events'].forEach(t => document.getElementById(`${t}-tab-btn`).addEventListener('click', () => switchAdminTab(t)));
-            
-            // Add listeners for print and export buttons
-            document.getElementById('print-btn').addEventListener('click', printDonors);
-            document.getElementById('export-btn').addEventListener('click', exportToCSV);
-
-
-            document.getElementById('donation-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                donations.push(Object.fromEntries(formData.entries()));
-                showAlert('donationSuccess');
-                e.target.reset();
-                renderDonors();
-            });
-
-            document.getElementById('photo-upload-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const file = document.getElementById('photoFile').files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        photos.push(event.target.result);
-                        showAlert('photoUploadSuccess');
-                        renderPhotos();
-                        e.target.reset();
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            document.getElementById('event-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const data = { date: document.getElementById('eventDate').value, description: document.getElementById('eventDescription').value };
-                events.push(data);
-                showAlert('eventAddedSuccess');
-                renderEvents();
-                e.target.reset();
-            });
-
-            switchLanguage('en');
-        });
-    </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Donation Portal - Firebase Version</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arulmigu Narayana Swamy Temple - Donation Portal (Cloud)</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script type="module">
-    // ✅ Step 1: Import Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    [lang="ta"] body, [lang="ta"] button, [lang="ta"] input, [lang="ta"] textarea, [lang="ta"] h1, [lang="ta"] h2, [lang="ta"] p, [lang="ta"] label { font-family: 'Noto Sans Tamil', sans-serif; }
+    .glass-card { background: rgba(255,255,255,0.75); backdrop-filter: blur(8px); border-radius: 12px; padding: 1.25rem; box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    @media print { .no-print { display:none !important; } }
+  </style>
+</head>
+<body class="bg-orange-50 min-h-screen">
 
-    // ✅ Step 2: Paste your Firebase config here 👇
-    const firebaseConfig = {
+<!-- NOTE: This file uses the modular Firebase JS SDK. Replace firebaseConfig below. -->
+
+<div id="app" class="max-w-6xl mx-auto p-6">
+  <header class="mb-6">
+    <div class="header-image bg-[url('https://placehold.co/1200x300/E67E22/FFFFFF?text=.')] bg-cover bg-center h-48 rounded-lg relative">
+      <div class="absolute inset-0 bg-black/40 flex items-center justify-center rounded-lg">
+        <h1 id="header-title" class="text-white text-3xl md:text-4xl font-bold" data-key="headerTitle">Arulmigu Narayana Swamy Temple Donation Portal</h1>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mb-6 flex justify-between items-center no-print">
+    <div class="flex gap-2">
+      <button id="en-lang-btn" class="px-4 py-2 bg-orange-500 text-white rounded-md">English</button>
+      <button id="ta-lang-btn" class="px-4 py-2 bg-green-600 text-white rounded-md">தமிழ்</button>
+    </div>
+    <div>
+      <a href="#" id="admin-login-link" class="text-sm font-medium text-orange-700" data-key="adminLoginLink">Admin Login</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Home -->
+    <div id="home-page">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <section class="glass-card">
+          <h2 class="text-2xl font-bold mb-4" data-key="formTitle">Make a Donation</h2>
+          <form id="donation-form" class="space-y-3">
+            <div><label class="block text-sm font-medium" data-key="donorNameLabel">Donor Name</label><input id="donorName" required class="mt-1 block w-full p-2 border rounded-md"></div>
+            <div><label class="block text-sm font-medium" data-key="addressLabel">Address</label><textarea id="address" rows="2" class="mt-1 block w-full p-2 border rounded-md"></textarea></div>
+            <div><label class="block text-sm font-medium" data-key="phoneLabel">Phone Number</label><input id="phone" type="tel" class="mt-1 block w-full p-2 border rounded-md"></div>
+            <div><label class="block text-sm font-medium" data-key="emailLabel">Email ID</label><input id="email" type="email" class="mt-1 block w-full p-2 border rounded-md"></div>
+            <div><label class="block text-sm font-medium" data-key="amountLabel">Donation Amount (₹)</label><input id="amount" type="number" min="1" required class="mt-1 block w-full p-2 border rounded-md"></div>
+            <div><label class="block text-sm font-medium" data-key="transactionIdLabel">UPI Transaction ID</label><input id="transactionId" class="mt-1 block w-full p-2 border rounded-md" placeholder="Enter UPI txn ID"></div>
+            <div><label class="block text-sm font-medium">Date</label><input id="donationDate" type="date" class="mt-1 block w-full p-2 border rounded-md"></div>
+            <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg" data-key="submitBtn">Submit Donation</button>
+          </form>
+        </section>
+
+        <aside class="space-y-6">
+          <div class="glass-card text-center">
+            <h3 class="text-xl font-bold mb-2" data-key="paymentTitle">Scan to Pay</h3>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAADp6ekhISHm5ubf398nJyfAwMC6urpKSko5OTnz8/MTEw/U1NRWVlZSUlI/Pz/b29vMzMxwcHCJiYlISEgYGBhubm5gYGDAwMBPT0+cnJx6enqysrKnp6eRkZFbW1tXV1dFRUUZsykYAAAIQElEQVR4nO2d63aqPBSGgwLjgqK4KoruGNH7P+WJvQeokG1Qp/Hq+v3PMUmyfQwhIUny+Ph4PP64v1xP67P6e1O+3I/rU/x1f9v+Y3/b/15/2/6/v1z/p325f1+n/T1/1d7v+j/t2/l1r7/t2z/tT/h98fHxenx8PP54v1xP67P6e1O+3I/rU/x1f9v+Y3/b/15/2/6/v1z/p325f1+n/T1/1d7v+j/t2/l1r7/t2z/tT/h9+ePj9fzweDweD88v61N/2h/2J3zaH/an/Gl/2p/wp/1pfxrW3/Wn/Wn/Wm//tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/70/60P+1P+9P+tD/tT/vT/rQ/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U/7U" alt="QR" class="mx-auto rounded-lg shadow-lg w-48">
+            <p class="mt-3 text-sm">After payment, enter the UPI transaction id in the form.</p>
+          </div>
+
+          <div class="glass-card">
+            <h3 class="text-xl font-bold mb-2" data-key="exploreHeader">Explore More</h3>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼 Temple Photos</button>
+              <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">✨ Special Days</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Photos page -->
+    <div id="photos-page" class="hidden">
+      <div class="glass-card mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold">🖼 Temple Photos</h2>
+          <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
+        </div>
+        <div id="main-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+      </div>
+    </div>
+
+    <!-- Events page -->
+    <div id="events-page" class="hidden">
+      <div class="glass-card mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold">✨ Special Days</h2>
+          <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
+        </div>
+        <div id="main-events" class="space-y-4"></div>
+      </div>
+    </div>
+
+    <!-- Admin -->
+    <div id="admin-view" class="hidden no-print">
+      <div class="glass-card">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold">Admin Dashboard</h2>
+          <div class="flex gap-2 items-center">
+            <button id="logout-btn" class="bg-red-500 text-white px-3 py-2 rounded-md">Logout</button>
+          </div>
+        </div>
+
+        <div class="border-b mb-4">
+          <nav class="flex gap-4">
+            <button id="donors-tab-btn" class="px-3 py-2 bg-orange-100 rounded-md text-orange-700">Donors</button>
+            <button id="photos-tab-btn" class="px-3 py-2 rounded-md">Upload Photos</button>
+            <button id="events-tab-btn" class="px-3 py-2 rounded-md">Manage Events</button>
+          </nav>
+        </div>
+
+        <div id="donors-content">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="font-semibold">Donors List</h3>
+            <div class="flex gap-2">
+              <button id="print-btn" class="bg-blue-500 text-white px-3 py-2 rounded-md">Print</button>
+              <button id="export-btn" class="bg-green-500 text-white px-3 py-2 rounded-md">Export CSV</button>
+            </div>
+          </div>
+          <div id="donors-print-area" class="overflow-x-auto bg-white rounded-lg shadow p-2">
+            <table class="min-w-full text-left">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="p-2">Name</th>
+                  <th class="p-2">Contact</th>
+                  <th class="p-2">Amount</th>
+                  <th class="p-2">Txn ID</th>
+                  <th class="p-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="donors-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="photos-content" class="hidden">
+          <h3 class="font-semibold mb-2">Upload Photos</h3>
+          <form id="photo-upload-form" class="flex gap-2 mb-4">
+            <input id="photoFile" type="file" accept="image/*" class="p-2 border rounded-md" />
+            <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md">Upload</button>
+          </form>
+          <p class="text-sm text-gray-600">Uploaded photos will show on the main gallery.</p>
+        </div>
+
+        <div id="events-content" class="hidden">
+          <h3 class="font-semibold mb-2">Manage Events</h3>
+          <form id="event-form" class="space-y-2 mb-4">
+            <input id="eventDate" type="date" class="p-2 border rounded-md w-full" required />
+            <textarea id="eventDescription" rows="3" class="p-2 border rounded-md w-full" placeholder="E.g., Vaikunta Ekadasi special"></textarea>
+            <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md w-full">Add Event</button>
+          </form>
+          <p class="text-sm text-gray-600">Events are visible to all users.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Temple</footer>
+</div>
+
+<!-- Alert & Password modals -->
+<div id="alert-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 max-w-sm text-center">
+    <p id="alert-message" class="mb-4"></p>
+    <button id="alert-ok-btn" class="bg-orange-500 text-white px-4 py-2 rounded-md">OK</button>
+  </div>
+</div>
+
+<div id="password-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 max-w-sm">
+    <h3 class="text-lg font-bold mb-2">Admin Login</h3>
+    <form id="password-form" class="space-y-3">
+      <label class="block">Enter password:</label>
+      <input id="admin-password" type="password" class="w-full p-2 border rounded-md" />
+      <div class="flex justify-end gap-2">
+        <button type="button" id="password-cancel-btn" class="px-4 py-2 bg-gray-300 rounded-md">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-md">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Firebase + App Logic -->
+<script type="module">
+  // ------------------------
+  // 1) IMPORT FIREBASE (modular SDK)
+  // ------------------------
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getDatabase, ref, push, onValue, remove, set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+  import { getStorage, ref as sref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+
+  // ------------------------
+  // 2) PASTE YOUR FIREBASE CONFIG HERE
+  // Replace every "PASTE_..." value with the values from Firebase console.
+  // Make sure databaseURL points to your Realtime Database (the URL shown in console).
+  // ------------------------
+  const firebaseConfig = {
   apiKey: "AIzaSyC7AcMsWETrrEwQTqVYL_QqFMzepMog",
   authDomain: "donation-portal-f4b2b.firebaseapp.com",
   databaseURL: "https://donation-portal-f4b2b-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -275,99 +209,214 @@
   appId: "1:1105454748967:web:aa9de7408b64d5d8cd28de"
 };
 
+  // ------------------------
+  // 3) INIT FIREBASE SERVICES
+  // ------------------------
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const storage = getStorage(app);
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+  // ------------------------
+  // 4) UI ELEMENTS
+  // ------------------------
+  const translations = { en: {}, ta: {} }; // not used heavily here but kept for data-key mapping usage earlier
+  let currentLanguage = 'en';
 
-    // Wait until DOM loads
-    window.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById("donationForm");
-      const donorList = document.getElementById("donorList");
+  const alertModal = document.getElementById('alert-modal');
+  const passwordModal = document.getElementById('password-modal');
+  const showAlert = (msg) => {
+    document.getElementById('alert-message').textContent = msg;
+    alertModal.classList.remove('hidden'); alertModal.classList.add('flex');
+  };
 
-      // Add data to Firebase
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const name = document.getElementById("name").value;
-        const amount = document.getElementById("amount").value;
-        const date = document.getElementById("date").value;
-        if (name && amount && date) {
-          push(ref(db, "donations"), { name, amount, date });
-          form.reset();
-        }
+  // Buttons and pages
+  const showPage = (id) => {
+    ['home-page','photos-page','events-page','admin-view'].forEach(p => document.getElementById(p).classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+  };
+
+  // ------------------------
+  // 5) DONATION: submit to Realtime Database
+  // ------------------------
+  document.getElementById('donation-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const data = {
+      donorName: document.getElementById('donorName').value || '',
+      address: document.getElementById('address').value || '',
+      phone: document.getElementById('phone').value || '',
+      email: document.getElementById('email').value || '',
+      amount: document.getElementById('amount').value || '',
+      transactionId: document.getElementById('transactionId').value || '',
+      date: document.getElementById('donationDate').value || new Date().toISOString().slice(0,10)
+    };
+    // push to /donations
+    push(ref(db, 'donations'), data)
+      .then(() => showAlert('Donation submitted — saved to cloud.'))
+      .catch(e => showAlert('Error saving donation: ' + e.message));
+    e.target.reset();
+  });
+
+  // ------------------------
+  // 6) LIVE LISTEN: Donors (populate admin table & client list)
+  // ------------------------
+  const donorsTableBody = document.getElementById('donors-table-body');
+  const donorsRef = ref(db, 'donations');
+  onValue(donorsRef, snapshot => {
+    const data = snapshot.val();
+    donorsTableBody.innerHTML = '';
+    if (data) {
+      Object.keys(data).forEach(key => {
+        const d = data[key];
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="p-2 border">${escapeHtml(d.donorName || '')}<br><small>${escapeHtml(d.address||'')}</small></td>
+          <td class="p-2 border">${escapeHtml(d.phone||'')}<br><small>${escapeHtml(d.email||'')}</small></td>
+          <td class="p-2 border">₹${escapeHtml(d.amount||'')}</td>
+          <td class="p-2 border">${escapeHtml(d.transactionId||'')}</td>
+          <td class="p-2 border"><button data-key="${key}" class="delete-btn bg-red-500 text-white px-2 py-1 rounded">Delete</button></td>
+        `;
+        donorsTableBody.appendChild(tr);
       });
-
-      // Fetch data live
-      const donationsRef = ref(db, "donations");
-      onValue(donationsRef, (snapshot) => {
-        donorList.innerHTML = "";
-        const data = snapshot.val();
-        if (data) {
-          let i = 1;
-          Object.keys(data).forEach((key) => {
-            const donor = data[key];
-            const row = document.createElement("tr");
-            row.innerHTML = `
-              <td class="border p-2">${i++}</td>
-              <td class="border p-2">${donor.name}</td>
-              <td class="border p-2">${donor.amount}</td>
-              <td class="border p-2">${donor.date}</td>
-              <td class="border p-2">
-                <button onclick="deleteDonor('${key}')" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded">Delete</button>
-              </td>`;
-            donorList.appendChild(row);
-          });
-        } else {
-          donorList.innerHTML = "<tr><td colspan='5' class='p-4 text-gray-500'>No donations yet</td></tr>";
-        }
+      // wire delete buttons
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (confirm('Delete this donation?')) remove(ref(db, 'donations/' + btn.dataset.key));
+        });
       });
+    } else {
+      donorsTableBody.innerHTML = '<tr><td colspan="5" class="p-4 text-gray-500">No donations yet.</td></tr>';
+    }
+  });
 
-      // Delete donor
-      window.deleteDonor = (key) => {
-        remove(ref(db, "donations/" + key));
-      };
-    });
-  </script>
-</head>
+  // ------------------------
+  // 7) PHOTOS: upload to Firebase Storage and save URL to /photos
+  // ------------------------
+  document.getElementById('photo-upload-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const file = document.getElementById('photoFile').files[0];
+    if (!file) { showAlert('Select a photo first.'); return; }
+    const path = `photos/${Date.now()}_${file.name}`;
+    const storageRef = sref(storage, path);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on('state_changed',
+      null,
+      (err) => showAlert('Upload failed: ' + err.message),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(url => {
+          push(ref(db, 'photos'), { url, name: file.name, uploadedAt: new Date().toISOString() })
+            .then(()=> showAlert('Photo uploaded to cloud.'))
+            .catch(e=> showAlert('Error saving photo meta: ' + e.message));
+        });
+      }
+    );
+    e.target.reset();
+  });
 
-<body class="p-6 bg-gray-100">
-  <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-6">
-    <h1 class="text-3xl font-bold text-center mb-4">💖 Cloud Donation Portal</h1>
+  // Render gallery live
+  const galleryEl = document.getElementById('main-gallery');
+  onValue(ref(db, 'photos'), snapshot => {
+    const data = snapshot.val();
+    galleryEl.innerHTML = '';
+    if (data) {
+      Object.values(data).forEach(photo => {
+        const img = document.createElement('img');
+        img.src = photo.url;
+        img.alt = photo.name || 'temple photo';
+        img.className = 'w-full h-48 object-cover rounded-lg shadow';
+        galleryEl.appendChild(img);
+      });
+    } else {
+      galleryEl.innerHTML = '<p class="text-center col-span-full text-gray-500">No photos uploaded yet.</p>';
+    }
+  });
 
-    <form id="donationForm" class="space-y-4">
-      <div>
-        <label class="block font-semibold">Donor Name:</label>
-        <input type="text" id="name" required class="w-full border rounded-lg p-2">
-      </div>
-      <div>
-        <label class="block font-semibold">Amount (₹):</label>
-        <input type="number" id="amount" required class="w-full border rounded-lg p-2">
-      </div>
-      <div>
-        <label class="block font-semibold">Date:</label>
-        <input type="date" id="date" required class="w-full border rounded-lg p-2">
-      </div>
-      <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-lg w-full">
-        💰 Add Donation
-      </button>
-    </form>
+  // ------------------------
+  // 8) EVENTS: save to /events and render
+  // ------------------------
+  document.getElementById('event-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const data = { date: document.getElementById('eventDate').value, description: document.getElementById('eventDescription').value || '' };
+    push(ref(db, 'events'), data)
+      .then(()=> showAlert('Event added to cloud.'))
+      .catch(e => showAlert('Error adding event: ' + e.message));
+    e.target.reset();
+  });
 
-    <hr class="my-6">
-    <h2 class="text-2xl font-semibold mb-2">🧾 Donor List (Cloud Stored)</h2>
+  const eventsList = document.getElementById('main-events');
+  onValue(ref(db, 'events'), snapshot => {
+    const data = snapshot.val() || {};
+    const arr = Object.values(data).sort((a,b)=> new Date(a.date) - new Date(b.date));
+    eventsList.innerHTML = arr.length ? arr.map(e => `<div class="bg-white/60 p-3 rounded">${escapeHtml(new Date(e.date).toLocaleDateString())}<p>${escapeHtml(e.description)}</p></div>`).join('') : '<p class="text-center text-gray-500">No events scheduled yet.</p>';
+  });
 
-    <div class="overflow-x-auto">
-      <table class="min-w-full border text-center">
-        <thead class="bg-indigo-100">
-          <tr>
-            <th class="border p-2">#</th>
-            <th class="border p-2">Name</th>
-            <th class="border p-2">Amount (₹)</th>
-            <th class="border p-2">Date</th>
-            <th class="border p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="donorList"></tbody>
-      </table>
-    </div>
-  </div>
+  // ------------------------
+  // 9) ADMIN: simple password modal (client-side). For production use Firebase Auth.
+  // ------------------------
+  const adminPassword = 'password123'; // CHANGE THIS before sharing; better: implement Firebase Auth
+  document.getElementById('admin-login-link').addEventListener('click', (ev) => { ev.preventDefault(); passwordModal.classList.remove('hidden'); passwordModal.classList.add('flex'); });
+  document.getElementById('password-cancel-btn').addEventListener('click', ()=> passwordModal.classList.add('hidden'));
+  document.getElementById('password-form').addEventListener('submit', (e)=> {
+    e.preventDefault();
+    const val = document.getElementById('admin-password').value;
+    if (val === adminPassword) {
+      passwordModal.classList.add('hidden'); showPage('admin-view');
+      // set default admin tab
+      showAdminTab('donors');
+    } else showAlert('Wrong password. Access denied.');
+  });
+  document.getElementById('logout-btn').addEventListener('click', ()=> showPage('home-page'));
+
+  // Admin tab switching
+  function showAdminTab(name) {
+    document.getElementById('donors-content').classList.toggle('hidden', name!=='donors');
+    document.getElementById('photos-content').classList.toggle('hidden', name!=='photos');
+    document.getElementById('events-content').classList.toggle('hidden', name!=='events');
+    // highlight buttons (simple)
+    ['donors-tab-btn','photos-tab-btn','events-tab-btn'].forEach(id => document.getElementById(id).classList.remove('bg-orange-100','text-orange-700'));
+    if (name==='donors') document.getElementById('donors-tab-btn').classList.add('bg-orange-100','text-orange-700');
+    if (name==='photos') document.getElementById('photos-tab-btn').classList.add('bg-orange-100','text-orange-700');
+    if (name==='events') document.getElementById('events-tab-btn').classList.add('bg-orange-100','text-orange-700');
+  }
+  document.getElementById('donors-tab-btn').addEventListener('click', ()=> showAdminTab('donors'));
+  document.getElementById('photos-tab-btn').addEventListener('click', ()=> showAdminTab('photos'));
+  document.getElementById('events-tab-btn').addEventListener('click', ()=> showAdminTab('events'));
+
+  // Navigation buttons
+  document.getElementById('go-to-photos-btn').addEventListener('click', ()=> showPage('photos-page'));
+  document.getElementById('go-to-events-btn').addEventListener('click', ()=> showPage('events-page'));
+  document.querySelectorAll('.back-to-home-btn').forEach(b=> b.addEventListener('click', ()=> showPage('home-page')));
+
+  // Print & Export
+  document.getElementById('print-btn').addEventListener('click', ()=> window.print());
+  document.getElementById('export-btn').addEventListener('click', exportDonationsCSV);
+  document.getElementById('alert-ok-btn').addEventListener('click', ()=> alertModal.classList.add('hidden'));
+
+  // Export CSV: read snapshot once and download
+  import { get } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+  async function exportDonationsCSV() {
+    try {
+      const snap = await get(ref(db,'donations'));
+      const data = snap.val();
+      if (!data) { showAlert('No donations to export.'); return; }
+      const rows = [['Donor Name','Address','Phone','Email','Amount','TxnID','Date']];
+      Object.values(data).forEach(d => rows.push([d.donorName||'', d.address||'', d.phone||'', d.email||'', d.amount||'', d.transactionId||'', d.date||'']));
+      const csv = rows.map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\r\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'donations.csv'; a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) { showAlert('Export failed: ' + e.message); }
+  }
+
+  // helper escape
+  function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]); }); }
+
+  // Footer year
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  // initial page
+  showPage('home-page');
+</script>
+
 </body>
 </html>
