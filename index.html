@@ -485,6 +485,35 @@
     });
   }
 
+  // ---------- mobile number add/render/delete ----------
+  document.getElementById('event-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = { date: document.getElementById('eventDate').value, description: document.getElementById('eventDescription').value||'' };
+    try { await push(ref(db,'events'), data); showAlert('number added to cloud.'); e.target.reset(); } catch (err) { showAlert('Error: '+err.message); }
+  });
+
+  let latestEvents = {};
+  onValue(ref(db,'events'), snap => {
+    latestEvents = snap.val() || {};
+    renderPublicEvents(); renderAdminEvents();
+  });
+
+  function renderPublicEvents() {
+    const list = document.getElementById('main-events');
+    const arr = Object.keys(latestEvents).map(k => ({ key:k, ...latestEvents[k] })).sort((a,b)=> new Date(a.date)-new Date(b.date));
+    list.innerHTML = arr.length ? arr.map(e => `<div class="bg-white/60 p-3 rounded"><p class="font-bold text-orange-700">${escapeHtml(new Date(e.date).toLocaleDateString())}</p><p>${escapeHtml(e.description)}</p></div>`).join('') : '<p class="text-center text-gray-500">No events scheduled yet.</p>';
+  }
+  function renderAdminEvents() {
+    const container = document.getElementById('admin-events-list');
+    const arr = Object.keys(latestEvents).map(k => ({ key:k, ...latestEvents[k] })).sort((a,b)=> new Date(a.date)-new Date(b.date));
+    container.innerHTML = arr.length ? arr.map(e => `<div class="flex items-start justify-between bg-white/70 p-3 rounded"><div><p class="font-bold text-orange-700">${escapeHtml(new Date(e.date).toLocaleDateString())}</p><p>${escapeHtml(e.description)}</p></div><div><button data-key="${e.key}" class="delete-event bg-red-500 text-white px-3 py-1 rounded">Delete</button></div></div>`).join('') : '<p class="text-gray-500">No events</p>';
+    document.querySelectorAll('.delete-event').forEach(btn => {
+      btn.addEventListener('click', ()=> {
+        if (confirm('Delete this event?')) remove(ref(db,'events/'+btn.dataset.key)).then(()=> showAlert('Event deleted.'));
+      });
+    });
+  }
+
   // ---------- Admin login/logout ----------
   const adminPassword = 'password123'; // change this for production
   document.getElementById('admin-login-link').addEventListener('click', (ev)=> { ev.preventDefault(); document.getElementById('password-modal').classList.remove('hidden'); document.getElementById('password-modal').classList.add('flex'); });
@@ -499,6 +528,7 @@
     document.getElementById('home-page').classList.add('hidden');
     document.getElementById('photos-page').classList.add('hidden');
     document.getElementById('events-page').classList.add('hidden');
+    document.getElementById('Temple Phone-page').classList.add('hidden');
     document.getElementById('admin-view').classList.remove('hidden');
     showAdminTab('donors');
   }
@@ -518,14 +548,17 @@
     document.getElementById('donors-content').classList.toggle('hidden', name!=='donors');
     document.getElementById('photos-content').classList.toggle('hidden', name!=='photos');
     document.getElementById('events-content').classList.toggle('hidden', name!=='events');
+    document.getElementById('Temple Phone').classList.toggle('hidden', name!=='events');
     ['donors-tab-btn','photos-tab-btn','events-tab-btn'].forEach(id=> document.getElementById(id).classList.remove('bg-orange-100','text-orange-700'));
     if (name==='donors') document.getElementById('donors-tab-btn').classList.add('bg-orange-100','text-orange-700');
     if (name==='photos') document.getElementById('photos-tab-btn').classList.add('bg-orange-100','text-orange-700');
     if (name==='events') document.getElementById('events-tab-btn').classList.add('bg-orange-100','text-orange-700');
+    if (name==='events') document.getElementById('Temple Phone-tab-btn').classList.add('bg-orange-100','text-orange-700');
   }
   document.getElementById('donors-tab-btn').addEventListener('click', ()=> showAdminTab('donors'));
   document.getElementById('photos-tab-btn').addEventListener('click', ()=> showAdminTab('photos'));
   document.getElementById('events-tab-btn').addEventListener('click', ()=> showAdminTab('events'));
+  document.getElementById('Temple Phone-tab-btn').addEventListener('click', ()=> showAdminTab('Temple Phone'));
 
   // navigation
   document.getElementById('go-to-photos-btn').addEventListener('click', ()=> { document.getElementById('home-page').classList.add('hidden'); document.getElementById('photos-page').classList.remove('hidden'); });
@@ -544,6 +577,7 @@
 </script>
 </body>
 </html>
+
 
 
 
