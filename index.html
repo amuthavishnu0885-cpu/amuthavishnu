@@ -506,7 +506,7 @@ const ytEl = document.getElementById('temple-youtube');
 const fbEl = document.getElementById('temple-facebook');
 const igEl = document.getElementById('temple-instagram');
 
-onValue(ref(db, 'templeInfo'), snap => {
+onValue(ref(db, 'templeInfo/main'), snap => {
   const info = snap.val() || {};
   phoneEl.textContent = info.phone ? `📞 Phone: ${info.phone}` : '📞 Phone: Not available';
   ytEl.href = info.youtube || '#';
@@ -514,7 +514,9 @@ onValue(ref(db, 'templeInfo'), snap => {
   igEl.href = info.instagram || '#';
 });
 
-// Admin update
+// ---------- Admin update (fixed: overwrite temple info instead of pushing multiple entries) ----------
+import { set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
 document.getElementById('temple-form').addEventListener('submit', async e => {
   e.preventDefault();
   const data = {
@@ -524,13 +526,13 @@ document.getElementById('temple-form').addEventListener('submit', async e => {
     instagram: document.getElementById('templeInstagram').value || ''
   };
   try {
-    await push(ref(db, 'templeInfo'), data);
+    await set(ref(db, 'templeInfo/main'), data); // ✅ overwrite fixed path
     showAlert('Temple info updated successfully.');
-    e.target.reset();
   } catch (err) {
     showAlert('Error saving temple info: ' + err.message);
   }
 });
+
 
 // Switch admin tab
 document.getElementById('temple-tab-btn').addEventListener('click', ()=> showAdminTab('temple'));
@@ -655,6 +657,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => {
 // Default = English
 setLang("en");
 </script>
+
 
 
 
