@@ -157,8 +157,9 @@
       </div>
     </div>
 
-    <div id="very-special-content" class="hidden">
-  <h3 class="font-semibold mb-2">Manage very special days</h3>
+        <!-- 🌟 Admin Very Special Days Section -->
+<div id="very-special-content" class="hidden">
+  <h3 class="font-semibold mb-2">Manage mobile number</h3>
   <form id="very-special-form" class="space-y-2 mb-4">
     <input id="verySpecialDate" type="date" class="p-2 border rounded-md w-full" required />
     <textarea id="verySpecialDescription" rows="3" class="p-2 border rounded-md w-full" placeholder="E.g., +91 9876543210"></textarea>
@@ -432,7 +433,7 @@
   document.getElementById('password-form').addEventListener('submit', (e)=> {
     e.preventDefault();
     const v = document.getElementById('admin-password').value;
-    if (v === adminPassword) { document.getElementById('password-modal').classList.add('hidden'); showAdminView(); } else showAlert('❌Wrong password.❗Access denied.🔒');
+    if (v === adminPassword) { document.getElementById('password-modal').classList.add('hidden'); showAdminView(); } else showAlert('Wrong password. Access denied.');
   });
 
   function showAdminView() {
@@ -481,15 +482,6 @@
   // footer
   document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-  // ---------- Navigation + Social Buttons ----------
-document.getElementById('go-to-very-special-btn').addEventListener('click', ()=> { 
-  document.getElementById('home-page').classList.add('hidden'); 
-  document.getElementById('very-special-page').classList.remove('hidden'); 
-});
-document.getElementById('go-to-youtube-btn').addEventListener('click', () => window.open('https://www.youtube.com/@arulmigunarayanaswamy', '_blank'));
-document.getElementById('go-to-facebook-btn').addEventListener('click', () => window.open('https://www.facebook.com/arulmigunarayanaswamy', '_blank'));
-document.getElementById('go-to-instagram-btn').addEventListener('click', () => window.open('https://www.instagram.com/arulmigunarayanaswamy', '_blank'));
- 
 </script>
 </body>
 </html>
@@ -664,11 +656,17 @@ function renderAdminVerySpecial() {
   });
 }
 
-
+// ---------- Navigation + Social Buttons ----------
+document.getElementById('go-to-very-special-btn').addEventListener('click', ()=> { 
+  document.getElementById('home-page').classList.add('hidden'); 
+  document.getElementById('very-special-page').classList.remove('hidden'); 
+});
+document.getElementById('go-to-youtube-btn').addEventListener('click', () => window.open('https://www.youtube.com/@arulmigunarayanaswamy', '_blank'));
+document.getElementById('go-to-facebook-btn').addEventListener('click', () => window.open('https://www.facebook.com/arulmigunarayanaswamy', '_blank'));
+document.getElementById('go-to-instagram-btn').addEventListener('click', () => window.open('https://www.instagram.com/arulmigunarayanaswamy', '_blank'));
+ 
 </script>
       
-
-
 
 
 
