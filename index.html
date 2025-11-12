@@ -43,7 +43,7 @@
 <div class="glass-card p-6 md:p-8 text-center">
   <h3 class="text-xl font-bold mb-2" data-key="paymentTitle">Scan to Pay</h3>
   <img id="upi-qr" src="QR.png" alt="UPI QR code" class="mx-auto rounded-lg shadow-lg w-400 h-500 object-cover" />
-  <p class="mt-3 text-sm" data-key="paymentInstructions">After payment, enter the UPI transaction id in the form.</p>
+  <p class="mt-3 text-sm" data-key="paymentInstructions">After payment, enter the UPI transaction id in the form.<p>பணம் செலுத்திய பிறகு, படிவத்தில் UPI பரிவர்த்தனை ஐடியை உள்ளிடவும்.</p></p>
 </div>
     
     <!-- Home -->
@@ -404,7 +404,7 @@
   document.getElementById('password-form').addEventListener('submit', (e)=> {
     e.preventDefault();
     const v = document.getElementById('admin-password').value;
-    if (v === adminPassword) { document.getElementById('password-modal').classList.add('hidden'); showAdminView(); } else showAlert('Wrong password. Access denied.');
+    if (v === adminPassword) { document.getElementById('password-modal').classList.add('hidden'); showAdminView(); } else showAlert('❌Wrong password.❗Access denied.🔒');
   });
 
   function showAdminView() {
@@ -475,7 +475,7 @@ const translations = {
     date: "Date",
     submit: "Submit Donation",
     explore: "Explore More",
-    templePhotos: "🖼 Temple Photos",
+    templePhotos: "🖼️Temple Photos📸",
     specialDays: "✨ Special Days",
     donorsList: "Donors List",
     uploadPhotos: "Upload Photos",
@@ -497,7 +497,7 @@ const translations = {
     date: "தேதி",
     submit: "நன்கொடை சமர்ப்பிக்கவும்",
     explore: "மேலும் பார்க்க",
-    templePhotos: "🖼 கோவில் புகைப்படங்கள்",
+    templePhotos: "🖼️கோவில் புகைப்படங்கள்📸",
     specialDays: "✨ சிறப்பு நாட்கள்",
     donorsList: "நன்கொடையாளர்கள் பட்டியல்",
     uploadPhotos: "புகைப்படங்களைப் பதிவேற்றவும்",
@@ -570,6 +570,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => {
 // Default = English
 setLang("en");
 </script>
+
 
 
 
