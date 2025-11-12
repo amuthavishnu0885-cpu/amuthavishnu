@@ -68,8 +68,9 @@
           <div class="glass-card">
             <h3 class="text-xl font-bold mb-2">Explore More</h3>
             <div class="flex flex-col sm:flex-row gap-3">
-              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼 Temple Photos</button>
-              <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">✨ Special Days</button>
+              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼️Temple Photos📸</button>
+              <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">✨ Special Days🎆</button>
+              <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">Temple Phone</button>
             </div>
           </div>
         </aside>
@@ -90,7 +91,7 @@
     <div id="events-page" class="hidden">
       <div class="glass-card mb-6">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">✨ Special Days</h2>
+          <h2 class="text-2xl font-bold">✨ Special Days🎆</h2>
           <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
         </div>
         <div id="main-events" class="space-y-4"></div>
@@ -159,6 +160,92 @@
   <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Temple</footer>
 </div>
 
+  <div id="events-page" class="hidden">
+      <div class="glass-card mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold">Temple Phone</h2>
+          <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
+        </div>
+        <div id="main-events" class="space-y-4"></div>
+      </div>
+    </div>
+
+    <div id="admin-view" class="hidden no-print">
+      <div class="glass-card">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold">Admin Dashboard</h2>
+          <div class="flex gap-2 items-center">
+            <button id="logout-btn" class="bg-red-500 text-white px-3 py-2 rounded-md">Logout</button>
+          </div>
+        </div>
+
+        <div class="border-b mb-4">
+          <nav class="flex gap-4">
+            <button id="donors-tab-btn" class="px-3 py-2 bg-orange-100 rounded-md text-orange-700">Donors</button>
+            <button id="photos-tab-btn" class="px-3 py-2 rounded-md">Upload Photos</button>
+            <button id="events-tab-btn" class="px-3 py-2 rounded-md">Manage Events</button>
+             <button id="events-tab-btn" class="px-3 py-2 rounded-md">Uplod mobile number</button>
+          </nav>
+        </div>
+
+        <div id="donors-content">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="font-semibold">Donors List</h3>
+            <div class="flex gap-2">
+              <button id="print-btn" class="bg-blue-500 text-white px-3 py-2 rounded-md">Print</button>
+              <button id="export-btn" class="bg-green-500 text-white px-3 py-2 rounded-md">Export CSV</button>
+            </div>
+          </div>
+          <div id="donors-print-area" class="overflow-x-auto bg-white rounded-lg shadow p-2">
+            <table class="min-w-full text-left">
+              <thead class="bg-gray-100">
+                <tr><th class="p-2">Name</th><th class="p-2">Contact</th><th class="p-2">Amount</th><th class="p-2">Txn ID</th><th class="p-2">Actions</th></tr>
+              </thead>
+              <tbody id="donors-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="photos-content" class="hidden">
+          <h3 class="font-semibold mb-2">Upload Photos</h3>
+          <form id="photo-upload-form" class="flex gap-2 mb-4">
+            <input id="photoFile" type="file" accept="image/*" class="p-2 border rounded-md" />
+            <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md">Upload</button>
+          </form>
+          <p class="text-sm text-gray-600">Uploaded photos will show on the main gallery.</p>
+        </div>
+
+        <div id="events-content" class="hidden">
+          <h3 class="font-semibold mb-2">Manage Events</h3>
+          <form id="event-form" class="space-y-2 mb-4">
+            <input id="eventDate" type="date" class="p-2 border rounded-md w-full" required />
+            <textarea id="eventDescription" rows="3" class="p-2 border rounded-md w-full" placeholder="E.g., Vaikunta Ekadasi special"></textarea>
+            <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md w-full">Add Event</button>
+          </form>
+          <div id="admin-events-list" class="space-y-2"></div>
+          <p class="text-sm text-gray-600">Events are visible to all users.</p>
+        </div>
+      </div>
+    </div>
+  
+  <div id="events-content" class="hidden">
+          <h3 class="font-semibold mb-2">Uplod mobile number</h3>
+          <form id="event-form" class="space-y-2 mb-4">
+            <input id="eventDate" type="date" class="p-2 border rounded-md w-full" required />
+            <textarea id="eventDescription" rows="3" class="p-2 border rounded-md w-full" placeholder="E.g., +91 9876543210"></textarea>
+            <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md w-full">Add mobile number</button>
+          </form>
+          <div id="admin-events-list" class="space-y-2"></div>
+          <p class="text-sm text-gray-600">Events are visible to all users.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Temple</footer>
+</div>
+  
 <!-- Alert & Password modals -->
 <div id="alert-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 max-w-sm text-center">
@@ -457,6 +544,7 @@
 </script>
 </body>
 </html>
+
 
 
 
