@@ -110,12 +110,11 @@
 
         <!-- Tabs -->
         <nav class="flex gap-4 border-b mb-4">
-          <button id="donors-tab-btn" class="px-3 py-2 bg-orange-100 rounded-md text-orange-700">Donors</button>
-          <button id="contact-tab-btn" class="px-3 py-2 rounded-md">Temple Contact</button>
+          <button id="contact-tab-btn" class="px-3 py-2 bg-orange-100 rounded-md text-orange-700">Temple Contact</button>
         </nav>
 
         <!-- Contact Tab -->
-        <div id="contact-content" class="">
+        <div id="contact-content">
           <h3 class="font-semibold mb-2">Temple Contact Number</h3>
           <form id="contact-form" class="flex gap-2 mb-3">
             <input id="contactPhone" type="tel" placeholder="Enter temple phone number" class="p-2 border rounded-md flex-grow" />
@@ -135,11 +134,26 @@
   </footer>
 </div>
 
-<!-- Alert modal -->
+<!-- Alert Modal -->
 <div id="alert-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 max-w-sm text-center">
     <p id="alert-message" class="mb-4"></p>
     <button id="alert-ok-btn" class="bg-orange-500 text-white px-4 py-2 rounded-md">OK</button>
+  </div>
+</div>
+
+<!-- Admin Password Modal -->
+<div id="password-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 max-w-sm">
+    <h3 class="text-lg font-bold mb-2">Admin Login</h3>
+    <form id="password-form" class="space-y-3">
+      <label class="block">Enter password:</label>
+      <input id="admin-password" type="password" class="w-full p-2 border rounded-md" />
+      <div class="flex justify-end gap-2">
+        <button type="button" id="password-cancel-btn" class="px-4 py-2 bg-gray-300 rounded-md">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-md">Login</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -171,7 +185,34 @@
     document.getElementById('alert-modal').classList.add('hidden')
   );
 
-  // Temple contact system
+  // ---------- Admin Login ----------
+  const adminPassword = "temple123"; // 🔑 Change this password
+  document.getElementById('admin-login-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('password-modal').classList.remove('hidden');
+    document.getElementById('password-modal').classList.add('flex');
+  });
+  document.getElementById('password-cancel-btn').addEventListener('click', () =>
+    document.getElementById('password-modal').classList.add('hidden')
+  );
+  document.getElementById('password-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const entered = document.getElementById('admin-password').value.trim();
+    if (entered === adminPassword) {
+      document.getElementById('password-modal').classList.add('hidden');
+      document.getElementById('home-page').classList.add('hidden');
+      document.getElementById('admin-view').classList.remove('hidden');
+    } else {
+      showAlert("❌ Wrong Password!");
+    }
+  });
+
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    document.getElementById('admin-view').classList.add('hidden');
+    document.getElementById('home-page').classList.remove('hidden');
+  });
+
+  // ---------- Temple Contact ----------
   const publicPhone = document.getElementById('publicPhone');
   const currentPhone = document.getElementById('currentPhone');
   const deleteBtn = document.getElementById('deletePhoneBtn');
@@ -205,7 +246,6 @@
     }
   });
 
-  // Footer year
   document.getElementById('footer-year').textContent = new Date().getFullYear();
 </script>
 </body>
