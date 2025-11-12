@@ -66,7 +66,7 @@
           <div class="glass-card">
             <h3 class="text-xl font-bold mb-2">Explore More</h3>
             <div class="flex flex-col sm:flex-row gap-3">
-              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼 Temple Photos</button>
+              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼️ Temple Photos</button>
               <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">✨ Special Days</button>
             </div>
           </div>
@@ -78,7 +78,7 @@
     <div id="photos-page" class="hidden">
       <div class="glass-card mb-6">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">🖼 Temple Photos</h2>
+          <h2 class="text-2xl font-bold">🖼️ Temple Photos</h2>
           <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
         </div>
         <div id="main-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
@@ -403,7 +403,7 @@
   document.getElementById('password-form').addEventListener('submit', (e)=> {
     e.preventDefault();
     const v = document.getElementById('admin-password').value;
-    if (v === adminPassword) { document.getElementById('password-modal').classList.add('hidden'); showAdminView(); } else showAlert('Wrong password. Access denied.');
+    if (v === adminPassword) { document.getElementById('password-modal').classList.add('hidden'); showAdminView(); } else showAlert('❌Wrong password. Access denied❗.');
   });
 
   function showAdminView() {
@@ -455,6 +455,7 @@
 </script>
 </body>
 </html>
+
 
 
 
