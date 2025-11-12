@@ -64,16 +64,18 @@
         </section>
 
 
-          <div class="glass-card">
-            <h3 class="text-xl font-bold mb-2">Explore More</h3>
-            <div class="flex flex-col sm:flex-row gap-3">
-              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼 Temple Photos</button>
-              <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">✨ Special Days</button>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </div>
+       <div class="glass-card">
+  <h3 class="text-xl font-bold mb-2">Explore More</h3>
+  <div class="flex flex-col sm:flex-row gap-3 flex-wrap">
+    <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼 Temple Photos</button>
+    <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">✨ Special Days</button>
+    <button id="go-to-very-special-btn" class="w-full bg-pink-600 text-white py-2 rounded-lg">💫 Very Special Days</button>
+    <button id="go-to-youtube-btn" class="w-full bg-red-600 text-white py-2 rounded-lg">▶ Temple YouTube</button>
+    <button id="go-to-facebook-btn" class="w-full bg-blue-700 text-white py-2 rounded-lg">📘 Temple Facebook</button>
+    <button id="go-to-instagram-btn" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white py-2 rounded-lg">📸 Temple Instagram</button>
+  </div>
+</div>
+   
 
     <!-- Photos, Events, Admin (similar to previous) -->
     <div id="photos-page" class="hidden">
@@ -110,6 +112,8 @@
             <button id="donors-tab-btn" class="px-3 py-2 bg-orange-100 rounded-md text-orange-700">Donors</button>
             <button id="photos-tab-btn" class="px-3 py-2 rounded-md">Upload Photos</button>
             <button id="events-tab-btn" class="px-3 py-2 rounded-md">Manage Events</button>
+            <button id="very-special-tab-btn" class="px-3 py-2 rounded-md">Very Special Days</button>
+
           </nav>
         </div>
 
@@ -153,10 +157,35 @@
       </div>
     </div>
 
+        <!-- 🌟 Admin Very Special Days Section -->
+<div id="very-special-content" class="hidden">
+  <h3 class="font-semibold mb-2">Manage Very Special Days</h3>
+  <form id="very-special-form" class="space-y-2 mb-4">
+    <input id="verySpecialDate" type="date" class="p-2 border rounded-md w-full" required />
+    <textarea id="verySpecialDescription" rows="3" class="p-2 border rounded-md w-full" placeholder="E.g., Annual Temple Maha Pooja"></textarea>
+    <button type="submit" class="bg-pink-600 text-white px-4 py-2 rounded-md w-full">Add Very Special Day</button>
+  </form>
+  <div id="admin-very-special-list" class="space-y-2"></div>
+  <p class="text-sm text-gray-600">Visible to all users.</p>
+</div>
+
+
   </main>
 
   <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Temple</footer>
 </div>
+
+<!-- 🌟 Very Special Days Page -->
+<div id="very-special-page" class="hidden">
+  <div class="glass-card mb-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-bold">💫 Very Special Days</h2>
+      <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
+    </div>
+    <div id="main-very-special" class="space-y-4"></div>
+  </div>
+</div>
+      
 
 <!-- Alert & Password modals -->
 <div id="alert-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
@@ -569,7 +598,66 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => {
 
 // Default = English
 setLang("en");
+
+ // ---------- Very Special Days (Admin + Public) ----------
+import { ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+document.getElementById('very-special-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = { 
+    date: document.getElementById('verySpecialDate').value, 
+    description: document.getElementById('verySpecialDescription').value || '' 
+  };
+  try { 
+    await push(ref(db, 'verySpecialDays'), data); 
+    showAlert('Very Special Day added to cloud.');
+    e.target.reset(); 
+  } catch (err) { 
+    showAlert('Error: ' + err.message); 
+  }
+});
+
+let verySpecials = {};
+onValue(ref(db,'verySpecialDays'), snap => {
+  verySpecials = snap.val() || {};
+  renderPublicVerySpecial(); 
+  renderAdminVerySpecial();
+});
+
+function renderPublicVerySpecial() {
+  const list = document.getElementById('main-very-special');
+  const arr = Object.keys(verySpecials).map(k => ({ key:k, ...verySpecials[k] })).sort((a,b)=> new Date(a.date)-new Date(b.date));
+  list.innerHTML = arr.length ? arr.map(e => `<div class="bg-white/60 p-3 rounded"><p class="font-bold text-pink-600">${escapeHtml(new Date(e.date).toLocaleDateString())}</p><p>${escapeHtml(e.description)}</p></div>`).join('') : '<p class="text-center text-gray-500">No very special days yet.</p>';
+}
+
+function renderAdminVerySpecial() {
+  const container = document.getElementById('admin-very-special-list');
+  const arr = Object.keys(verySpecials).map(k => ({ key:k, ...verySpecials[k] })).sort((a,b)=> new Date(a.date)-new Date(b.date));
+  container.innerHTML = arr.length ? arr.map(e => `
+    <div class="flex items-start justify-between bg-white/70 p-3 rounded">
+      <div><p class="font-bold text-pink-600">${escapeHtml(new Date(e.date).toLocaleDateString())}</p><p>${escapeHtml(e.description)}</p></div>
+      <div><button data-key="${e.key}" class="delete-very-special bg-red-500 text-white px-3 py-1 rounded">Delete</button></div>
+    </div>`).join('') : '<p class="text-gray-500">No very special days</p>';
+  document.querySelectorAll('.delete-very-special').forEach(btn => {
+    btn.addEventListener('click', ()=> {
+      if (confirm('Delete this very special day?')) 
+        remove(ref(db,'verySpecialDays/'+btn.dataset.key))
+        .then(()=> showAlert('Very Special Day deleted.'));
+    });
+  });
+}
+
+// ---------- Navigation + Social Buttons ----------
+document.getElementById('go-to-very-special-btn').addEventListener('click', ()=> { 
+  document.getElementById('home-page').classList.add('hidden'); 
+  document.getElementById('very-special-page').classList.remove('hidden'); 
+});
+document.getElementById('go-to-youtube-btn').addEventListener('click', () => window.open('https://www.youtube.com/@arulmigunarayanaswamy', '_blank'));
+document.getElementById('go-to-facebook-btn').addEventListener('click', () => window.open('https://www.facebook.com/arulmigunarayanaswamy', '_blank'));
+document.getElementById('go-to-instagram-btn').addEventListener('click', () => window.open('https://www.instagram.com/arulmigunarayanaswamy', '_blank'));
+ 
 </script>
+      
 
 
 
