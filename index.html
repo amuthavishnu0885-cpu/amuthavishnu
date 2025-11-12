@@ -449,12 +449,21 @@
   });
 
   function showAdminView() {
-    document.getElementById('home-page').classList.add('hidden');
-    document.getElementById('photos-page').classList.add('hidden');
-    document.getElementById('events-page').classList.add('hidden');
-    document.getElementById('admin-view').classList.remove('hidden');
-    showAdminTab('donors');
-  }
+  // Hide normal user pages
+  document.getElementById('home-page').classList.add('hidden');
+  document.getElementById('photos-page').classList.add('hidden');
+  document.getElementById('events-page').classList.add('hidden');
+
+  // Show admin panel
+  document.getElementById('admin-view').classList.remove('hidden');
+
+  // Default tab: Donors
+  showAdminTab('donors');
+
+  // Remember admin session
+  localStorage.setItem('isAdmin', 'true');
+}
+
 
   function logoutAdmin() {
     // hide admin and return to home
@@ -653,6 +662,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => {
 // Default = English
 setLang("en");
 </script>
+
 
 
 
