@@ -167,55 +167,48 @@
       <button id="templeinfo-tab" class="px-3 py-2 rounded">📰Temple Info</button>
     </div>
 
-    <!-- Donor Content -->
-   <div id="donor-content"></div>
-      <h3 class="font-semibold my-3">Donor List📃</h3>
-      <p id="donor-count" class="text-sm text-gray-600 mb-2"></p>
-      <table class="w-full">
-        <tbody id="donors-table-body"></tbody>
-      </table>
-    </div>
+    <!-- DONOR CONTENT -->
+<div id="donor-content">
+  <h3 class="font-semibold my-3">Donor List📃</h3>
+  <p id="donor-count" class="text-sm text-gray-600 mb-2"></p>
+  <table class="w-full">
+    <tbody id="donors-table-body"></tbody>
+  </table>
+</div>
 
-    <!-- Upload Photos -->
-    <div id="photo-content" class="hidden"></div>
-      <h3 class="font-semibold my-3">Upload Photos</h3>
-      <form id="photo-upload-form" class="flex gap-3">
-        <input id="photoFile" type="file" class="border p-2 rounded" />
-        <button class="bg-orange-500 text-white px-4 py-2 rounded">Upload</button>
-      </form>
-    </div>
+<!-- PHOTO CONTENT -->
+<div id="photo-content" class="hidden">
+  <h3 class="font-semibold my-3">Upload Photos</h3>
+  <form id="photo-upload-form" class="flex gap-3">
+    <input id="photoFile" type="file" class="border p-2 rounded" />
+    <button class="bg-orange-500 text-white px-4 py-2 rounded">Upload</button>
+  </form>
+</div>
 
-    <!-- Manage Events -->
-    <div id="event-content" class="hidden"></div>
-      <h3 class="font-semibold my-3">Manage Events</h3>
+<!-- EVENT CONTENT -->
+<div id="event-content" class="hidden">
+  <h3 class="font-semibold my-3">Manage Events</h3>
+  <form id="event-form" class="space-y-2">
+    <input id="eventDate" type="date" class="border p-2 rounded w-full" />
+    <textarea id="eventDescription" class="border p-2 rounded w-full"></textarea>
+    <button class="bg-orange-500 text-white px-4 py-2 rounded w-full">Add Event</button>
+  </form>
 
-      <form id="event-form" class="space-y-2">
-        <input id="eventDate" type="date" class="border p-2 rounded w-full" />
-        <textarea id="eventDescription" class="border p-2 rounded w-full"></textarea>
-        <button class="bg-orange-500 text-white px-4 py-2 rounded w-full">Add Event</button>
-      </form>
+  <div id="admin-events-list" class="mt-3 space-y-2"></div>
+</div>
 
-      <div id="admin-events-list" class="mt-3 space-y-2"></div>
-    </div>
+<!-- TEMPLE INFO CONTENT -->
+<div id="templeinfo-content" class="hidden">
+  <h3 class="font-semibold my-3">Temple Info & Contact</h3>
+  <form id="templeinfo-form" class="space-y-2">
+    <input id="tphone" placeholder="Temple Phone" class="border p-2 rounded w-full" />
+    <input id="tyt" placeholder="YouTube Link" class="border p-2 rounded w-full" />
+    <input id="tfb" placeholder="Facebook Link" class="border p-2 rounded w-full" />
+    <input id="tig" placeholder="Instagram Link" class="border p-2 rounded w-full" />
+    <button class="bg-pink-600 text-white px-4 py-2 rounded w-full">Save Temple Info</button>
+  </form>
 
-    <!-- TEMPLE INFO ADMIN -->
-    <div id="templeinfo-list" class="mt-4 space-y-2"></div>
-   <div id="templeinfo-content" class="hidden"></div>
-      <h3 class="font-semibold my-3">Temple Info & Contact</h3>
-
-      <form id="templeinfo-form" class="space-y-2">
-        <input id="tphone" placeholder="Temple Phone" class="border p-2 rounded w-full" />
-        <input id="tyt" placeholder="YouTube Link" class="border p-2 rounded w-full" />
-        <input id="tfb" placeholder="Facebook Link" class="border p-2 rounded w-full" />
-        <input id="tig" placeholder="Instagram Link" class="border p-2 rounded w-full" />
-
-        <button class="bg-pink-600 text-white px-4 py-2 rounded w-full">
-          Save Temple Info
-        </button>
-      </form>
-    </div>
-
-  </div>
+  <div id="templeinfo-list" class="mt-4 space-y-2"></div>
 </div>
 
 </main>
@@ -237,6 +230,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Firebase + App Logic -->
 <script type="module">
+  // 🔥 STORE LATEST TEMPLE INFO HERE
+let latestTempleInfo = {};
   
   /* -------------------------------------------------------
     FIREBASE INITIAL SETUP
@@ -288,14 +283,17 @@ document.getElementById("go-to-photos-btn").onclick = () => showPage("photos-pag
 document.getElementById("go-to-events-btn").onclick = () => showPage("events-page");
 document.getElementById("go-to-templeinfo-btn").onclick = () => showPage("templeinfo-page");
 
-document.getElementById("go-to-youtube-btn").onclick = () =>
-  window.open("https://www.youtube.com", "_blank");
+document.getElementById("go-to-youtube-btn").onclick = () => {
+  window.open(latestTempleInfo.youtube || "https://youtube.com", "_blank");
+};
 
-document.getElementById("go-to-facebook-btn").onclick = () =>
-  window.open("https://facebook.com", "_blank");
+document.getElementById("go-to-facebook-btn").onclick = () => {
+  window.open(latestTempleInfo.facebook || "https://facebook.com", "_blank");
+};
 
-document.getElementById("go-to-instagram-btn").onclick = () =>
-  window.open("https://instagram.com", "_blank");
+document.getElementById("go-to-instagram-btn").onclick = () => {
+  window.open(latestTempleInfo.instagram || "https://instagram.com", "_blank");
+};
 
 /* -------------------------------------------------------
     DONATION SAVE
@@ -450,6 +448,10 @@ onValue(ref(db, "events"), snapshot => {
 // SAVE TEMPLE INFO
   // SHOW + EDIT + DELETE TEMPLE INFO
 onValue(ref(db, "templeInfo"), snapshot => {
+  const data = snapshot.val();
+  if (!data) return;
+
+  latestTempleInfo = Object.values(data).pop();
   const data = snapshot.val() || {};
   const list = document.getElementById("templeinfo-list");
   list.innerHTML = "";
@@ -662,6 +664,7 @@ applyLanguage("en");
 </script>
 
  
+
 
 
 
