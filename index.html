@@ -324,10 +324,6 @@ onValue(ref(db, "donations"), snapshot => {
   const tbody = document.getElementById("donors-table-body");
   tbody.innerHTML = "";
 
-  // Count
-  document.getElementById("donor-count").innerHTML =
-    "Total Donors: " + Object.keys(data).length;
-
   // Count display
   document.getElementById("donor-count").innerHTML =
     "Total Donors: " + Object.keys(data).length;
@@ -560,6 +556,7 @@ document.getElementById("templeinfo-tab").onclick = () => {
   
 
 </script>
+
 
 
 
