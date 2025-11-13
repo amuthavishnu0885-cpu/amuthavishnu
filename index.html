@@ -452,7 +452,7 @@ onValue(ref(db, "templeInfo"), snapshot => {
   if (!data) return;
 
   latestTempleInfo = Object.values(data).pop();
-  const data = snapshot.val() || {};
+  
   const list = document.getElementById("templeinfo-list");
   list.innerHTML = "";
 
@@ -664,6 +664,7 @@ applyLanguage("en");
 </script>
 
  
+
 
 
 
