@@ -64,27 +64,31 @@
         </section>
 
 
-          <!-- 🌸 Explore More + Temple Contact (3×2 grid layout) -->
-<div class="glass-card text-center">
-  <h3 class="text-xl font-bold mb-3">Explore More</h3>
+          <div class="glass-card">
+            <h3 class="text-xl font-bold mb-2">Explore More</h3>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼 Temple Photos📸</button>
+              <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">✨ Special Days</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
 
-  <!-- Grid layout for Explore + Contact -->
+    <!-- 🕉 Temple Contact & Social Links -->
+<div class="glass-card mt-4 text-center">
+  <h3 class="text-xl font-bold mb-4">Temple Contact & Social Links</h3>
+
   <div class="grid grid-cols-2 gap-3">
-    <!-- Row 1 -->
-    <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg font-semibold">🖼️ Temple Photos</button>
-    <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg font-semibold">✨ Special Days</button>
-
-    <!-- Row 2 -->
-    <div class="p-3 border-2 border-orange-300 rounded-lg bg-white shadow-sm flex items-center justify-center">
+    <div class="p-3 border-2 border-orange-300 rounded-lg bg-white shadow-sm">
       <p id="temple-phone" class="text-gray-800 font-semibold text-base">📞 Phone: --</p>
     </div>
 
     <a id="temple-youtube" href="#" target="_blank"
       class="p-3 border-2 border-red-400 rounded-lg bg-white hover:bg-red-50 shadow-sm text-red-600 font-semibold flex items-center justify-center">
-      ▶️ YouTube
+      ▶ YouTube
     </a>
 
-    <!-- Row 3 -->
     <a id="temple-facebook" href="#" target="_blank"
       class="p-3 border-2 border-blue-400 rounded-lg bg-white hover:bg-blue-50 shadow-sm text-blue-600 font-semibold flex items-center justify-center">
       📘 Facebook
@@ -98,12 +102,12 @@
 </div>
 
 
-    
+
     <!-- Photos, Events, Admin (similar to previous) -->
     <div id="photos-page" class="hidden">
       <div class="glass-card mb-6">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">🖼️ Temple Photos📸</h2>
+          <h2 class="text-2xl font-bold">🖼 Temple Photos📸</h2>
           <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
         </div>
         <div id="main-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
@@ -195,7 +199,7 @@
 
   </main>
 
-  <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Temple<p>Created by Amuthavishnukumaran Srinivasan</p></footer>
+  <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Temple<p>Created by Amuthavishnukumaran Srinivasan</p></footer>
 </div>
 
 <!-- Alert & Password modals -->
@@ -320,7 +324,7 @@
           </tr>`;
         });
       } else {
-        rows = `<tr><td colspan="6" style="padding:12px;text-align:center">No donations to print</td></tr>`;
+        rows = <tr><td colspan="6" style="padding:12px;text-align:center">No donations to print</td></tr>;
       }
 
       const html = `
@@ -372,7 +376,7 @@
       if (!data) { showAlert('No donations to export.'); return; }
       const rows = [['Donor Name','Address','Phone','Email','Amount','TxnID','Date']];
       Object.values(data).forEach(d => rows.push([d.donorName||'', d.address||'', d.phone||'', d.email||'', d.amount||'', d.transactionId||'', d.date||'']));
-      const csv = rows.map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\r\n');
+      const csv = rows.map(r => r.map(cell => "${String(cell).replace(/"/g,'""')}").join(',')).join('\r\n');
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a'); a.href = url; a.download = 'donations.csv'; a.click();
@@ -385,7 +389,7 @@
     e.preventDefault();
     const file = document.getElementById('photoFile').files[0];
     if (!file) { showAlert('Select a photo first.'); return; }
-    const path = `photos/${Date.now()}_${file.name}`;
+    const path = photos/${Date.now()}_${file.name};
     const storageRef = sref(storage, path);
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on('state_changed', null, err => showAlert('Upload failed: ' + err.message), async () => {
@@ -425,12 +429,12 @@
   function renderPublicEvents() {
     const list = document.getElementById('main-events');
     const arr = Object.keys(latestEvents).map(k => ({ key:k, ...latestEvents[k] })).sort((a,b)=> new Date(a.date)-new Date(b.date));
-    list.innerHTML = arr.length ? arr.map(e => `<div class="bg-white/60 p-3 rounded"><p class="font-bold text-orange-700">${escapeHtml(new Date(e.date).toLocaleDateString())}</p><p>${escapeHtml(e.description)}</p></div>`).join('') : '<p class="text-center text-gray-500">No events scheduled yet.</p>';
+    list.innerHTML = arr.length ? arr.map(e => <div class="bg-white/60 p-3 rounded"><p class="font-bold text-orange-700">${escapeHtml(new Date(e.date).toLocaleDateString())}</p><p>${escapeHtml(e.description)}</p></div>).join('') : '<p class="text-center text-gray-500">No events scheduled yet.</p>';
   }
   function renderAdminEvents() {
     const container = document.getElementById('admin-events-list');
     const arr = Object.keys(latestEvents).map(k => ({ key:k, ...latestEvents[k] })).sort((a,b)=> new Date(a.date)-new Date(b.date));
-    container.innerHTML = arr.length ? arr.map(e => `<div class="flex items-start justify-between bg-white/70 p-3 rounded"><div><p class="font-bold text-orange-700">${escapeHtml(new Date(e.date).toLocaleDateString())}</p><p>${escapeHtml(e.description)}</p></div><div><button data-key="${e.key}" class="delete-event bg-red-500 text-white px-3 py-1 rounded">Delete</button></div></div>`).join('') : '<p class="text-gray-500">No events</p>';
+    container.innerHTML = arr.length ? arr.map(e => <div class="flex items-start justify-between bg-white/70 p-3 rounded"><div><p class="font-bold text-orange-700">${escapeHtml(new Date(e.date).toLocaleDateString())}</p><p>${escapeHtml(e.description)}</p></div><div><button data-key="${e.key}" class="delete-event bg-red-500 text-white px-3 py-1 rounded">Delete</button></div></div>).join('') : '<p class="text-gray-500">No events</p>';
     document.querySelectorAll('.delete-event').forEach(btn => {
       btn.addEventListener('click', ()=> {
         if (confirm('Delete this event?')) remove(ref(db,'events/'+btn.dataset.key)).then(()=> showAlert('Event deleted.'));
@@ -449,21 +453,12 @@
   });
 
   function showAdminView() {
-  // Hide normal user pages
-  document.getElementById('home-page').classList.add('hidden');
-  document.getElementById('photos-page').classList.add('hidden');
-  document.getElementById('events-page').classList.add('hidden');
-
-  // Show admin panel
-  document.getElementById('admin-view').classList.remove('hidden');
-
-  // Default tab: Donors
-  showAdminTab('donors');
-
-  // Remember admin session
-  localStorage.setItem('isAdmin', 'true');
-}
-
+    document.getElementById('home-page').classList.add('hidden');
+    document.getElementById('photos-page').classList.add('hidden');
+    document.getElementById('events-page').classList.add('hidden');
+    document.getElementById('admin-view').classList.remove('hidden');
+    showAdminTab('donors');
+  }
 
   function logoutAdmin() {
     // hide admin and return to home
@@ -513,7 +508,7 @@ const igEl = document.getElementById('temple-instagram');
 
 onValue(ref(db, 'templeInfo/main'), snap => {
   const info = snap.val() || {};
-  phoneEl.textContent = info.phone ? `📞 Phone: ${info.phone}` : '📞 Phone: Not available';
+  phoneEl.textContent = info.phone ? 📞 Phone: ${info.phone} : '📞 Phone: Not available';
   ytEl.href = info.youtube || '#';
   fbEl.href = info.facebook || '#';
   igEl.href = info.instagram || '#';
@@ -567,7 +562,7 @@ const translations = {
     date: "Date",
     submit: "Submit Donation",
     explore: "Explore More",
-    templePhotos: "🖼️Temple Photos📸",
+    templePhotos: "🖼Temple Photos📸",
     specialDays: "✨ Special Days",
     donorsList: "Donors List",
     uploadPhotos: "Upload Photos",
@@ -589,7 +584,7 @@ const translations = {
     date: "தேதி",
     submit: "நன்கொடை சமர்ப்பிக்கவும்",
     explore: "மேலும் பார்க்க",
-    templePhotos: "🖼️கோவில் புகைப்படங்கள்📸",
+    templePhotos: "🖼கோவில் புகைப்படங்கள்📸",
     specialDays: "✨ சிறப்பு நாட்கள்",
     donorsList: "நன்கொடையாளர்கள் பட்டியல்",
     uploadPhotos: "புகைப்படங்களைப் பதிவேற்றவும்",
@@ -662,17 +657,3 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => {
 // Default = English
 setLang("en");
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
