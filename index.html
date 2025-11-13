@@ -21,9 +21,9 @@
 
 <div id="app" class="max-w-6xl mx-auto p-6">
   <header class="mb-6">
-    <div class="header-image bg-[url('https://placehold.co/1200x200/E67E22/FFFFFF?text=-')] bg-cover bg-center h-40 rounded-lg relative">
-      <div class="absolute inset-0 bg-black/0 flex items-center justify-center rounded-lg">
-        <h2 id="header-title" class="text-white text-1xl md:text-4xl font-bold"><center>Arulmigu Narayana Swamy Temple Donation Portal </center></h2>
+    <div class="header-image bg-[url('https://placehold.co/1200x300/E67E22/FFFFFF?text=.')] bg-cover bg-center h-48 rounded-lg relative">
+      <div class="absolute inset-0 bg-black/40 flex items-center justify-center rounded-lg">
+        <h1 id="header-title" class="text-white text-3xl md:text-4xl font-bold">Arulmigu Narayana Swamy Temple Donation Portal</h1>
       </div>
     </div>
   </header>
@@ -39,13 +39,6 @@
   </nav>
 
   <main>
-     <!-- Scan to Pay (static) -->
-<div class="glass-card p-6 md:p-8 text-center">
-  <h3 class="text-xl font-bold mb-2" data-key="paymentTitle">Scan to Pay</h3>
-  <img id="upi-qr" src="QR.png" alt="UPI QR code" class="mx-auto rounded-lg shadow-lg w-400 h-500 object-cover" />
-  <p class="mt-3 text-sm" data-key="paymentInstructions">After payment, enter the UPI transaction id in the form.<p>பணம் செலுத்திய பிறகு, படிவத்தில் UPI பரிவர்த்தனை ஐடியை உள்ளிடவும்.</p></p>
-</div>
-    
     <!-- Home -->
     <div id="home-page">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -63,11 +56,17 @@
           </form>
         </section>
 
+        <!-- Scan to Pay (static) -->
+<div class="glass-card p-6 md:p-8 text-center">
+  <h3 class="text-xl font-bold mb-2" data-key="paymentTitle">Scan to Pay</h3>
+  <img id="upi-qr" src="QR.png" alt="UPI QR code" class="mx-auto rounded-lg shadow-lg w-400 h-500 object-cover" />
+  <p class="mt-3 text-sm" data-key="paymentInstructions">After payment, enter the UPI transaction id in the form.</p>
+</div>
 
           <div class="glass-card">
             <h3 class="text-xl font-bold mb-2">Explore More</h3>
             <div class="flex flex-col sm:flex-row gap-3">
-              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼 Temple Photos📸</button>
+              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼 Temple Photos</button>
               <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">✨ Special Days</button>
             </div>
           </div>
@@ -75,39 +74,11 @@
       </div>
     </div>
 
-    <!-- 🕉 Temple Contact & Social Links -->
-<div class="glass-card mt-4 text-center">
-  <h3 class="text-xl font-bold mb-4">Temple Contact & Social Links</h3>
-
-  <div class="grid grid-cols-2 gap-3">
-    <div class="p-3 border-2 border-orange-300 rounded-lg bg-white shadow-sm">
-      <p id="temple-phone" class="text-gray-800 font-semibold text-base">📞 Phone: --</p>
-    </div>
-
-    <a id="temple-youtube" href="#" target="_blank"
-      class="p-3 border-2 border-red-400 rounded-lg bg-white hover:bg-red-50 shadow-sm text-red-600 font-semibold flex items-center justify-center">
-      ▶ YouTube
-    </a>
-
-    <a id="temple-facebook" href="#" target="_blank"
-      class="p-3 border-2 border-blue-400 rounded-lg bg-white hover:bg-blue-50 shadow-sm text-blue-600 font-semibold flex items-center justify-center">
-      📘 Facebook
-    </a>
-
-    <a id="temple-instagram" href="#" target="_blank"
-      class="p-3 border-2 border-pink-400 rounded-lg bg-white hover:bg-pink-50 shadow-sm text-pink-600 font-semibold flex items-center justify-center">
-      📸 Instagram
-    </a>
-  </div>
-</div>
-
-
-
     <!-- Photos, Events, Admin (similar to previous) -->
     <div id="photos-page" class="hidden">
       <div class="glass-card mb-6">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">🖼 Temple Photos📸</h2>
+          <h2 class="text-2xl font-bold">🖼 Temple Photos</h2>
           <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
         </div>
         <div id="main-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
@@ -138,8 +109,6 @@
             <button id="donors-tab-btn" class="px-3 py-2 bg-orange-100 rounded-md text-orange-700">Donors</button>
             <button id="photos-tab-btn" class="px-3 py-2 rounded-md">Upload Photos</button>
             <button id="events-tab-btn" class="px-3 py-2 rounded-md">Manage Events</button>
-            <button id="temple-tab-btn" class="px-3 py-2 rounded-md">Temple Info</button>
-
           </nav>
         </div>
 
@@ -183,23 +152,9 @@
       </div>
     </div>
 
-    <!-- Temple Info (Admin Only) -->
-<div id="temple-content" class="hidden">
-  <h3 class="font-semibold mb-2">Temple Contact & Social Links</h3>
-  <form id="temple-form" class="space-y-2 mb-4">
-    <input id="templePhone" type="tel" class="p-2 border rounded-md w-full" placeholder="Temple Phone Number" />
-    <input id="templeYouTube" type="url" class="p-2 border rounded-md w-full" placeholder="YouTube Link" />
-    <input id="templeFacebook" type="url" class="p-2 border rounded-md w-full" placeholder="Facebook Link" />
-    <input id="templeInstagram" type="url" class="p-2 border rounded-md w-full" placeholder="Instagram Link" />
-    <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md w-full">Save Info</button>
-  </form>
-  <p class="text-sm text-gray-600">This info will appear on the homepage.</p>
-</div>
-
-
   </main>
 
-  <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Temple<p>Created by Amuthavishnukumaran Srinivasan</p></footer>
+  <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Temple</footer>
 </div>
 
 <!-- Alert & Password modals -->
@@ -253,7 +208,6 @@
   };
   document.getElementById('alert-ok-btn').addEventListener('click', ()=> document.getElementById('alert-modal').classList.add('hidden'));
 
-  
   // ---------- Add donation ----------
   document.getElementById('donation-form').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -449,7 +403,7 @@
   document.getElementById('password-form').addEventListener('submit', (e)=> {
     e.preventDefault();
     const v = document.getElementById('admin-password').value;
-    if (v === adminPassword) { document.getElementById('password-modal').classList.add('hidden'); showAdminView(); } else showAlert('❌Wrong password.❗Access denied.🔒');
+    if (v === adminPassword) { document.getElementById('password-modal').classList.add('hidden'); showAdminView(); } else showAlert('Wrong password. Access denied.');
   });
 
   function showAdminView() {
@@ -472,17 +426,14 @@
 
   // admin tab switching
   function showAdminTab(name){
-  document.getElementById('donors-content').classList.toggle('hidden', name!=='donors');
-  document.getElementById('photos-content').classList.toggle('hidden', name!=='photos');
-  document.getElementById('events-content').classList.toggle('hidden', name!=='events');
-  document.getElementById('temple-content').classList.toggle('hidden', name!=='temple');
-  ['donors-tab-btn','photos-tab-btn','events-tab-btn','temple-tab-btn'].forEach(id=> document.getElementById(id).classList.remove('bg-orange-100','text-orange-700'));
-  if (name==='donors') document.getElementById('donors-tab-btn').classList.add('bg-orange-100','text-orange-700');
-  if (name==='photos') document.getElementById('photos-tab-btn').classList.add('bg-orange-100','text-orange-700');
-  if (name==='events') document.getElementById('events-tab-btn').classList.add('bg-orange-100','text-orange-700');
-  if (name==='temple') document.getElementById('temple-tab-btn').classList.add('bg-orange-100','text-orange-700');
-}
-
+    document.getElementById('donors-content').classList.toggle('hidden', name!=='donors');
+    document.getElementById('photos-content').classList.toggle('hidden', name!=='photos');
+    document.getElementById('events-content').classList.toggle('hidden', name!=='events');
+    ['donors-tab-btn','photos-tab-btn','events-tab-btn'].forEach(id=> document.getElementById(id).classList.remove('bg-orange-100','text-orange-700'));
+    if (name==='donors') document.getElementById('donors-tab-btn').classList.add('bg-orange-100','text-orange-700');
+    if (name==='photos') document.getElementById('photos-tab-btn').classList.add('bg-orange-100','text-orange-700');
+    if (name==='events') document.getElementById('events-tab-btn').classList.add('bg-orange-100','text-orange-700');
+  }
   document.getElementById('donors-tab-btn').addEventListener('click', ()=> showAdminTab('donors'));
   document.getElementById('photos-tab-btn').addEventListener('click', ()=> showAdminTab('photos'));
   document.getElementById('events-tab-btn').addEventListener('click', ()=> showAdminTab('events'));
@@ -498,162 +449,9 @@
   // simple helper
   function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]); }); }
 
-  // ---------- Temple Contact & Social Links (Admin Manage) ----------
-
-// Realtime update on homepage
-const phoneEl = document.getElementById('temple-phone');
-const ytEl = document.getElementById('temple-youtube');
-const fbEl = document.getElementById('temple-facebook');
-const igEl = document.getElementById('temple-instagram');
-
-onValue(ref(db, 'templeInfo/main'), snap => {
-  const info = snap.val() || {};
-  phoneEl.textContent = info.phone ? 📞 Phone: ${info.phone} : '📞 Phone: Not available';
-  ytEl.href = info.youtube || '#';
-  fbEl.href = info.facebook || '#';
-  igEl.href = info.instagram || '#';
-});
-
-// ---------- Admin update (fixed: overwrite temple info instead of pushing multiple entries) ----------
-import { set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
-
-document.getElementById('temple-form').addEventListener('submit', async e => {
-  e.preventDefault();
-  const data = {
-    phone: document.getElementById('templePhone').value || '',
-    youtube: document.getElementById('templeYouTube').value || '',
-    facebook: document.getElementById('templeFacebook').value || '',
-    instagram: document.getElementById('templeInstagram').value || ''
-  };
-  try {
-    await set(ref(db, 'templeInfo/main'), data); // ✅ overwrite fixed path
-    showAlert('Temple info updated successfully.');
-  } catch (err) {
-    showAlert('Error saving temple info: ' + err.message);
-  }
-});
-
-
-// Switch admin tab
-document.getElementById('temple-tab-btn').addEventListener('click', ()=> showAdminTab('temple'));
-
   // footer
   document.getElementById('footer-year').textContent = new Date().getFullYear();
 
 </script>
 </body>
 </html>
-
-<script type="module">
-
-  // ---------- 💬 Tamil / English Language Toggle (Add-On) ----------
-const translations = {
-  en: {
-    header: "Arulmigu Narayana Swamy Temple Donation Portal",
-    paymentTitle: "Scan to Pay",
-    paymentInstructions: "After payment, enter the UPI transaction ID in the form.",
-    donationTitle: "Make a Donation",
-    donorName: "Donor Name",
-    address: "Address",
-    phone: "Phone Number",
-    email: "Email ID",
-    amount: "Donation Amount (₹)",
-    transactionId: "UPI Transaction ID",
-    date: "Date",
-    submit: "Submit Donation",
-    explore: "Explore More",
-    templePhotos: "🖼Temple Photos📸",
-    specialDays: "✨ Special Days",
-    donorsList: "Donors List",
-    uploadPhotos: "Upload Photos",
-    manageEvents: "Manage Events",
-    logout: "Logout",
-    admin: "Admin Dashboard"
-  },
-  ta: {
-    header: "அருள்மிகு நாராயண சுவாமி கோவில் நன்கொடை தளம்",
-    paymentTitle: "கட்டணம் செலுத்த ஸ்கேன் செய்யவும்",
-    paymentInstructions: "பணம் செலுத்திய பிறகு, படிவத்தில் UPI பரிவர்த்தனை ஐடியை உள்ளிடவும்.",
-    donationTitle: "நன்கொடை அளிக்கவும்",
-    donorName: "தொகை வழங்குநர் பெயர்",
-    address: "முகவரி",
-    phone: "தொலைபேசி எண்",
-    email: "மின்னஞ்சல் ஐடி",
-    amount: "நன்கொடை தொகை (₹)",
-    transactionId: "UPI பரிவர்த்தனை ஐடி",
-    date: "தேதி",
-    submit: "நன்கொடை சமர்ப்பிக்கவும்",
-    explore: "மேலும் பார்க்க",
-    templePhotos: "🖼கோவில் புகைப்படங்கள்📸",
-    specialDays: "✨ சிறப்பு நாட்கள்",
-    donorsList: "நன்கொடையாளர்கள் பட்டியல்",
-    uploadPhotos: "புகைப்படங்களைப் பதிவேற்றவும்",
-    manageEvents: "நிகழ்வுகளை நிர்வகிக்கவும்",
-    logout: "வெளியேறு",
-    admin: "நிர்வாகக் குழு"
-  }
-};
-
-function setLang(lang) {
-  const t = translations[lang];
-  if (!t) return;
-
-  // Header & static sections
-  document.getElementById("header-title").textContent = t.header;
-  document.querySelector("[data-key='paymentTitle']").textContent = t.paymentTitle;
-  document.querySelector("[data-key='paymentInstructions']").textContent = t.paymentInstructions;
-
-  // Donation form labels
-  const labels = document.querySelectorAll("#donation-form label");
-  if (labels.length >= 7) {
-    labels[0].textContent = t.donorName;
-    labels[1].textContent = t.address;
-    labels[2].textContent = t.phone;
-    labels[3].textContent = t.email;
-    labels[4].textContent = t.amount;
-    labels[5].textContent = t.transactionId;
-    labels[6].textContent = t.date;
-  }
-
-  // Buttons and titles
-  const donationTitle = document.querySelector(".text-2xl.font-bold.mb-4");
-  if (donationTitle) donationTitle.textContent = t.donationTitle;
-
-  const submitBtn = document.querySelector("#donation-form button");
-  if (submitBtn) submitBtn.textContent = t.submit;
-
-  const exploreTitle = document.querySelector(".glass-card h3.text-xl.font-bold.mb-2");
-  if (exploreTitle) exploreTitle.textContent = t.explore;
-
-  const photoBtn = document.getElementById("go-to-photos-btn");
-  const eventBtn = document.getElementById("go-to-events-btn");
-  if (photoBtn) photoBtn.textContent = t.templePhotos;
-  if (eventBtn) eventBtn.textContent = t.specialDays;
-
-  // Admin section if visible
-  const adminHeader = document.querySelector("#admin-view h2");
-  if (adminHeader) adminHeader.textContent = t.admin;
-  const logoutBtn = document.getElementById("logout-btn");
-  if (logoutBtn) logoutBtn.textContent = t.logout;
-  const donorList = document.querySelector("#donors-content h3");
-  if (donorList) donorList.textContent = t.donorsList;
-  const photoTab = document.getElementById("photos-tab-btn");
-  const eventTab = document.getElementById("events-tab-btn");
-  if (photoTab) photoTab.textContent = t.uploadPhotos;
-  if (eventTab) eventTab.textContent = t.manageEvents;
-}
-
-// Language buttons
-document.getElementById("en-lang-btn").addEventListener("click", () => {
-  setLang("en");
-  document.documentElement.lang = "en";
-});
-
-document.getElementById("ta-lang-btn").addEventListener("click", () => {
-  setLang("ta");
-  document.documentElement.lang = "ta";
-});
-
-// Default = English
-setLang("en");
-</script>
