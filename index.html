@@ -276,53 +276,19 @@ document.querySelectorAll(".back-home").forEach(btn =>
 /* -------------------------------------------------------
     EXPLORE BUTTONS
 -------------------------------------------------------- */
-/* -------------------------------------------------------
-   SOCIAL BUTTONS OPEN SAVED ADMIN LINKS
--------------------------------------------------------- */
-let savedYouTube = "";
-let savedFacebook = "";
-let savedInstagram = "";
+document.getElementById("go-to-photos-btn").onclick = () => showPage("photos-page");
+document.getElementById("go-to-events-btn").onclick = () => showPage("events-page");
+document.getElementById("go-to-templeinfo-btn").onclick = () => showPage("templeinfo-page");
 
-// Load latest saved links from Firebase
-onValue(ref(db, "templeInfo"), (snapshot) => {
-  const data = snapshot.val();
-  if (!data) return;
+document.getElementById("go-to-youtube-btn").onclick = () =>
+  window.open("https://www.youtube.com", "_blank");
 
-  const last = Object.values(data).pop();
+document.getElementById("go-to-facebook-btn").onclick = () =>
+  window.open("https://facebook.com", "_blank");
 
-  savedYouTube = last.youtube || "";
-  savedFacebook = last.facebook || "";
-  savedInstagram = last.instagram || "";
-});
+document.getElementById("go-to-instagram-btn").onclick = () =>
+  window.open("https://instagram.com", "_blank");
 
-// YouTube button
-document.getElementById("go-to-youtube-btn").onclick = () => {
-  if (savedYouTube.trim() !== "") {
-    window.open(savedYouTube, "_blank");
-  } else {
-    alert("YouTube link not saved in Admin Panel!");
-  }
-};
-
-// Facebook button
-document.getElementById("go-to-facebook-btn").onclick = () => {
-  if (savedFacebook.trim() !== "") {
-    window.open(savedFacebook, "_blank");
-  } else {
-    alert("Facebook link not saved in Admin Panel!");
-  }
-};
-
-// Instagram button
-document.getElementById("go-to-instagram-btn").onclick = () => {
-  if (savedInstagram.trim() !== "") {
-    window.open(savedInstagram, "_blank");
-  } else {
-    alert("Instagram link not saved in Admin Panel!");
-  }
-};
-
-  
 /* -------------------------------------------------------
     DONATION SAVE
 -------------------------------------------------------- */
@@ -341,7 +307,7 @@ document.getElementById("donation-form").addEventListener("submit", async (e) =>
   Swal.fire({
   title: "Thank You! 🙏",
   text: "Your donation has been successfully submitted.",
-  imageUrl: "https://i.ibb.co/7Wn7dqz/thankyou.png",
+  imageUrl: "https://media.tenor.com/kx02y-HTwW8AAAAj/thank-you.gif",
   imageWidth: 150,
   imageHeight: 150,
   confirmButtonText: "OK",
@@ -474,8 +440,6 @@ onValue(ref(db, "events"), snapshot => {
 -------------------------------------------------------- */
 
 // SAVE TEMPLE INFO
-import { set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
-
 document.getElementById("templeinfo-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const data = {
@@ -484,25 +448,26 @@ document.getElementById("templeinfo-form").addEventListener("submit", async (e) 
     facebook: tfb.value,
     instagram: tig.value
   };
-
-  await set(ref(db, "templeInfo/latest"), data);
-
+  await push(ref(db, "templeInfo"), data);
   alert("Temple info updated!");
   e.target.reset();
 });
 
 // SHOW TEMPLE INFO PUBLIC
-onValue(ref(db, "templeInfo/latest"), snapshot => {
-  const last = snapshot.val();
-  if (!last) return;
+onValue(ref(db, "templeInfo"), snapshot => {
+  const data = snapshot.val();
+  if (!data) return;
 
-  savedYouTube = last.youtube || "";
-  savedFacebook = last.facebook || "";
-  savedInstagram = last.instagram || "";
+  const last = Object.values(data).pop(); // latest entry
 
   document.getElementById("info-phone").innerHTML = "📞 " + last.phone;
+  document.getElementById("info-youtube").innerHTML = "▶ YouTube";
   document.getElementById("info-youtube").href = last.youtube;
+
+  document.getElementById("info-facebook").innerHTML = "📘 Facebook";
   document.getElementById("info-facebook").href = last.facebook;
+
+  document.getElementById("info-instagram").innerHTML = "📸 Instagram";
   document.getElementById("info-instagram").href = last.instagram;
 });
 
@@ -593,8 +558,4 @@ document.getElementById("templeinfo-tab").onclick = () => {
 </script>
 
  
-
-
-
-
 
