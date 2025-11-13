@@ -474,6 +474,8 @@ onValue(ref(db, "events"), snapshot => {
 -------------------------------------------------------- */
 
 // SAVE TEMPLE INFO
+import { set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
 document.getElementById("templeinfo-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const data = {
@@ -482,26 +484,25 @@ document.getElementById("templeinfo-form").addEventListener("submit", async (e) 
     facebook: tfb.value,
     instagram: tig.value
   };
-  await push(ref(db, "templeInfo"), data);
+
+  await set(ref(db, "templeInfo/latest"), data);
+
   alert("Temple info updated!");
   e.target.reset();
 });
 
 // SHOW TEMPLE INFO PUBLIC
-onValue(ref(db, "templeInfo"), snapshot => {
-  const data = snapshot.val();
-  if (!data) return;
+onValue(ref(db, "templeInfo/latest"), snapshot => {
+  const last = snapshot.val();
+  if (!last) return;
 
-  const last = Object.values(data).pop(); // latest entry
+  savedYouTube = last.youtube || "";
+  savedFacebook = last.facebook || "";
+  savedInstagram = last.instagram || "";
 
   document.getElementById("info-phone").innerHTML = "📞 " + last.phone;
-  document.getElementById("info-youtube").innerHTML = "▶ YouTube";
   document.getElementById("info-youtube").href = last.youtube;
-
-  document.getElementById("info-facebook").innerHTML = "📘 Facebook";
   document.getElementById("info-facebook").href = last.facebook;
-
-  document.getElementById("info-instagram").innerHTML = "📸 Instagram";
   document.getElementById("info-instagram").href = last.instagram;
 });
 
@@ -592,6 +593,7 @@ document.getElementById("templeinfo-tab").onclick = () => {
 </script>
 
  
+
 
 
 
