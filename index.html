@@ -253,6 +253,14 @@ const storage = getStorage(app);
 /* -------------------------------------------------------
     PAGE SWITCHER
 -------------------------------------------------------- */
+  // ---- Correct Date Formatter (dd-mm-yyyy) ----
+function formatDate(dateString) {
+  if (!dateString) return "";
+  const parts = dateString.split("-");
+  if (parts.length !== 3) return dateString;
+  return `${parts[2]}-${parts[1]}-${parts[0]}`;
+}
+
 function showPage(target) {
   ["home-page", "photos-page", "events-page", "templeinfo-page"].forEach(id => {
     document.getElementById(id).classList.add("hidden");
@@ -489,6 +497,47 @@ document.getElementById("photo-tab").onclick = () => showAdminTab("photo");
 document.getElementById("event-tab").onclick = () => showAdminTab("event");
 document.getElementById("templeinfo-tab").onclick = () => showAdminTab("templeinfo");
 
+  // ---- Admin Tab Highlight ----
+const tabButtons = {
+  donors: document.getElementById("donors-tab-btn"),
+  photos: document.getElementById("photos-tab-btn"),
+  events: document.getElementById("events-tab-btn"),
+  temple: document.getElementById("temple-tab-btn")
+};
+
+function setActiveTab(tabName) {
+  Object.keys(tabButtons).forEach(name => {
+    const btn = tabButtons[name];
+    if (name === tabName) {
+      btn.classList.add("font-bold", "text-orange-700", "bg-orange-100");
+    } else {
+      btn.classList.remove("font-bold", "text-orange-700", "bg-orange-100");
+    }
+  });
+}
+
+document.getElementById("donors-tab-btn").onclick = () => {
+  showAdminTab("donors");
+  setActiveTab("donors");
+};
+
+document.getElementById("photos-tab-btn").onclick = () => {
+  showAdminTab("photos");
+  setActiveTab("photos");
+};
+
+document.getElementById("events-tab-btn").onclick = () => {
+  showAdminTab("events");
+  setActiveTab("events");
+};
+
+document.getElementById("temple-tab-btn").onclick = () => {
+  showAdminTab("temple");
+  setActiveTab("temple");
+};
+
+
 </script>
+
 
 
