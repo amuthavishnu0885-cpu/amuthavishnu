@@ -163,6 +163,7 @@
     <!-- Donor Content -->
     <div id="donor-content">
       <h3 class="font-semibold my-3">Donor List</h3>
+      <p id="donor-count" class="text-sm text-gray-600 mb-2"></p>
       <table class="w-full">
         <tbody id="donors-table-body"></tbody>
       </table>
@@ -315,11 +316,18 @@ onValue(ref(db, "donations"), snapshot => {
   const tbody = document.getElementById("donors-table-body");
   tbody.innerHTML = "";
 
-  Object.keys(data).forEach(id => {
+  // Count
+  document.getElementById("donor-count").innerHTML =
+    "Total Donors: " + Object.keys(data).length;
+
+  // Latest first
+  Object.keys(data).reverse().forEach(id => {
     const d = data[id];
+
     let tr = document.createElement("tr");
     tr.innerHTML = `
       <td class="border p-2">${d.donorName}<br><small>${d.address}</small></td>
+      <td class="border p-2">${formatDate(d.date)}</td>
       <td class="border p-2">${d.phone}</td>
       <td class="border p-2">₹${d.amount}</td>
       <td class="border p-2">${d.transactionId}</td>
@@ -539,6 +547,7 @@ document.getElementById("templeinfo-tab").onclick = () => {
   
 
 </script>
+
 
 
 
