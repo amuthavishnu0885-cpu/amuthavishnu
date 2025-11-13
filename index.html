@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,118 +38,191 @@
   </nav>
 
   <main>
-     <!-- Scan to Pay (static) -->
+
+<!-- Scan to Pay -->
 <div class="glass-card p-6 md:p-8 text-center">
-  <h3 class="text-xl font-bold mb-2" data-key="paymentTitle">Scan to Pay</h3>
-  <img id="upi-qr" src="QR.png" alt="UPI QR code" class="mx-auto rounded-lg shadow-lg w-400 h-500 object-cover" />
-  <p class="mt-3 text-sm" data-key="paymentInstructions">After payment, enter the UPI transaction id in the form.</p>
+  <h3 class="text-xl font-bold mb-2">Scan to Pay</h3>
+  <img src="QR.png" class="mx-auto rounded-lg shadow-lg w-80 h-auto" />
+  <p class="mt-3 text-sm">After payment, enter the UPI transaction ID in the form.</p>
 </div>
-    
-    <!-- Home -->
-    <div id="home-page">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <section class="glass-card">
-          <h2 class="text-2xl font-bold mb-4">Make a Donation</h2>
-          <form id="donation-form" class="space-y-3">
-            <div><label class="block text-sm font-medium">Donor Name</label><input id="donorName" required placeholder="Enter full name" class="mt-1 block w-full p-2 border rounded-md"></div>
-            <div><label class="block text-sm font-medium">Address</label><textarea id="address" rows="2" class="mt-1 block w-full p-2 border rounded-md" placeholder="Address (optional)"></textarea></div>
-            <div><label class="block text-sm font-medium">Phone Number</label><input id="phone" type="tel" class="mt-1 block w-full p-2 border rounded-md" placeholder="Mobile number"></div>
-            <div><label class="block text-sm font-medium">Email ID</label><input id="email" type="email" class="mt-1 block w-full p-2 border rounded-md" placeholder="Email (optional)"></div>
-            <div><label class="block text-sm font-medium">Donation Amount (₹)</label><input id="amount" type="number" min="1" required class="mt-1 block w-full p-2 border rounded-md" placeholder="Enter amount"></div>
-            <div><label class="block text-sm font-medium">UPI Transaction ID</label><input id="transactionId" class="mt-1 block w-full p-2 border rounded-md" placeholder="Enter transaction ID from UPI"></div>
-            <div><label class="block text-sm font-medium">Date</label><input id="donationDate" type="date" class="mt-1 block w-full p-2 border rounded-md"></div>
-            <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg">Submit Donation</button>
-          </form>
-        </section>
 
-          <!-- 🌟 NEW Explore Buttons -->
-          <div class="glass-card">
-            <h3 class="text-xl font-bold mb-2">Explore More</h3>
-            <div class="flex flex-col sm:flex-row gap-3 flex-wrap">
-              <button id="go-to-photos-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">🖼 Temple Photos</button>
-              <button id="go-to-events-btn" class="w-full bg-orange-500 text-white py-2 rounded-lg">✨ Special Days</button>
-              <button id="go-to-very-special-btn" class="w-full bg-pink-600 text-white py-2 rounded-lg">💫 Very Special Days</button>
-              <button id="go-to-youtube-btn" class="w-full bg-red-600 text-white py-2 rounded-lg">▶ Temple YouTube</button>
-              <button id="go-to-facebook-btn" class="w-full bg-blue-700 text-white py-2 rounded-lg">📘 Temple Facebook</button>
-              <button id="go-to-instagram-btn" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white py-2 rounded-lg">📸 Temple Instagram</button>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </div>
+<!-- HOME PAGE -->
+<div id="home-page">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
 
-    <!-- Photos Page -->
-    <div id="photos-page" class="hidden">
-      <div class="glass-card mb-6">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">🖼️ Temple Photos📸</h2>
-          <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
-        </div>
-        <div id="main-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
-      </div>
-    </div>
+    <!-- Donation Form -->
+    <section class="glass-card">
+      <h2 class="text-2xl font-bold mb-4">Make a Donation</h2>
 
-    <!-- Events Page -->
-    <div id="events-page" class="hidden">
-      <div class="glass-card mb-6">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">✨ Special Days</h2>
-          <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
-        </div>
-        <div id="main-events" class="space-y-4"></div>
-      </div>
-    </div>
+      <form id="donation-form" class="space-y-3">
 
-    <!-- 🌟 Very Special Days Page -->
-    <div id="very-special-page" class="hidden">
-      <div class="glass-card mb-6">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">💫 Very Special Days</h2>
-          <button class="back-to-home-btn bg-gray-500 text-white px-4 py-2 rounded-md">Back to Home</button>
-        </div>
-        <div id="main-very-special" class="space-y-4"></div>
-      </div>
-    </div>
+        <div><label>Donor Name</label>
+          <input id="donorName" required class="w-full p-2 border rounded-md" /></div>
 
-    <!-- Admin Dashboard (same as yours, with added tab) -->
-    <div id="admin-view" class="hidden no-print">
-      <div class="glass-card">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">Admin Dashboard</h2>
-          <div class="flex gap-2 items-center">
-            <button id="logout-btn" class="bg-red-500 text-white px-3 py-2 rounded-md">Logout</button>
-          </div>
-        </div>
+        <div><label>Address</label>
+          <textarea id="address" rows="2" class="w-full p-2 border rounded-md"></textarea></div>
 
-        <div class="border-b mb-4">
-          <nav class="flex gap-4 flex-wrap">
-            <button id="donors-tab-btn" class="px-3 py-2 bg-orange-100 rounded-md text-orange-700">Donors</button>
-            <button id="photos-tab-btn" class="px-3 py-2 rounded-md">Upload Photos</button>
-            <button id="events-tab-btn" class="px-3 py-2 rounded-md">Manage Events</button>
-            <button id="very-special-tab-btn" class="px-3 py-2 rounded-md">Very Special Days</button>
-          </nav>
-        </div>
+        <div><label>Phone Number</label>
+          <input id="phone" class="w-full p-2 border rounded-md" /></div>
 
-        <div id="donors-content"> ... (same as your file) ... </div>
-        <div id="photos-content" class="hidden"> ... </div>
-        <div id="events-content" class="hidden"> ... </div>
+        <div><label>Email</label>
+          <input id="email" class="w-full p-2 border rounded-md" /></div>
 
-        <!-- 🌟 Admin Very Special Days Section -->
-        <div id="very-special-content" class="hidden">
-          <h3 class="font-semibold mb-2">Manage Very Special Days</h3>
-          <form id="very-special-form" class="space-y-2 mb-4">
-            <input id="verySpecialDate" type="date" class="p-2 border rounded-md w-full" required />
-            <textarea id="verySpecialDescription" rows="3" class="p-2 border rounded-md w-full" placeholder="E.g., Annual Temple Maha Pooja"></textarea>
-            <button type="submit" class="bg-pink-600 text-white px-4 py-2 rounded-md w-full">Add Very Special Day</button>
-          </form>
-          <div id="admin-very-special-list" class="space-y-2"></div>
-          <p class="text-sm text-gray-600">Visible to all users.</p>
-        </div>
+        <div><label>Amount (₹)</label>
+          <input id="amount" type="number" min="1" required class="w-full p-2 border rounded-md" /></div>
+
+        <div><label>UPI Transaction ID</label>
+          <input id="transactionId" class="w-full p-2 border rounded-md" /></div>
+
+        <div><label>Date</label>
+          <input id="donationDate" type="date" class="w-full p-2 border rounded-md" /></div>
+
+        <button class="w-full bg-green-600 text-white py-2 rounded-lg">Submit Donation</button>
+      </form>
+    </section>
+
+    <!-- Explore More 3x2 Layout -->
+    <div class="glass-card">
+      <h3 class="text-xl font-bold mb-2">Explore More</h3>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+        <button id="go-to-photos-btn" class="py-3 rounded-lg bg-orange-500 text-white">🖼 Temple Photos</button>
+        <button id="go-to-events-btn" class="py-3 rounded-lg bg-orange-500 text-white">✨ Special Days</button>
+
+        <button id="go-to-templeinfo-btn" class="py-3 rounded-lg bg-pink-600 text-white">📞 Temple Info & Contact</button>
+        <button id="go-to-youtube-btn" class="py-3 rounded-lg bg-red-600 text-white">▶ YouTube</button>
+
+        <button id="go-to-facebook-btn" class="py-3 rounded-lg bg-blue-700 text-white">📘 Facebook</button>
+        <button id="go-to-instagram-btn" class="py-3 rounded-lg bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white">📸 Instagram</button>
 
       </div>
     </div>
-  </main>
 
+  </div>
+</div>
+
+<!-- PHOTOS PAGE -->
+<div id="photos-page" class="hidden">
+  <div class="glass-card">
+    <div class="flex justify-between">
+      <h2 class="text-2xl font-bold">Temple Photos</h2>
+      <button class="back-home bg-gray-500 text-white px-3 py-2 rounded">Back</button>
+    </div>
+
+    <div id="main-gallery" class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+  </div>
+</div>
+
+<!-- EVENTS PAGE -->
+<div id="events-page" class="hidden">
+  <div class="glass-card">
+    <div class="flex justify-between">
+      <h2 class="text-2xl font-bold">Special Days</h2>
+      <button class="back-home bg-gray-500 text-white px-3 py-2 rounded">Back</button>
+    </div>
+
+    <div id="main-events" class="space-y-3 mt-4"></div>
+  </div>
+</div>
+
+<!-- TEMPLE INFO PAGE (User View Only) -->
+<div id="templeinfo-page" class="hidden">
+  <div class="glass-card">
+    <div class="flex justify-between">
+      <h2 class="text-2xl font-bold">Temple Info & Contacts</h2>
+      <button class="back-home bg-gray-500 text-white px-3 py-2 rounded">Back</button>
+    </div>
+
+    <div class="mt-4 space-y-3">
+      <p id="info-phone" class="p-3 border rounded bg-white shadow"></p>
+      <a id="info-youtube" target="_blank" class="block p-3 border rounded bg-white shadow text-red-600"></a>
+      <a id="info-facebook" target="_blank" class="block p-3 border rounded bg-white shadow text-blue-700"></a>
+      <a id="info-instagram" target="_blank" class="block p-3 border rounded bg-white shadow text-pink-600"></a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ADMIN PANEL -->
+<div id="admin-view" class="hidden">
+  <div class="glass-card mt-6">
+
+    <div class="flex justify-between">
+      <h2 class="text-xl font-bold">Admin Dashboard</h2>
+      <button id="logout-btn" class="bg-red-500 text-white px-3 py-2 rounded">Logout</button>
+    </div>
+
+    <div class="flex gap-4 mt-4 border-b pb-3">
+      <button id="donor-tab" class="px-3 py-2 bg-orange-100 text-orange-700 rounded">Donors</button>
+      <button id="photo-tab" class="px-3 py-2 rounded">Photos</button>
+      <button id="event-tab" class="px-3 py-2 rounded">Events</button>
+      <button id="templeinfo-tab" class="px-3 py-2 rounded">Temple Info</button>
+    </div>
+
+    <!-- Donor Content -->
+    <div id="donor-content">
+      <h3 class="font-semibold my-3">Donor List</h3>
+      <table class="w-full">
+        <tbody id="donors-table-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Upload Photos -->
+    <div id="photo-content" class="hidden">
+      <h3 class="font-semibold my-3">Upload Photos</h3>
+      <form id="photo-upload-form" class="flex gap-3">
+        <input id="photoFile" type="file" class="border p-2 rounded" />
+        <button class="bg-orange-500 text-white px-4 py-2 rounded">Upload</button>
+      </form>
+    </div>
+
+    <!-- Manage Events -->
+    <div id="event-content" class="hidden">
+      <h3 class="font-semibold my-3">Manage Events</h3>
+
+      <form id="event-form" class="space-y-2">
+        <input id="eventDate" type="date" class="border p-2 rounded w-full" />
+        <textarea id="eventDescription" class="border p-2 rounded w-full"></textarea>
+        <button class="bg-orange-500 text-white px-4 py-2 rounded w-full">Add Event</button>
+      </form>
+
+      <div id="admin-events-list" class="mt-3 space-y-2"></div>
+    </div>
+
+    <!-- TEMPLE INFO ADMIN -->
+    <div id="templeinfo-content" class="hidden">
+      <h3 class="font-semibold my-3">Temple Info & Contact</h3>
+
+      <form id="templeinfo-form" class="space-y-2">
+        <input id="tphone" placeholder="Temple Phone" class="border p-2 rounded w-full" />
+        <input id="tyt" placeholder="YouTube Link" class="border p-2 rounded w-full" />
+        <input id="tfb" placeholder="Facebook Link" class="border p-2 rounded w-full" />
+        <input id="tig" placeholder="Instagram Link" class="border p-2 rounded w-full" />
+
+        <button class="bg-pink-600 text-white px-4 py-2 rounded w-full">
+          Save Temple Info
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<!-- ADMIN LOGIN MODAL -->
+<div id="password-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center">
+  <div class="bg-white p-6 rounded max-w-sm w-full">
+    <h3 class="text-lg font-bold mb-2">Admin Login</h3>
+    <input id="admin-password" type="password" class="w-full border p-2 rounded mb-3" placeholder="Enter password" />
+    <div class="flex justify-end gap-2">
+      <button id="password-cancel-btn" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+      <button id="password-submit" class="px-4 py-2 bg-orange-500 text-white rounded">Login</button>
+    </div>
+  </div>
+</div>
+  
   <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Temple</footer>
 </div>
 
@@ -386,4 +458,266 @@
   document.getElementById('en-lang-btn').addEventListener('click', () => setLang('en'));
   document.getElementById('ta-lang-btn').addEventListener('click', () => setLang('ta'));
   setLang('en');
+
+  /* -------------------------------------------------------
+    FIREBASE INITIAL SETUP
+-------------------------------------------------------- */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+import { getStorage, ref as sref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC7AcMsWETrrEwQTqVYL_QqFMzepMog",
+  authDomain: "donation-portal-f4b2b.firebaseapp.com",
+  databaseURL: "https://donation-portal-f4b2b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "donation-portal-f4b2b",
+  storageBucket: "donation-portal-f4b2b.appspot.com",
+  messagingSenderId: "1105454748967",
+  appId: "1:1105454748967:web:aa9de7408b64d5d8cd28de"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const storage = getStorage(app);
+
+/* -------------------------------------------------------
+    PAGE SWITCHER
+-------------------------------------------------------- */
+function showPage(target) {
+  ["home-page", "photos-page", "events-page", "templeinfo-page"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+  document.getElementById(target).classList.remove("hidden");
+}
+
+document.querySelectorAll(".back-home").forEach(btn =>
+  btn.addEventListener("click", () => showPage("home-page"))
+);
+
+/* -------------------------------------------------------
+    EXPLORE BUTTONS
+-------------------------------------------------------- */
+document.getElementById("go-to-photos-btn").onclick = () => showPage("photos-page");
+document.getElementById("go-to-events-btn").onclick = () => showPage("events-page");
+document.getElementById("go-to-templeinfo-btn").onclick = () => showPage("templeinfo-page");
+
+document.getElementById("go-to-youtube-btn").onclick = () =>
+  window.open("https://www.youtube.com", "_blank");
+
+document.getElementById("go-to-facebook-btn").onclick = () =>
+  window.open("https://facebook.com", "_blank");
+
+document.getElementById("go-to-instagram-btn").onclick = () =>
+  window.open("https://instagram.com", "_blank");
+
+/* -------------------------------------------------------
+    DONATION SAVE
+-------------------------------------------------------- */
+document.getElementById("donation-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = {
+    donorName: donorName.value,
+    address: address.value,
+    phone: phone.value,
+    email: email.value,
+    amount: amount.value,
+    transactionId: transactionId.value,
+    date: donationDate.value
+  };
+  await push(ref(db, "donations"), data);
+  alert("Donation Saved Successfully!");
+  e.target.reset();
+});
+
+/* -------------------------------------------------------
+    DONOR TABLE LIVE UPDATE
+-------------------------------------------------------- */
+onValue(ref(db, "donations"), snapshot => {
+  const data = snapshot.val() || {};
+  const tbody = document.getElementById("donors-table-body");
+  tbody.innerHTML = "";
+
+  Object.keys(data).forEach(id => {
+    const d = data[id];
+    let tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="border p-2">${d.donorName}<br><small>${d.address}</small></td>
+      <td class="border p-2">${d.phone}</td>
+      <td class="border p-2">₹${d.amount}</td>
+      <td class="border p-2">${d.transactionId}</td>
+      <td class="border p-2">
+        <button data-id="${id}" class="delete-donation bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  document.querySelectorAll(".delete-donation").forEach(btn => {
+    btn.onclick = () => {
+      if (confirm("Delete this donation?")) {
+        remove(ref(db, "donations/" + btn.dataset.id));
+      }
+    };
+  });
+});
+
+/* -------------------------------------------------------
+    PHOTO UPLOAD
+-------------------------------------------------------- */
+document.getElementById("photo-upload-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const file = document.getElementById("photoFile").files[0];
+  if (!file) return alert("Select photo!");
+
+  const storageRef = sref(storage, "photos/" + Date.now() + "_" + file.name);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+
+  uploadTask.on("state_changed", null, err => alert(err.message), async () => {
+    const url = await getDownloadURL(uploadTask.snapshot.ref);
+    await push(ref(db, "photos"), { url });
+    alert("Photo Uploaded!");
+  });
+});
+
+/* LOAD PHOTOS */
+onValue(ref(db, "photos"), snapshot => {
+  const data = snapshot.val() || {};
+  const gallery = document.getElementById("main-gallery");
+  gallery.innerHTML = "";
+
+  Object.values(data).forEach(p => {
+    let img = document.createElement("img");
+    img.src = p.url;
+    img.className = "w-full h-48 object-cover rounded shadow";
+    gallery.appendChild(img);
+  });
+});
+
+/* -------------------------------------------------------
+    EVENTS
+-------------------------------------------------------- */
+document.getElementById("event-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = {
+    date: eventDate.value,
+    description: eventDescription.value
+  };
+  await push(ref(db, "events"), data);
+  alert("Event added!");
+  e.target.reset();
+});
+
+/* LOAD EVENTS */
+onValue(ref(db, "events"), snapshot => {
+  const data = snapshot.val() || {};
+  const list = document.getElementById("main-events");
+  const adminList = document.getElementById("admin-events-list");
+
+  list.innerHTML = "";
+  adminList.innerHTML = "";
+
+  Object.keys(data).forEach(id => {
+    const e = data[id];
+
+    list.innerHTML += `
+      <div class="p-3 bg-white/60 rounded">
+        <p class="font-bold">${e.date}</p>
+        <p>${e.description}</p>
+      </div>`;
+
+    adminList.innerHTML += `
+      <div class="p-3 bg-white/70 rounded flex justify-between">
+        <div><b>${e.date}</b><br>${e.description}</div>
+        <button data-id="${id}" class="delete-event bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+      </div>`;
+  });
+
+  document.querySelectorAll(".delete-event").forEach(btn => {
+    btn.onclick = () => {
+      if (confirm("Delete event?"))
+        remove(ref(db, "events/" + btn.dataset.id));
+    };
+  });
+});
+
+/* -------------------------------------------------------
+    TEMPLE INFO (ADMIN ONLY)
+-------------------------------------------------------- */
+
+// SAVE TEMPLE INFO
+document.getElementById("templeinfo-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = {
+    phone: tphone.value,
+    youtube: tyt.value,
+    facebook: tfb.value,
+    instagram: tig.value
+  };
+  await push(ref(db, "templeInfo"), data);
+  alert("Temple info updated!");
+  e.target.reset();
+});
+
+// SHOW TEMPLE INFO PUBLIC
+onValue(ref(db, "templeInfo"), snapshot => {
+  const data = snapshot.val();
+  if (!data) return;
+
+  const last = Object.values(data).pop(); // latest entry
+
+  document.getElementById("info-phone").innerHTML = "📞 " + last.phone;
+  document.getElementById("info-youtube").innerHTML = "▶ YouTube";
+  document.getElementById("info-youtube").href = last.youtube;
+
+  document.getElementById("info-facebook").innerHTML = "📘 Facebook";
+  document.getElementById("info-facebook").href = last.facebook;
+
+  document.getElementById("info-instagram").innerHTML = "📸 Instagram";
+  document.getElementById("info-instagram").href = last.instagram;
+});
+
+/* -------------------------------------------------------
+    ADMIN LOGIN
+-------------------------------------------------------- */
+const ADMIN_PASSWORD = "password123";
+
+document.getElementById("admin-login-link").onclick = () => {
+  document.getElementById("password-modal").classList.remove("hidden");
+  document.getElementById("password-modal").classList.add("flex");
+};
+
+document.getElementById("password-cancel-btn").onclick = () =>
+  document.getElementById("password-modal").classList.add("hidden");
+
+document.getElementById("password-submit").onclick = () => {
+  if (document.getElementById("admin-password").value === ADMIN_PASSWORD) {
+    document.getElementById("password-modal").classList.add("hidden");
+    document.getElementById("home-page").classList.add("hidden");
+    document.getElementById("admin-view").classList.remove("hidden");
+  } else {
+    alert("Wrong Password!");
+  }
+};
+
+document.getElementById("logout-btn").onclick = () => {
+  document.getElementById("admin-view").classList.add("hidden");
+  document.getElementById("home-page").classList.remove("hidden");
+};
+
+/* -------------------------------------------------------
+    ADMIN TAB SWITCHER
+-------------------------------------------------------- */
+function showAdminTab(tab) {
+  ["donor", "photo", "event", "templeinfo"].forEach(id => {
+    document.getElementById(id + "-content").classList.add("hidden");
+  });
+  document.getElementById(tab + "-content").classList.remove("hidden");
+}
+
+document.getElementById("donor-tab").onclick = () => showAdminTab("donor");
+document.getElementById("photo-tab").onclick = () => showAdminTab("photo");
+document.getElementById("event-tab").onclick = () => showAdminTab("event");
+document.getElementById("templeinfo-tab").onclick = () => showAdminTab("templeinfo");
+
 </script>
+
