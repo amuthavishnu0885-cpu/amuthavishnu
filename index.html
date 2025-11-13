@@ -276,43 +276,52 @@ document.querySelectorAll(".back-home").forEach(btn =>
 /* -------------------------------------------------------
     EXPLORE BUTTONS
 -------------------------------------------------------- */
-document.getElementById("go-to-photos-btn").onclick = () => showPage("photos-page");
-document.getElementById("go-to-events-btn").onclick = () => showPage("events-page");
-document.getElementById("go-to-templeinfo-btn").onclick = () => showPage("templeinfo-page");
-
+/* -------------------------------------------------------
+   SOCIAL BUTTONS OPEN SAVED ADMIN LINKS
+-------------------------------------------------------- */
 let savedYouTube = "";
+let savedFacebook = "";
+let savedInstagram = "";
 
+// Load latest saved links from Firebase
 onValue(ref(db, "templeInfo"), (snapshot) => {
   const data = snapshot.val();
   if (!data) return;
 
   const last = Object.values(data).pop();
-  savedYouTube = last.youtube;
+
+  savedYouTube = last.youtube || "";
+  savedFacebook = last.facebook || "";
+  savedInstagram = last.instagram || "";
 });
 
+// YouTube button
 document.getElementById("go-to-youtube-btn").onclick = () => {
   if (savedYouTube.trim() !== "") {
     window.open(savedYouTube, "_blank");
   } else {
-    alert("No YouTube link saved in Admin Panel!");
+    alert("YouTube link not saved in Admin Panel!");
   }
 };
 
+// Facebook button
 document.getElementById("go-to-facebook-btn").onclick = () => {
   if (savedFacebook.trim() !== "") {
     window.open(savedFacebook, "_blank");
   } else {
-    alert("No Facebook link saved in Admin Panel!");
+    alert("Facebook link not saved in Admin Panel!");
   }
 };
 
+// Instagram button
 document.getElementById("go-to-instagram-btn").onclick = () => {
   if (savedInstagram.trim() !== "") {
     window.open(savedInstagram, "_blank");
   } else {
-    alert("No Instagram link saved in Admin Panel!");
+    alert("Instagram link not saved in Admin Panel!");
   }
 };
+
   
 /* -------------------------------------------------------
     DONATION SAVE
@@ -583,6 +592,7 @@ document.getElementById("templeinfo-tab").onclick = () => {
 </script>
 
  
+
 
 
 
