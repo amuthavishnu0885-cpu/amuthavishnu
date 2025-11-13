@@ -328,17 +328,23 @@ onValue(ref(db, "donations"), snapshot => {
   document.getElementById("donor-count").innerHTML =
     "Total Donors: " + Object.keys(data).length;
 
-  // Latest first
-  let tr = document.createElement("tr");
-tr.innerHTML = `
-  <td class="border p-2">${d.donorName}<br><small>${d.address}</small></td>
-  let tr = document.createElement("tr");
-tr.innerHTML = `
-  <td class="border p-2 font-bold">${index + 1}</td>
-  <td class="border p-2">${d.donorName}<br><small>${d.address}</small></td>
+// DONOR TABLE LIVE UPDATE
+onValue(ref(db, "donations"), snapshot => {
+  const data = snapshot.val() || {};
+  const tbody = document.getElementById("donors-table-body");
+  tbody.innerHTML = "";
+
+  // Count display
+  document.getElementById("donor-count").innerHTML =
+    "Total Donors: " + Object.keys(data).length;
+
+  // Latest first + numbering
+  Object.keys(data).reverse().forEach((id, index) => {
+    const d = data[id];
 
     let tr = document.createElement("tr");
     tr.innerHTML = `
+      <td class="border p-2 font-bold">${index + 1}</td>
       <td class="border p-2">${d.donorName}<br><small>${d.address}</small></td>
       <td class="border p-2">${formatDate(d.date)}</td>
       <td class="border p-2">${d.phone}</td>
@@ -560,6 +566,7 @@ document.getElementById("templeinfo-tab").onclick = () => {
   
 
 </script>
+
 
 
 
