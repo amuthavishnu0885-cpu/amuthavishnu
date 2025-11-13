@@ -143,9 +143,9 @@
 
     <div class="mt-4 space-y-3">
       <p id="info-phone" class="p-3 border rounded bg-white shadow"></p>
-     <!-- <a id="info-youtube" target="_blank" class="block p-3 border rounded bg-white shadow text-red-600"></a>
-      <a id="info-facebook" target="_blank" class="block p-3 border rounded bg-white shadow text-blue-700"></a>
-      <a id="info-instagram" target="_blank" class="block p-3 border rounded bg-white shadow text-pink-600"></a> -->
+    <a id="info-youtube" target="_blank" class="block p-3 border rounded bg-white shadow text-red-600"></a>
+<a id="info-facebook" target="_blank" class="block p-3 border rounded bg-white shadow text-blue-700"></a>
+<a id="info-instagram" target="_blank" class="block p-3 border rounded bg-white shadow text-pink-600"></a>
     </div>
   </div>
 </div>
@@ -199,7 +199,8 @@
     </div>
 
     <!-- TEMPLE INFO ADMIN -->
-    <div id="templeinfo-content" class="hidden">
+    <div id="templeinfo-list" class="mt-4 space-y-2"></div>
+   <!-- <div id="templeinfo-content" class="hidden">-->
       <h3 class="font-semibold my-3">Temple Info & Contact</h3>
 
       <form id="templeinfo-form" class="space-y-2">
@@ -447,6 +448,54 @@ onValue(ref(db, "events"), snapshot => {
 -------------------------------------------------------- */
 
 // SAVE TEMPLE INFO
+  // SHOW + EDIT + DELETE TEMPLE INFO
+onValue(ref(db, "templeInfo"), snapshot => {
+  const data = snapshot.val() || {};
+  const list = document.getElementById("templeinfo-list");
+  list.innerHTML = "";
+
+  Object.keys(data).forEach(id => {
+    const t = data[id];
+
+    list.innerHTML += `
+      <div class="p-3 bg-white/80 rounded shadow flex justify-between items-center">
+        <div>
+          <p><b>📞 ${t.phone}</b></p>
+          <p>▶ ${t.youtube}</p>
+          <p>📘 ${t.facebook}</p>
+          <p>📸 ${t.instagram}</p>
+        </div>
+
+        <div class="flex gap-2">
+          <button data-id="${id}" class="edit-info bg-blue-500 text-white px-3 py-1 rounded">Edit</button>
+          <button data-id="${id}" class="delete-info bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+        </div>
+      </div>
+    `;
+  });
+
+  // DELETE
+  document.querySelectorAll(".delete-info").forEach(btn => {
+    btn.onclick = () => {
+      if (confirm("Delete this Temple Info?")) {
+        remove(ref(db, "templeInfo/" + btn.dataset.id));
+      }
+    };
+  });
+
+  // EDIT (Load values back into form)
+  document.querySelectorAll(".edit-info").forEach(btn => {
+    btn.onclick = () => {
+      const t = data[btn.dataset.id];
+      tphone.value = t.phone;
+      tyt.value = t.youtube;
+      tfb.value = t.facebook;
+      tig.value = t.instagram;
+
+      alert("Editing mode enabled. Update the fields and press Save Temple Info.");
+    };
+  });
+});
 document.getElementById("templeinfo-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const data = {
@@ -636,6 +685,7 @@ applyLanguage("en");
 </script>
 
  
+
 
 
 
