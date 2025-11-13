@@ -399,13 +399,13 @@ onValue(ref(db, "events"), snapshot => {
 
     list.innerHTML += `
       <div class="p-3 bg-white/60 rounded">
-        <p class="font-bold">${e.date}</p>
+        <p class="font-bold">${formatDate(e.date)}</p>
         <p>${e.description}</p>
       </div>`;
 
     adminList.innerHTML += `
       <div class="p-3 bg-white/70 rounded flex justify-between">
-        <div><b>${e.date}</b><br>${e.description}</div>
+        <div><b>${formatDate(e.date)}</b><br>${e.description}</div>
         <button data-id="${id}" class="delete-event bg-red-500 text-white px-3 py-1 rounded">Delete</button>
       </div>`;
   });
@@ -497,17 +497,18 @@ document.getElementById("photo-tab").onclick = () => showAdminTab("photo");
 document.getElementById("event-tab").onclick = () => showAdminTab("event");
 document.getElementById("templeinfo-tab").onclick = () => showAdminTab("templeinfo");
 
-  // ---- Admin Tab Highlight ----
+// -------------------- ADMIN TAB HIGHLIGHT FIX --------------------
 const tabButtons = {
-  donors: document.getElementById("donors-tab-btn"),
-  photos: document.getElementById("photos-tab-btn"),
-  events: document.getElementById("events-tab-btn"),
-  temple: document.getElementById("temple-tab-btn")
+  donor: document.getElementById("donor-tab"),
+  photo: document.getElementById("photo-tab"),
+  event: document.getElementById("event-tab"),
+  templeinfo: document.getElementById("templeinfo-tab")
 };
 
 function setActiveTab(tabName) {
   Object.keys(tabButtons).forEach(name => {
     const btn = tabButtons[name];
+
     if (name === tabName) {
       btn.classList.add("font-bold", "text-orange-700", "bg-orange-100");
     } else {
@@ -516,28 +517,29 @@ function setActiveTab(tabName) {
   });
 }
 
-document.getElementById("donors-tab-btn").onclick = () => {
-  showAdminTab("donors");
-  setActiveTab("donors");
+document.getElementById("donor-tab").onclick = () => {
+  showAdminTab("donor");
+  setActiveTab("donor");
 };
 
-document.getElementById("photos-tab-btn").onclick = () => {
-  showAdminTab("photos");
-  setActiveTab("photos");
+document.getElementById("photo-tab").onclick = () => {
+  showAdminTab("photo");
+  setActiveTab("photo");
 };
 
-document.getElementById("events-tab-btn").onclick = () => {
-  showAdminTab("events");
-  setActiveTab("events");
+document.getElementById("event-tab").onclick = () => {
+  showAdminTab("event");
+  setActiveTab("event");
 };
 
-document.getElementById("temple-tab-btn").onclick = () => {
-  showAdminTab("temple");
-  setActiveTab("temple");
+document.getElementById("templeinfo-tab").onclick = () => {
+  showAdminTab("templeinfo");
+  setActiveTab("templeinfo");
 };
-
+  
 
 </script>
+
 
 
 
