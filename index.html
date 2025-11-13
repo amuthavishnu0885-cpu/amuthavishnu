@@ -565,12 +565,6 @@ function showAdminTab(tab) {
   document.getElementById(tab + "-content").classList.remove("hidden");
 }
 
-document.getElementById("donor-tab").onclick = () => showAdminTab("donor");
-document.getElementById("photo-tab").onclick = () => showAdminTab("photo");
-document.getElementById("event-tab").onclick = () => showAdminTab("event");
-document.getElementById("templeinfo-tab").onclick = () => showAdminTab("templeinfo");
-
-// -------------------- ADMIN TAB HIGHLIGHT FIX --------------------
 const tabButtons = {
   donor: document.getElementById("donor-tab"),
   photo: document.getElementById("photo-tab"),
@@ -581,34 +575,17 @@ const tabButtons = {
 function setActiveTab(tabName) {
   Object.keys(tabButtons).forEach(name => {
     const btn = tabButtons[name];
-
-    if (name === tabName) {
-      btn.classList.add("font-bold", "text-orange-700", "bg-orange-100");
-    } else {
-      btn.classList.remove("font-bold", "text-orange-700", "bg-orange-100");
-    }
+    btn.classList.toggle("bg-orange-100", name === tabName);
+    btn.classList.toggle("text-orange-700", name === tabName);
+    btn.classList.toggle("font-bold", name === tabName);
   });
 }
 
-document.getElementById("donor-tab").onclick = () => {
-  showAdminTab("donor");
-  setActiveTab("donor");
-};
+tabButtons.donor.onclick = () => { showAdminTab("donor"); setActiveTab("donor"); };
+tabButtons.photo.onclick = () => { showAdminTab("photo"); setActiveTab("photo"); };
+tabButtons.event.onclick = () => { showAdminTab("event"); setActiveTab("event"); };
+tabButtons.templeinfo.onclick = () => { showAdminTab("templeinfo"); setActiveTab("templeinfo"); };
 
-document.getElementById("photo-tab").onclick = () => {
-  showAdminTab("photo");
-  setActiveTab("photo");
-};
-
-document.getElementById("event-tab").onclick = () => {
-  showAdminTab("event");
-  setActiveTab("event");
-};
-
-document.getElementById("templeinfo-tab").onclick = () => {
-  showAdminTab("templeinfo");
-  setActiveTab("templeinfo");
-};
 
 </script>
   
@@ -685,6 +662,7 @@ applyLanguage("en");
 </script>
 
  
+
 
 
 
