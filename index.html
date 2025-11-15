@@ -171,15 +171,26 @@
 <div class="flex items-center justify-between my-3">
   <h3 class="font-semibold">Donor List📃</h3>
 
-  <div class="flex gap-2 text-sm">
-    <button id="sort-name-asc" class="px-2 py-1 bg-orange-100 rounded">A → Z</button>
-    <button id="sort-name-desc" class="px-2 py-1 bg-orange-100 rounded">Z → A</button>
-    <button id="sort-index-asc" class="px-2 py-1 bg-orange-100 rounded">1 → 10000</button>
-<button id="sort-index-desc" class="px-2 py-1 bg-orange-100 rounded">10000 → 1</button>
-    <button id="sort-amount-asc" class="px-2 py-1 bg-orange-100 rounded">₹ Low → High</button>
-    <button id="sort-amount-desc" class="px-2 py-1 bg-orange-100 rounded">₹ High → Low</button>
-  </div>
+ <div class="flex gap-2 text-sm">
+
+  <!-- Name -->
+  <button id="sort-name-asc" class="px-2 py-1 bg-orange-100 rounded">A → Z</button>
+  <button id="sort-name-desc" class="px-2 py-1 bg-orange-100 rounded">Z → A</button>
+
+  <!-- Date -->
+  <button id="sort-date-new" class="px-2 py-1 bg-orange-100 rounded">New → Old</button>
+  <button id="sort-date-old" class="px-2 py-1 bg-orange-100 rounded">Old → New</button>
+
+  <!-- Amount -->
+  <button id="sort-amount-asc" class="px-2 py-1 bg-orange-100 rounded">₹ Low → High</button>
+  <button id="sort-amount-desc" class="px-2 py-1 bg-orange-100 rounded">₹ High → Low</button>
+
+  <!-- Export / Print -->
+  <button id="export-btn" class="px-2 py-1 bg-green-200 rounded font-semibold">Export</button>
+  <button id="print-btn" class="px-2 py-1 bg-blue-200 rounded font-semibold">Print</button>
+
 </div>
+
 
 <p id="donor-count" class="text-sm text-gray-600 mb-2"></p>
     <table class="w-full text-sm mt-2 border">
@@ -415,6 +426,40 @@ document.getElementById("sort-amount-asc").onclick = () => {
 document.getElementById("sort-amount-desc").onclick = () => {
   let sorted = [...donorArray].sort((a, b) => Number(b.amount) - Number(a.amount));
   renderDonorTable(sorted);
+};
+
+  /* ------------ DATE SORTING ---------------- */
+
+document.getElementById("sort-date-new").onclick = () => {
+  let sorted = [...donorArray].sort((a, b) => new Date(b.date) - new Date(a.date));
+  renderDonorTable(sorted);
+};
+
+document.getElementById("sort-date-old").onclick = () => {
+  let sorted = [...donorArray].sort((a, b) => new Date(a.date) - new Date(b.date));
+  renderDonorTable(sorted);
+};
+
+  /* ------------ EXPORT CSV ---------------- */
+
+document.getElementById("export-btn").onclick = () => {
+  let csv = "Index,Name,Address,Date,Phone,Amount,TxnID\n";
+
+  donorArray.forEach((d, idx) => {
+    csv += `${idx+1},"${d.donorName}","${d.address}",${d.date},${d.phone},${d.amount},${d.transactionId}\n`;
+  });
+
+  let blob = new Blob([csv], { type: "text/csv" });
+  let link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "Donor_List.csv";
+  link.click();
+};
+
+  /* ------------ PRINT TABLE ---------------- */
+
+document.getElementById("print-btn").onclick = () => {
+  window.print();
 };
 
 /* ------------ INDEX NUMBER sort (1 → 100 and 100 → 1) ------------ */
@@ -729,6 +774,7 @@ applyLanguage("en");
 </script>
 
  
+
 
 
 
