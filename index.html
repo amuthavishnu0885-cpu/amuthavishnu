@@ -328,9 +328,20 @@ document.getElementById("donation-form").addEventListener("submit", async (e) =>
 });
 
 /* -------------------------------------------------------
-    DONOR TABLE LIVE UPDATE
+    DONOR TABLE LIVE UPDATE + SORTING
 -------------------------------------------------------- */
-let donorArray = Object.keys(data).map(id => ({ id, ...data[id] }));
+
+onValue(ref(db, "donations"), snapshot => {
+  const data = snapshot.val() || {};
+
+  // Convert object → array
+  donorArray = Object.keys(data).map(id => ({ id, ...data[id] }));
+
+  // Initial load → latest first
+  donorArray = donorArray.reverse();
+
+  renderDonorTable(donorArray);
+});
 
 function renderDonorTable(list) {
   const tbody = document.getElementById("donors-table-body");
@@ -350,6 +361,7 @@ function renderDonorTable(list) {
     tbody.appendChild(tr);
   });
 
+  // Delete event
   document.querySelectorAll(".delete-donation").forEach(btn => {
     btn.onclick = () => {
       if (confirm("Delete this donation?"))
@@ -357,6 +369,9 @@ function renderDonorTable(list) {
     };
   });
 }
+
+/* -------- SORT BUTTONS -------- */
+
 document.getElementById("sort-name-asc").onclick = () => {
   let sorted = [...donorArray].sort((a,b) => a.donorName.localeCompare(b.donorName));
   renderDonorTable(sorted);
@@ -376,34 +391,7 @@ document.getElementById("sort-amount-desc").onclick = () => {
   let sorted = [...donorArray].sort((a,b) => Number(b.amount) - Number(a.amount));
   renderDonorTable(sorted);
 };
-  // Latest first + numbering
-  Object.keys(data).reverse().forEach((id, index) => {
-    const d = data[id];
-
-    let tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td class="border p-2 font-bold">${index + 1}</td>
-      <td class="border p-2">${d.donorName}<br><small>${d.address}</small></td>
-      <td class="border p-2">${formatDate(d.date)}</td>
-      <td class="border p-2">${d.phone}</td>
-      <td class="border p-2">₹${d.amount}</td>
-      <td class="border p-2">${d.transactionId}</td>
-      <td class="border p-2">
-        <button data-id="${id}" class="delete-donation bg-red-500 text-white px-2 py-1 rounded">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  document.querySelectorAll(".delete-donation").forEach(btn => {
-    btn.onclick = () => {
-      if (confirm("Delete this donation?")) {
-        remove(ref(db, "donations/" + btn.dataset.id));
-      }
-    };
-  });
-});
-
+  
 /* -------------------------------------------------------
     PHOTO UPLOAD
 -------------------------------------------------------- */
@@ -706,6 +694,7 @@ applyLanguage("en");
 </script>
 
  
+
 
 
 
