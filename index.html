@@ -174,6 +174,8 @@
   <div class="flex gap-2 text-sm">
     <button id="sort-name-asc" class="px-2 py-1 bg-orange-100 rounded">A → Z</button>
     <button id="sort-name-desc" class="px-2 py-1 bg-orange-100 rounded">Z → A</button>
+    <button id="sort-index-asc" class="px-2 py-1 bg-orange-100 rounded">1 → 10000</button>
+<button id="sort-index-desc" class="px-2 py-1 bg-orange-100 rounded">10000 → 1</button>
     <button id="sort-amount-asc" class="px-2 py-1 bg-orange-100 rounded">₹ Low → High</button>
     <button id="sort-amount-desc" class="px-2 py-1 bg-orange-100 rounded">₹ High → Low</button>
   </div>
@@ -328,17 +330,22 @@ document.getElementById("donation-form").addEventListener("submit", async (e) =>
 });
 
 /* -------------------------------------------------------
-    DONOR TABLE LIVE UPDATE + SORTING
+    DONOR TABLE + SORTING (FULL WORKING)
 -------------------------------------------------------- */
+
+let donorArray = [];
 
 onValue(ref(db, "donations"), snapshot => {
   const data = snapshot.val() || {};
 
-  // Convert object → array
-  donorArray = Object.keys(data).map(id => ({ id, ...data[id] }));
+  // Convert Firebase object → Array
+  donorArray = Object.keys(data).map(id => ({
+    id,
+    ...data[id]
+  }));
 
-  // Initial load → latest first
-  donorArray = donorArray.reverse();
+  // Default → latest first
+  donorArray.reverse();
 
   renderDonorTable(donorArray);
 });
@@ -356,40 +363,53 @@ function renderDonorTable(list) {
       <td class="border p-2">${d.phone}</td>
       <td class="border p-2">₹${d.amount}</td>
       <td class="border p-2">${d.transactionId}</td>
-      <td class="border p-2"><button data-id="${d.id}" class="delete-donation bg-red-500 text-white px-2 py-1 rounded">Delete</button></td>
+      <td class="border p-2">
+        <button data-id="${d.id}" class="delete-donation bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+      </td>
     `;
     tbody.appendChild(tr);
   });
 
-  // Delete event
+  // DELETE BUTTON EVENTS
   document.querySelectorAll(".delete-donation").forEach(btn => {
     btn.onclick = () => {
-      if (confirm("Delete this donation?"))
+      if (confirm("Delete this donation?")) {
         remove(ref(db, "donations/" + btn.dataset.id));
+      }
     };
   });
 }
 
-/* -------- SORT BUTTONS -------- */
+/* ---------------- SORT BUTTONS ---------------- */
 
 document.getElementById("sort-name-asc").onclick = () => {
-  let sorted = [...donorArray].sort((a,b) => a.donorName.localeCompare(b.donorName));
+  let sorted = [...donorArray].sort((a, b) => a.donorName.localeCompare(b.donorName));
   renderDonorTable(sorted);
 };
 
 document.getElementById("sort-name-desc").onclick = () => {
-  let sorted = [...donorArray].sort((a,b) => b.donorName.localeCompare(a.donorName));
+  let sorted = [...donorArray].sort((a, b) => b.donorName.localeCompare(a.donorName));
   renderDonorTable(sorted);
 };
 
 document.getElementById("sort-amount-asc").onclick = () => {
-  let sorted = [...donorArray].sort((a,b) => Number(a.amount) - Number(b.amount));
+  let sorted = [...donorArray].sort((a, b) => Number(a.amount) - Number(b.amount));
   renderDonorTable(sorted);
 };
 
 document.getElementById("sort-amount-desc").onclick = () => {
-  let sorted = [...donorArray].sort((a,b) => Number(b.amount) - Number(a.amount));
+  let sorted = [...donorArray].sort((a, b) => Number(b.amount) - Number(a.amount));
   renderDonorTable(sorted);
+};
+
+/* ------------ INDEX NUMBER sort (1 → 100 and 100 → 1) ------------ */
+
+document.getElementById("sort-index-asc").onclick = () => {
+  renderDonorTable([...donorArray]); // original order
+};
+
+document.getElementById("sort-index-desc").onclick = () => {
+  renderDonorTable([...donorArray].reverse());
 };
   
 /* -------------------------------------------------------
@@ -694,6 +714,7 @@ applyLanguage("en");
 </script>
 
  
+
 
 
 
