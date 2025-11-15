@@ -461,16 +461,6 @@ document.getElementById("export-btn").onclick = () => {
 document.getElementById("print-btn").onclick = () => {
   window.print();
 };
-
-/* ------------ INDEX NUMBER sort (1 → 100 and 100 → 1) ------------ */
-
-document.getElementById("sort-index-asc").onclick = () => {
-  renderDonorTable([...donorArray]); // original order
-};
-
-document.getElementById("sort-index-desc").onclick = () => {
-  renderDonorTable([...donorArray].reverse());
-};
   
 /* -------------------------------------------------------
     PHOTO UPLOAD
@@ -772,29 +762,6 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
