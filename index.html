@@ -170,10 +170,11 @@
     <!-- DONOR CONTENT -->
 <div id="donor-content">
 
-<div class="flex items-center justify-between my-3">
-  <h3 class="font-semibold">Donor List📃</h3>
+<div class="my-3">
+  <h3 class="font-semibold mb-2">Donor List📃</h3>
 
- <div class="flex flex-wrap gap-2 text-sm">
+  <div class="flex flex-wrap gap-2 text-sm w-full">
+    <!-- buttons stay same -->
 
   <!-- Name -->
   <button id="sort-name-asc" class="px-2 py-1 bg-orange-100 rounded">A → Z</button>
@@ -395,6 +396,7 @@ onValue(ref(db, "donations"), snapshot => {
 
   // Default → latest first
   donorArray.reverse();
+  document.getElementById("donor-count").textContent = "Total Donors: " + donorArray.length;
 
   renderDonorTable(donorArray);
 });
@@ -791,6 +793,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
