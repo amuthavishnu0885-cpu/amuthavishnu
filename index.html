@@ -105,21 +105,39 @@
     }
   }
 </style>  
- /* PRINT FOOTER FIX */
-#print-footer, .print-footer {
-    text-align: center !important;
-    width: 100%;
-}
+<style>
 
+/* PRINT FOOTER FIX */
 .print-footer {
     display: none;
 }
 
 @media print {
-    #screen-footer {
+
+    /* hide unwanted elements */
+    nav,
+    #scan-to-pay,
+    #home-page,
+    #photos-page,
+    #events-page,
+    #templeinfo-page,
+    #password-modal,
+    #donor-tab,
+    #photo-tab,
+    #event-tab,
+    #templeinfo-tab,
+    #print-btn,
+    #export-btn,
+    .delete-donation,
+    .delete-event,
+    .edit-info,
+    .delete-info,
+    .no-print {
         display: none !important;
+        visibility: hidden !important;
     }
 
+    /* PRINT FOOTER */
     .print-footer {
         display: block !important;
         position: fixed !important;
@@ -131,11 +149,19 @@
         padding: 5px 0;
     }
 
+    /* remove action column */
+    th:last-child,
+    td:last-child {
+        display: none !important;
+    }
+
     @page {
         margin-bottom: 30px !important;
+        margin-top: 20px !important;
     }
 }
- 
+</style>
+
   </style>
 </head>
 <body class="bg-orange-50 min-h-screen">
@@ -922,6 +948,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
