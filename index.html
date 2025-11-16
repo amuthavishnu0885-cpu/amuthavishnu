@@ -488,6 +488,60 @@ document.getElementById("export-btn").onclick = () => {
 document.getElementById("print-btn").onclick = () => {
   window.print();
 };
+  @media print {
+
+  /* HIDE unwanted UI */
+  nav,
+  #scan-to-pay,
+  #home-page,
+  #photos-page,
+  #events-page,
+  #templeinfo-page,
+  #password-modal,
+  #donor-tab,
+  #photo-tab,
+  #event-tab,
+  #templeinfo-tab,
+  #print-btn,
+  #export-btn,
+  .delete-donation,
+  .delete-event,
+  .edit-info,
+  .delete-info,
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* MAKE header + footer visible */
+  header, footer {
+    display: block !important;
+    visibility: visible !important;
+    position: relative !important;
+  }
+
+  /* Show only donor table area */
+  #admin-view,
+  #donor-content,
+  #donor-count,
+  table {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  /* Table full width */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  /* Remove action column */
+  th:last-child,
+  td:last-child {
+    display: none !important;
+  }
+}
+
   
 /* -------------------------------------------------------
     PHOTO UPLOAD
@@ -795,6 +849,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
