@@ -6,92 +6,83 @@
   <title>Arulmigu Narayana Swamy Temple - Donation Portal (Cloud) v3</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;700&display=swap" rel="stylesheet">
- <style>
-
-/* 1. FONTS */
-body { font-family: 'Inter', sans-serif; }
-[lang="ta"] body, [lang="ta"] button, [lang="ta"] input, [lang="ta"] textarea,
-[lang="ta"] h1, [lang="ta"] h2, [lang="ta"] p, [lang="ta"] label {
-  font-family: 'Noto Sans Tamil', sans-serif;
-}
-
-/* 2. GLASS CARD DESIGN */
-.glass-card {
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(8px);
-  border-radius: 12px;
-  padding: 1.25rem;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-}
-
-/* 3. NO SCROLLBAR */
-.no-scrollbar::-webkit-scrollbar { display:none; }
-.no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
-
-/* 4. PRINT MODE */
-.print-footer { display: none; }
-
-@media print {
-
-  /* hide unwanted parts */
-  nav,
-  #scan-to-pay,
-  #home-page,
-  #photos-page,
-  #events-page,
-  #templeinfo-page,
-  #password-modal,
-  #donor-tab,
-  #photo-tab,
-  #event-tab,
-  #templeinfo-tab,
-  #print-btn,
-  #export-btn,
-  .delete-donation,
-  .delete-event,
-  .edit-info,
-  .delete-info,
-  .no-print {
-    display: none !important;
-    visibility: hidden !important;
+  <style>
+    
+    body { font-family: 'Inter', sans-serif; }
+    [lang="ta"] body, [lang="ta"] button, [lang="ta"] input, [lang="ta"] textarea, [lang="ta"] h1, [lang="ta"] h2, [lang="ta"] p, [lang="ta"] label { font-family: 'Noto Sans Tamil', sans-serif; }
+    .glass-card { background: rgba(255,255,255,0.75); backdrop-filter: blur(8px); border-radius: 12px; padding: 1.25rem; box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    @media print {
+      body * { visibility: visible; }
+    }
+    <style>
+  body { font-family: 'Inter', sans-serif; }
+  [lang="ta"] body, [lang="ta"] button, [lang="ta"] input, [lang="ta"] textarea, 
+  [lang="ta"] h1, [lang="ta"] h2, [lang="ta"] p, [lang="ta"] label { 
+      font-family: 'Noto Sans Tamil', sans-serif; 
   }
-
-  /* show table + admin view */
-  #admin-view,
-  #donor-content,
-  #donor-count,
-  table {
-    visibility: visible !important;
-    display: block !important;
+  .glass-card { 
+      background: rgba(255,255,255,0.75); 
+      backdrop-filter: blur(8px); 
+      border-radius: 12px; 
+      padding: 1.25rem; 
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12); 
   }
+  .no-scrollbar::-webkit-scrollbar { display:none; } 
+  .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
 
-  /* remove action column */
-  th:last-child,
-  td:last-child {
-    display: none !important;
+  /* 🔥 MOVE THIS HERE (correct place) */
+  @media print {
+
+    nav,
+    #scan-to-pay,
+    #home-page,
+    #photos-page,
+    #events-page,
+    #templeinfo-page,
+    #password-modal,
+    #donor-tab,
+    #photo-tab,
+    #event-tab,
+    #templeinfo-tab,
+    #print-btn,
+    #export-btn,
+    .delete-donation,
+    .delete-event,
+    .edit-info,
+    .delete-info,
+    .no-print {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+    header, footer {
+      display: block !important;
+      visibility: visible !important;
+      position: relative !important;
+    }
+
+    #admin-view,
+    #donor-content,
+    #donor-count,
+    table {
+      display: block !important;
+      visibility: visible !important;
+    }
+
+    table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+    }
+
+    th:last-child,
+    td:last-child {
+      display: none !important;
+    }
   }
-
-  /* footer visible on print */
-  .print-footer {
-    display: block !important;
-    position: fixed !important;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 13px;
-    padding: 5px 0;
-  }
-
-  @page {
-    margin-bottom: 30px !important;
-    margin-top: 20px !important;
-  }
-}
-
 </style>
 
-  
+  </style>
 </head>
 <body class="bg-orange-50 min-h-screen">
 
@@ -345,11 +336,7 @@ body { font-family: 'Inter', sans-serif; }
   </div>
 </div>
   
-<div id="print-footer" class="print-footer">
- © Arulmigu Narayana Swamy Temple<br>
-  Created by Amuthavishnukumaran Srinivasan
-</div>
- 
+  <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Templep<p>Created by Amuthavishnukumaran Srinivasan</p></footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Firebase + App Logic -->
