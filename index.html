@@ -168,10 +168,12 @@
     </div>
 
     <!-- DONOR CONTENT -->
+<div id="donor-content">
+
 <div class="flex items-center justify-between my-3">
   <h3 class="font-semibold">Donor List📃</h3>
 
- <div class="flex gap-2 text-sm">
+ <div class="flex flex-wrap gap-2 text-sm">
 
   <!-- Name -->
   <button id="sort-name-asc" class="px-2 py-1 bg-orange-100 rounded">A → Z</button>
@@ -185,15 +187,17 @@
   <button id="sort-amount-asc" class="px-2 py-1 bg-orange-100 rounded">₹ Low → High</button>
   <button id="sort-amount-desc" class="px-2 py-1 bg-orange-100 rounded">₹ High → Low</button>
 
-  <!-- Export / Print -->
+  <!-- Export -->
   <button id="export-btn" class="px-2 py-1 bg-green-200 rounded font-semibold">Export</button>
+
+  <!-- Print -->
   <button id="print-btn" class="px-2 py-1 bg-blue-200 rounded font-semibold">Print</button>
 
 </div>
-
+</div>
 
 <p id="donor-count" class="text-sm text-gray-600 mb-2"></p>
-    <table class="w-full text-sm mt-2 border">
+<table class="w-full text-sm mt-2 border">
   <thead>
     <tr class="bg-orange-200">
       <th class="border p-2">#</th>
@@ -208,6 +212,9 @@
 
   <tbody id="donors-table-body"></tbody>
 </table>
+
+</div> <!-- END donor-content -->
+
 
 <!-- PHOTO CONTENT -->
 <div id="photo-content" class="hidden">
@@ -762,6 +769,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
