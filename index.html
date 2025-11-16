@@ -104,8 +104,38 @@
       display: none !important;
     }
   }
-</style>
+</style>  
+ /* PRINT FOOTER FIX */
+#print-footer, .print-footer {
+    text-align: center !important;
+    width: 100%;
+}
 
+.print-footer {
+    display: none;
+}
+
+@media print {
+    #screen-footer {
+        display: none !important;
+    }
+
+    .print-footer {
+        display: block !important;
+        position: fixed !important;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center !important;
+        font-size: 13px;
+        padding: 5px 0;
+    }
+
+    @page {
+        margin-bottom: 30px !important;
+    }
+}
+ 
   </style>
 </head>
 <body class="bg-orange-50 min-h-screen">
@@ -361,8 +391,8 @@
 </div>
   
 <div id="print-footer" class="print-footer">
- <center> © Arulmigu Narayana Swamy Temple
-  Created by Amuthavishnukumaran Srinivasan</center>
+ © Arulmigu Narayana Swamy Temple<br>
+  Created by Amuthavishnukumaran Srinivasan
 </div>
  
 </div>
@@ -892,6 +922,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
