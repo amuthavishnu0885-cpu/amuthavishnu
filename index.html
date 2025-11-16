@@ -667,13 +667,19 @@ document.getElementById("password-cancel-btn").onclick = () =>
 
 document.getElementById("password-submit").onclick = () => {
   if (document.getElementById("admin-password").value === ADMIN_PASSWORD) {
+
     document.getElementById("password-modal").classList.add("hidden");
+
+    // ✨ Hide scan to pay section
+    document.getElementById("scan-to-pay").classList.add("hidden");
+
     document.getElementById("home-page").classList.add("hidden");
     document.getElementById("admin-view").classList.remove("hidden");
   } else {
     alert("❌Wrong Password❗🔒");
   }
 };
+
 
 document.getElementById("logout-btn").onclick = () => {
   document.getElementById("admin-view").classList.add("hidden");
@@ -785,6 +791,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
