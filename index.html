@@ -32,54 +32,53 @@
   .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
 
   /* 🔥 MOVE THIS HERE (correct place) */
-  @media print {
+  /* PRINT FOOTER FOR EVERY PAGE */
+@media print {
 
-    nav,
-    #scan-to-pay,
-    #home-page,
-    #photos-page,
-    #events-page,
-    #templeinfo-page,
-    #password-modal,
-    #donor-tab,
-    #photo-tab,
-    #event-tab,
-    #templeinfo-tab,
-    #print-btn,
-    #export-btn,
-    .delete-donation,
-    .delete-event,
-    .edit-info,
-    .delete-info,
-    .no-print {
-      display: none !important;
-      visibility: hidden !important;
-    }
-
-    header, footer {
-      display: block !important;
-      visibility: visible !important;
-      position: relative !important;
-    }
-
-    #admin-view,
-    #donor-content,
-    #donor-count,
-    table {
-      display: block !important;
-      visibility: visible !important;
-    }
-
-    table {
-      width: 100% !important;
-      border-collapse: collapse !important;
-    }
-
-    th:last-child,
-    td:last-child {
-      display: none !important;
-    }
+  @page {
+    margin: 15mm;
   }
+
+  /* Hide browser print header/footer */
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  nav,
+  #scan-to-pay,
+  #home-page,
+  #photos-page,
+  #events-page,
+  #templeinfo-page,
+  #password-modal,
+  #donor-tab,
+  #photo-tab,
+  #event-tab,
+  #templeinfo-tab,
+  #print-btn,
+  #export-btn,
+  .delete-donation,
+  .delete-event,
+  .edit-info,
+  .delete-info,
+  .no-print {
+    display: none !important;
+  }
+
+  /* ⬇⬇⬇ IMPORTANT PART — REPEATED FOOTER */
+  .print-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 12px;
+    background: white !important;
+    border-top: 1px solid #ddd;
+  }
+}
 </style>
 
   </style>
@@ -336,7 +335,7 @@
   </div>
 </div>
   
-  <footer class="mt-6 text-center text-sm print-footer">&copy;<span id="footer-year"></span> Arulmigu Narayana Swamy Templep<p>Created by Amuthavishnukumaran Srinivasan</p></footer>
+  <footer class="mt-6 text-center text-sm print-footer"><span id="footer-year"></span> Arulmigu Narayana Swamy Templep<p>Created by Amuthavishnukumaran Srinivasan</p></footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Firebase + App Logic -->
@@ -864,6 +863,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
