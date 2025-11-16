@@ -32,19 +32,20 @@
   .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
 
   /* 🔥 MOVE THIS HERE (correct place) */
-  /* PRINT FOOTER FOR EVERY PAGE */
+ /* PRINT MODE CLEAN VIEW */
 @media print {
 
   @page {
-    margin: 15mm;
+    margin: 12mm;
   }
 
-  /* Hide browser print header/footer */
   body {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
+  /* ❌ HIDE THESE IN PRINT ❌ */
+  header,
   nav,
   #scan-to-pay,
   #home-page,
@@ -52,31 +53,58 @@
   #events-page,
   #templeinfo-page,
   #password-modal,
+  #logout-btn,
   #donor-tab,
   #photo-tab,
   #event-tab,
   #templeinfo-tab,
-  #print-btn,
+  #sort-name-asc,
+  #sort-name-desc,
+  #sort-date-new,
+  #sort-date-old,
+  #sort-amount-asc,
+  #sort-amount-desc,
   #export-btn,
+  #print-btn,
   .delete-donation,
   .delete-event,
   .edit-info,
   .delete-info,
   .no-print {
     display: none !important;
+    visibility: hidden !important;
   }
 
-  /* ⬇⬇⬇ IMPORTANT PART — REPEATED FOOTER */
+  /* PRINT TABLE FULL WIDTH */
+  #admin-view,
+  #donor-content,
+  table {
+    visibility: visible !important;
+    display: block !important;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: auto;
+  }
+
+  th:last-child,
+  td:last-child {
+    display: none !important; /* Hide Action column */
+  }
+
+  /* 🔥 FIXED FOOTER ON EVERY PAGE */
   .print-footer {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     text-align: center;
-    padding: 5px 0;
+    padding: 6px 0;
     font-size: 12px;
     background: white !important;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #ccc;
   }
 }
 </style>
@@ -863,6 +891,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
