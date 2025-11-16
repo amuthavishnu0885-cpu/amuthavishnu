@@ -15,19 +15,6 @@
     @media print {
       body * { visibility: visible; }
     }
-    /* Prevent table row from splitting between pages */
-table, tr, td, th {
-  page-break-inside: avoid !important;
-}
-
-tr {
-  break-inside: avoid !important;
-}
-
-table {
-  width: 100% !important;
-  border-collapse: collapse !important;
-}
     <style>
   body { font-family: 'Inter', sans-serif; }
   [lang="ta"] body, [lang="ta"] button, [lang="ta"] input, [lang="ta"] textarea, 
@@ -45,95 +32,54 @@ table {
   .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
 
   /* 🔥 MOVE THIS HERE (correct place) */
- /* CLEAN PRINT MODE WITH HEADER + FOOTER */
-@media print {
+  @media print {
 
-  @page {
-    margin: 15mm;
-  }
+    nav,
+    #scan-to-pay,
+    #home-page,
+    #photos-page,
+    #events-page,
+    #templeinfo-page,
+    #password-modal,
+    #donor-tab,
+    #photo-tab,
+    #event-tab,
+    #templeinfo-tab,
+    #print-btn,
+    #export-btn,
+    .delete-donation,
+    .delete-event,
+    .edit-info,
+    .delete-info,
+    .no-print {
+      display: none !important;
+      visibility: hidden !important;
+    }
 
-  body {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+    header, footer {
+      display: block !important;
+      visibility: visible !important;
+      position: relative !important;
+    }
 
-  /* ❌ DO NOT SHOW THESE IN PRINT */
-  nav,
-  #password-modal,
-  #donor-tab,
-  #photo-tab,
-  #event-tab,
-  #templeinfo-tab,
-  #sort-name-asc,
-  #sort-name-desc,
-  #sort-date-new,
-  #sort-date-old,
-  #sort-amount-asc,
-  #sort-amount-desc,
-  #export-btn,
-  #print-btn,
-  .delete-donation,
-  .delete-event,
-  .edit-info,
-  .delete-info,
-  .no-print {
-    display: none !important;
-  }
+    #admin-view,
+    #donor-content,
+    #donor-count,
+    table {
+      display: block !important;
+      visibility: visible !important;
+    }
 
-  /* ❌ Hide scan-to-pay & home page only during print */
-  #scan-to-pay,
-  #home-page {
-    display: none !important;
-  }
+    table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+    }
 
-  /* ✔ SHOW THESE IN PRINT */
-  header,
-  footer,
-  #admin-view,
-  #donor-content,
-  table {
-    display: block !important;
-    visibility: visible !important;
+    th:last-child,
+    td:last-child {
+      display: none !important;
+    }
   }
-
-  /* HEADER ALWAYS AT TOP */
-  header {
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  /* BODY START AFTER HEADER */
-  main {
-    margin-top: 120px !important;
-  }
-
-  /* TABLE FULL WIDTH */
-  table {
-    width: 100% !important;
-    border-collapse: collapse !important;
-    page-break-inside: auto;
-  }
-
-  /* ACTION COLUMN HIDE */
-  th:last-child,
-  td:last-child {
-    display: none !important;
-  }
-
-  /* FOOTER ON EVERY PAGE */
-  .print-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    padding: 6px 0;
-    font-size: 12px;
-    background: white !important;
-    border-top: 1px solid #ccc;
-  }
-}
 </style>
 
   </style>
@@ -390,7 +336,7 @@ table {
   </div>
 </div>
   
-  <footer class="mt-6 text-center text-sm print-footer"><span id="footer-year"></span> Arulmigu Narayana Swamy Templep<p>Created by Amuthavishnukumaran Srinivasan</p></footer>
+  <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Templep<p>Created by Amuthavishnukumaran Srinivasan</p></footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Firebase + App Logic -->
@@ -918,26 +864,4 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
