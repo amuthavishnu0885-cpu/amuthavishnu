@@ -20,24 +20,27 @@
   visibility: visible !important;
   position: relative !important;
 }
-    <style>
-  body { font-family: 'Inter', sans-serif; }
-  [lang="ta"] body, [lang="ta"] button, [lang="ta"] input, [lang="ta"] textarea, 
-  [lang="ta"] h1, [lang="ta"] h2, [lang="ta"] p, [lang="ta"] label { 
-      font-family: 'Noto Sans Tamil', sans-serif; 
-  }
-  .glass-card { 
-      background: rgba(255,255,255,0.75); 
-      backdrop-filter: blur(8px); 
-      border-radius: 12px; 
-      padding: 1.25rem; 
-      box-shadow: 0 6px 18px rgba(0,0,0,0.12); 
-  }
-  .no-scrollbar::-webkit-scrollbar { display:none; } 
-  .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+   <style>
+body { font-family: 'Inter', sans-serif; }
+[lang="ta"] body, [lang="ta"] button, [lang="ta"] input, [lang="ta"] textarea, 
+[lang="ta"] h1, [lang="ta"] h2, [lang="ta"] p, [lang="ta"] label { 
+    font-family: 'Noto Sans Tamil', sans-serif; 
+}
+.glass-card { 
+    background: rgba(255,255,255,0.75); 
+    backdrop-filter: blur(8px); 
+    border-radius: 12px; 
+    padding: 1.25rem; 
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12); 
+}
 
-  /* 🔥 MOVE THIS HERE (correct place) */
-  @media print {
+.no-scrollbar::-webkit-scrollbar { display:none; } 
+.no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+
+/* ----------------------------------------------------------
+      PRINT MODE — CLEAN + WORKING
+----------------------------------------------------------- */
+@media print {
 
     nav,
     #scan-to-pay,
@@ -67,6 +70,12 @@
       position: relative !important;
     }
 
+    footer {
+      margin-top: 20px !important;
+      text-align: center !important;
+      font-size: 12px !important;
+    }
+
     #admin-view,
     #donor-content,
     #donor-count,
@@ -84,8 +93,8 @@
     td:last-child {
       display: none !important;
     }
-  }
-</style>
+}
+</style> 
 
   </style>
 </head>
@@ -869,6 +878,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
