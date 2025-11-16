@@ -32,11 +32,11 @@
   .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
 
   /* 🔥 MOVE THIS HERE (correct place) */
- /* PRINT MODE CLEAN VIEW */
+ /* CLEAN PRINT MODE WITH HEADER + FOOTER */
 @media print {
 
   @page {
-    margin: 12mm;
+    margin: 15mm;
   }
 
   body {
@@ -44,16 +44,9 @@
     print-color-adjust: exact;
   }
 
-  /* ❌ HIDE THESE IN PRINT ❌ */
-  header,
+  /* ❌ DO NOT SHOW THESE IN PRINT */
   nav,
-  #scan-to-pay,
-  #home-page,
-  #photos-page,
-  #events-page,
-  #templeinfo-page,
   #password-modal,
-  #logout-btn,
   #donor-tab,
   #photo-tab,
   #event-tab,
@@ -72,29 +65,51 @@
   .delete-info,
   .no-print {
     display: none !important;
-    visibility: hidden !important;
   }
 
-  /* PRINT TABLE FULL WIDTH */
+  /* ❌ Hide scan-to-pay & home page only during print */
+  #scan-to-pay,
+  #home-page {
+    display: none !important;
+  }
+
+  /* ✔ SHOW THESE IN PRINT */
+  header,
+  footer,
   #admin-view,
   #donor-content,
   table {
-    visibility: visible !important;
     display: block !important;
+    visibility: visible !important;
   }
 
+  /* HEADER ALWAYS AT TOP */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  /* BODY START AFTER HEADER */
+  main {
+    margin-top: 120px !important;
+  }
+
+  /* TABLE FULL WIDTH */
   table {
     width: 100% !important;
     border-collapse: collapse !important;
     page-break-inside: auto;
   }
 
+  /* ACTION COLUMN HIDE */
   th:last-child,
   td:last-child {
-    display: none !important; /* Hide Action column */
+    display: none !important;
   }
 
-  /* 🔥 FIXED FOOTER ON EVERY PAGE */
+  /* FOOTER ON EVERY PAGE */
   .print-footer {
     position: fixed;
     bottom: 0;
@@ -891,6 +906,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
