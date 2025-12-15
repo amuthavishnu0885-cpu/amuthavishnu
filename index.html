@@ -123,10 +123,36 @@ body { font-family: 'Inter', sans-serif; }
 
 <!-- Scan to Pay -->
 <div id="scan-to-pay" class="glass-card p-6 md:p-8 text-center">
-  <h3 class="text-xl font-bold mb-2" data-key="paymentTitle">Scan to Pay</h3>
-  <img src="QR.png" class="mx-auto rounded-lg shadow-lg w-80 h-auto" />
-  <p class="mt-3 text-sm" data-key="paymentInstructions">After payment, enter the UPI transaction ID in the form.<p>பணம் செலுத்திய பிறகு, படிவத்தில் UPI பரிவர்த்தனை ஐடியை உள்ளிடவும்.</p></p>
+
+  <h3 class="text-xl font-bold mb-2" data-key="paymentTitle">
+    Scan to Pay
+  </h3>
+
+  <!-- QR CODE -->
+  <img
+    src="QR.png"
+    alt="Temple UPI QR Code"
+    class="mx-auto rounded-lg shadow-lg w-80 h-auto"
+  />
+
+  <!-- Instructions -->
+  <p class="mt-3 text-sm" data-key="paymentInstructions">
+    After payment, enter the UPI transaction ID in the form.
+  </p>
+  <p class="text-sm">
+    பணம் செலுத்திய பிறகு, படிவத்தில் UPI பரிவர்த்தனை ஐடியை உள்ளிடவும்.
+  </p>
+
+  <!-- GPay / PhonePe Button -->
+  <a
+    href="upi://pay?pa=narayanaswamy@upi&pn=Arulmigu%20Narayana%20Swamy%20Temple&cu=INR"
+    class="mt-5 inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold"
+  >
+    💳 Pay using GPay / PhonePe
+  </a>
+
 </div>
+
 
 <!-- HOME PAGE -->
 <div id="home-page">
@@ -878,6 +904,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
