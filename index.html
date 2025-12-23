@@ -228,6 +228,51 @@ body { font-family: 'Inter', sans-serif; }
     <div id="main-gallery" class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
   </div>
 </div>
+    <script>
+/* -------------------------------------------------------
+   GITHUB STATIC TEMPLE PHOTOS (NO FIREBASE 💯 FREE)
+-------------------------------------------------------- */
+
+const templePhotos = [
+  "temple-photos/photo1.jpg",
+  "temple-photos/photo2.jpg",
+  "temple-photos/photo3.jpg",
+  "temple-photos/photo4.jpg",
+  "temple-photos/photo5.jpg",
+  "temple-photos/photo6.jpg",
+  "temple-photos/photo7.jpg",
+  "temple-photos/photo8.jpg",
+  "temple-photos/photo9.jpg",
+  "temple-photos/photo10.jpg",
+  "temple-photos/photo11.jpg",
+  "temple-photos/photo12.jpg",
+  "temple-photos/photo13.jpg",
+  "temple-photos/photo14.jpg",
+  "temple-photos/photo15.jpg"
+];
+
+function loadTemplePhotos() {
+  const gallery = document.getElementById("main-gallery");
+  if (!gallery) return;
+
+  gallery.innerHTML = "";
+
+  templePhotos.forEach(src => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.className =
+      "w-full h-56 object-cover rounded-lg shadow hover:scale-105 transition duration-300";
+    gallery.appendChild(img);
+  });
+}
+
+/* When clicking Temple Photos button */
+document.getElementById("go-to-photos-btn").onclick = () => {
+  showPage("photos-page");
+  loadTemplePhotos();
+};
+</script>
+
 
 <!-- EVENTS PAGE -->
 <div id="events-page" class="hidden">
@@ -904,6 +949,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
