@@ -480,6 +480,7 @@ function showPage(target) {
   });
   document.getElementById(target).classList.remove("hidden");
 }
+window.showPage = showPage;
 
 document.querySelectorAll(".back-home").forEach(btn =>
   btn.addEventListener("click", () => showPage("home-page"))
@@ -659,7 +660,7 @@ document.getElementById("photo-upload-form").addEventListener("submit", (e) => {
 });
 
 /* LOAD PHOTOS */
-onValue(ref(db, "photos"), snapshot => {
+/*onValue(ref(db, "photos"), snapshot => {
   const data = snapshot.val() || {};
   const gallery = document.getElementById("main-gallery");
   gallery.innerHTML = "";
@@ -670,7 +671,7 @@ onValue(ref(db, "photos"), snapshot => {
     img.className = "w-full h-48 object-cover rounded shadow";
     gallery.appendChild(img);
   });
-});
+}); */
 
 /* -------------------------------------------------------
     EVENTS
@@ -946,6 +947,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
