@@ -410,7 +410,7 @@ function loadTemplePhotos() {
     const img = document.createElement("img");
     img.src = src;
     img.className =
-      "w-full h-56 object-cover rounded-lg shadow hover:scale-105 transition";
+      "w-full h-56 object-contain bg-white rounded-lg shadow p-2";
     gallery.appendChild(img);
   });
 }
@@ -947,6 +947,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
