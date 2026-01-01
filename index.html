@@ -639,7 +639,7 @@ document.getElementById("donation-form").addEventListener("submit", async (e) =>
 };
 
   await push(ref(db, "donations"), data);
-  sendDonationEmail({
+ window.sendDonationEmail({
   name: donorName.value,
   amount: amount.value,
   purpose: purpose.value,
@@ -1159,39 +1159,40 @@ function closeVideo() {
   });
 </script>
 
-  <script>
-function sendDonationEmail(donor) {
-  emailjs.send(
-    "service_mwws5nk",      // SERVICE ID
-    "template_ykry8if",     // TEMPLATE ID
-    {
-      donor_name: donor.name,
-      amount: donor.amount,
-      purpose: donor.purpose,
-      transaction_id: donor.transactionId,
-      date: donor.date,
-      email: donor.email
-    }
-  ).then(
-    function () {
-      alert("Donation receipt email sent successfully ✅");
-    },
-    function (error) {
-      alert("Email failed ❌");
-      console.error(error);
-    }
-  );
-}
-</script>
-
-  
+  <!-- EMAILJS -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-  emailjs.init("aw4wSVx1imlupihY"); // PUBLIC KEY
+  (function(){
+    emailjs.init("aw4wSVx1imlupihY"); // PUBLIC KEY
+  })();
+
+  window.sendDonationEmail = function(donor) {
+    emailjs.send(
+      "service_mwws5nk",
+      "template_ykry8if",
+      {
+        donor_name: donor.name,
+        amount: donor.amount,
+        purpose: donor.purpose,
+        transaction_id: donor.transactionId,
+        date: donor.date,
+        email: donor.email
+      }
+    ).then(
+      () => {
+        console.log("✅ Email sent");
+      },
+      (error) => {
+        console.error("❌ Email error:", error);
+        alert("Email failed ❌ Check console");
+      }
+    );
+  }
 </script>
 
 </body>
 </html>
+
 
 
 
