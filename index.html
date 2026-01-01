@@ -1159,39 +1159,34 @@ function closeVideo() {
   });
 </script>
 
-  <!-- EMAILJS -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-  (function(){
-    emailjs.init("aw4wSVx1imlupihY"); // PUBLIC KEY
-  })();
-
-  window.sendDonationEmail = function(donor) {
-    emailjs.send(
-      "service_mwws5nk",
-      "template_ykry8if",
-      {
-        donor_name: donor.name,
-        amount: donor.amount,
-        purpose: donor.purpose,
-        transaction_id: donor.transactionId,
-        date: donor.date,
-        email: donor.email
-      }
-    ).then(
-      () => {
-        console.log("✅ Email sent");
-      },
-      (error) => {
-        console.error("❌ Email error:", error);
-        alert("Email failed ❌ Check console");
-      }
-    );
-  }
+  <script>
+function sendDonationEmail(donor) {
+  emailjs.send(
+    "service_mwws5nk",
+    "template_ykry8if",
+    {
+      donor_name: donor.name,
+      amount: donor.amount,
+      purpose: donor.purpose,
+      transaction_id: donor.transactionId,
+      date: donor.date,
+      email: donor.email
+    }
+  ).then(
+    () => {
+      alert("Donation receipt email sent successfully ✅");
+    },
+    (error) => {
+      alert("Email failed ❌");
+      console.error("EMAILJS ERROR:", error);
+    }
+  );
+}
 </script>
 
 </body>
 </html>
+
 
 
 
