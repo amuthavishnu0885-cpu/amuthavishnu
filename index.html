@@ -456,9 +456,7 @@ document.getElementById("go-to-photos-btn").addEventListener("click", () => {
   loadTemplePhotos();
 });
     function showReceipt(data) {
-  document.getElementById("r-no").textContent =
-    "TMT-" + Date.now();
-
+  document.getElementById("r-no").textContent = "TMT-" + Date.now();
   document.getElementById("r-name").textContent = data.donorName;
   document.getElementById("r-amount").textContent = data.amount;
   document.getElementById("r-date").textContent = new Date().toLocaleDateString();
@@ -467,6 +465,8 @@ document.getElementById("go-to-photos-btn").addEventListener("click", () => {
   document.getElementById("receipt-modal").classList.remove("hidden");
   document.getElementById("receipt-modal").classList.add("flex");
 }
+
+window.showReceipt = showReceipt;
 
 function closeReceipt() {
   document.getElementById("receipt-modal").classList.add("hidden");
@@ -997,6 +997,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
