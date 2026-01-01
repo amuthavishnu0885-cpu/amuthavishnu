@@ -209,6 +209,34 @@ body { font-family: 'Inter', sans-serif; }
 
         <button class="w-full bg-green-600 text-white py-4 rounded-lg">Submit Donation</button>
       </form>
+      
+      <!-- DONATION BILL / RECEIPT -->
+<div id="bill-section" class="hidden mt-6 glass-card">
+  <h2 class="text-2xl font-bold text-center mb-4">🧾 Donation Receipt</h2>
+
+  <div class="space-y-2 text-sm">
+    <p><b>Temple:</b> Arulmigu Narayana Swamy Temple</p>
+    <p><b>Donor Name:</b> <span id="b-name"></span></p>
+    <p><b>Address:</b> <span id="b-address"></span></p>
+    <p><b>Phone:</b> <span id="b-phone"></span></p>
+    <p><b>Email:</b> <span id="b-email"></span></p>
+    <p><b>Amount:</b> ₹<span id="b-amount"></span></p>
+    <p><b>Purpose:</b> <span id="b-purpose"></span></p>
+    <p><b>UPI Txn ID:</b> <span id="b-txn"></span></p>
+    <p><b>Date:</b> <span id="b-date"></span></p>
+  </div>
+
+  <div class="flex gap-3 mt-4 no-print">
+    <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded">
+      🖨 Print
+    </button>
+
+    <button onclick="downloadBill()" class="bg-green-600 text-white px-4 py-2 rounded">
+      ⬇ Download
+    </button>
+  </div>
+</div>
+
     </section>
 
     <!-- Explore More 3x2 Layout -->
@@ -630,29 +658,48 @@ document.getElementById("go-to-instagram-btn").onclick = () => {
 -------------------------------------------------------- */
 document.getElementById("donation-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const data = {
-  donorName: donorName.value,
-  address: address.value,
-  phone: phone.value,
-  email: email.value,
-  amount: amount.value,
-  transactionId: transactionId.value,
-  purpose: purpose.value, // ✅ NEW
-  date: donationDate.value
-};
 
+  const data = {
+    name: donorName.value,
+    address: address.value,
+    phone: phone.value,
+    email: email.value,
+    amount: amount.value,
+    purpose: purpose.value,
+    transactionId: transactionId.value,
+    date: donationDate.value
+  };
+
+  // ✅ Save to Firebase (ONLY ONCE)
   await push(ref(db, "donations"), data);
+
+  // ✅ SHOW BILL
+  document.getElementById("b-name").innerText = data.name;
+  document.getElementById("b-address").innerText = data.address;
+  document.getElementById("b-phone").innerText = data.phone;
+  document.getElementById("b-email").innerText = data.email;
+  document.getElementById("b-amount").innerText = data.amount;
+  document.getElementById("b-purpose").innerText = data.purpose;
+  document.getElementById("b-txn").innerText = data.transactionId;
+  document.getElementById("b-date").innerText = data.date;
+
+  document.getElementById("bill-section").classList.remove("hidden");
+  document.getElementById("bill-section").scrollIntoView({ behavior: "smooth" });
+
+  // ✅ Success popup
   Swal.fire({
   title: "Thank You! 🙏",
-  text: "Your donation has been successfully submitted.",
-  imageUrl: "https://media.tenor.com/kx02y-HTwW8AAAAj/thank-you.gif",
-  imageWidth: 150,
-  imageHeight: 150,
+  text: "Donation receipt generated below.",
   confirmButtonText: "OK",
   confirmButtonColor: "#28a745"
-});
+}).then(() => {
   e.target.reset();
 });
+
+  // ✅ Reset AFTER bill shown
+  e.target.reset();
+});
+
 
 /* -------------------------------------------------------
     DONOR TABLE + SORTING (FULL WORKING)
@@ -1153,8 +1200,21 @@ function closeVideo() {
   });
 </script>
 
+<!-- ✅ ADD THIS BELOW (NEW SCRIPT BLOCK) -->
+<script>
+function downloadBill() {
+  const bill = document.getElementById("bill-section").innerHTML;
+  const blob = new Blob([bill], { type: "text/html" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "Donation_Receipt.html";
+  link.click();
+}
+</script>
+
 </body>
 </html>
+
 
 
 
