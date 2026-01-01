@@ -361,42 +361,6 @@ body { font-family: 'Inter', sans-serif; }
 
   <div id="templeinfo-list" class="mt-4 space-y-2"></div>
 </div>
-    <!-- DONATION RECEIPT MODAL -->
-<div id="receipt-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center">
-  <div class="bg-white p-6 rounded-lg max-w-md w-full" id="receipt-content">
-
-    <h2 class="text-xl font-bold text-center mb-3">
-      Arulmigu Narayana Swamy Temple
-    </h2>
-
-    <p class="text-center font-semibold mb-4">Donation Receipt</p>
-
-    <hr class="mb-3">
-
-    <p><b>Receipt No:</b> <span id="r-no"></span></p>
-    <p><b>Name:</b> <span id="r-name"></span></p>
-    <p><b>Amount:</b> ₹<span id="r-amount"></span></p>
-    <p><b>Date:</b> <span id="r-date"></span></p>
-    <p><b>Transaction ID:</b> <span id="r-txn"></span></p>
-
-    <hr class="my-3">
-
-    <p class="text-center text-sm">
-      🙏 Thank you for your donation
-    </p>
-
-    <div class="flex gap-3 mt-4">
-      <button onclick="window.print()" class="flex-1 bg-green-600 text-white py-2 rounded">
-        Print
-      </button>
-      <button onclick="closeReceipt()" class="flex-1 bg-gray-500 text-white py-2 rounded">
-        Close
-      </button>
-    </div>
-
-  </div>
-</div>
-
 
 </main>
 
@@ -455,48 +419,21 @@ document.getElementById("go-to-photos-btn").addEventListener("click", () => {
   showPage("photos-page");
   loadTemplePhotos();
 });
-    function showReceipt(data) {
-  document.getElementById("r-no").textContent = "TMT-" + Date.now();
-  document.getElementById("r-name").textContent = data.donorName;
-  document.getElementById("r-amount").textContent = data.amount;
-  document.getElementById("r-date").textContent = new Date().toLocaleDateString();
-  document.getElementById("r-txn").textContent = data.transactionId;
-
-  document.getElementById("receipt-modal").classList.remove("hidden");
-  document.getElementById("receipt-modal").classList.add("flex");
-}
-
-window.showReceipt = showReceipt;
-
-function closeReceipt() {
-  document.getElementById("receipt-modal").classList.add("hidden");
-}
-
 </script>
 
 <!-- Firebase + App Logic -->
 <script type="module">
   // Hide scan to pay when admin logs in
-const ADMIN_PASSWORD = "password123";
-
-document.getElementById("admin-login-link").onclick = () => {
-  document.getElementById("password-modal").classList.remove("hidden");
-  document.getElementById("password-modal").classList.add("flex");
-};
-
-document.getElementById("password-cancel-btn").onclick = () =>
-  document.getElementById("password-modal").classList.add("hidden");
-
 document.getElementById("password-submit").onclick = () => {
   if (document.getElementById("admin-password").value === ADMIN_PASSWORD) {
 
-    isAdminLoggedIn = true; // ✅ ADD THIS LINE
-
     document.getElementById("password-modal").classList.add("hidden");
+
+    // ✨ Hide scan to pay section
     document.getElementById("scan-to-pay").classList.add("hidden");
+
     document.getElementById("home-page").classList.add("hidden");
     document.getElementById("admin-view").classList.remove("hidden");
-
   } else {
     alert("❌Wrong Password❗🔒");
   }
@@ -573,7 +510,6 @@ document.getElementById("go-to-instagram-btn").onclick = () => {
 -------------------------------------------------------- */
 document.getElementById("donation-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-
   const data = {
     donorName: donorName.value,
     address: address.value,
@@ -583,15 +519,16 @@ document.getElementById("donation-form").addEventListener("submit", async (e) =>
     transactionId: transactionId.value,
     date: donationDate.value
   };
-
   await push(ref(db, "donations"), data);
-
-  // ✅ ONLY USER → show receipt
-  if (!isAdminLoggedIn) {
-    showReceipt(data);
-  }
-
-  showPage("home-page"); // stay in home
+  Swal.fire({
+  title: "Thank You! 🙏",
+  text: "Your donation has been successfully submitted.",
+  imageUrl: "https://media.tenor.com/kx02y-HTwW8AAAAj/thank-you.gif",
+  imageWidth: 150,
+  imageHeight: 150,
+  confirmButtonText: "OK",
+  confirmButtonColor: "#28a745"
+});
   e.target.reset();
 });
 
@@ -871,6 +808,35 @@ onValue(ref(db, "templeInfo"), snapshot => {
   document.getElementById("info-instagram").href = last.instagram;
 });
 
+/* -------------------------------------------------------
+    ADMIN LOGIN
+-------------------------------------------------------- */
+const ADMIN_PASSWORD = "password123";
+
+document.getElementById("admin-login-link").onclick = () => {
+  document.getElementById("password-modal").classList.remove("hidden");
+  document.getElementById("password-modal").classList.add("flex");
+};
+
+document.getElementById("password-cancel-btn").onclick = () =>
+  document.getElementById("password-modal").classList.add("hidden");
+
+document.getElementById("password-submit").onclick = () => {
+  if (document.getElementById("admin-password").value === ADMIN_PASSWORD) {
+
+    document.getElementById("password-modal").classList.add("hidden");
+
+    // ✨ Hide scan to pay section
+    document.getElementById("scan-to-pay").classList.add("hidden");
+
+    document.getElementById("home-page").classList.add("hidden");
+    document.getElementById("admin-view").classList.remove("hidden");
+  } else {
+    alert("❌Wrong Password❗🔒");
+  }
+};
+
+
 document.getElementById("logout-btn").onclick = () => {
   document.getElementById("admin-view").classList.add("hidden");
   document.getElementById("home-page").classList.remove("hidden");
@@ -981,28 +947,6 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
