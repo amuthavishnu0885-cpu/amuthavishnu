@@ -1,6 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<title>Donation Receipt</title>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<style>
+body { font-family: Arial, sans-serif; background:#f3f3f3; }
+.container { max-width:400px; margin:30px auto; background:#fff; padding:20px; border-radius:10px; }
+input, select, button { width:100%; padding:10px; margin:8px 0; }
+button { background:#1e7e34; color:#fff; border:none; cursor:pointer; }
+
+#receiptBox {
+  display:none;
+  max-width:500px;
+  margin:30px auto;
+  background:#fff;
+  padding:20px;
+  border:2px solid #000;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>🙏 Make a Donation</h2>
+
+  <input id="name" placeholder="Donor Name" required>
+  <input id="email" placeholder="Email (optional)">
+  <input id="amount" placeholder="Amount ₹" required>
+  <input id="txn" placeholder="Transaction ID" required>
+  <input id="purpose" placeholder="Purpose">
+
+  <button onclick="generateReceipt()">Submit Donation</button>
+</div>
+
+<!-- RECEIPT -->
+<div id="receiptBox">
+  <h2 style="text-align:center;">🧾 Donation Receipt</h2>
+  <hr>
+
+  <p><b>Temple:</b> Arulmigu Narayana Swamy Temple</p>
+  <p><b>Name:</b> <span id="r_name"></span></p>
+  <p><b>Amount:</b> ₹<span id="r_amount"></span></p>
+  <p><b>Purpose:</b> <span id="r_purpose"></span></p>
+  <p><b>Transaction ID:</b> <span id="r_txn"></span></p>
+  <p><b>Date:</b> <span id="r_date"></span></p>
+
+  <hr>
+  <p>🙏 May Lord Narayana bless you</p>
+
+  <button onclick="downloadPDF()">📥 Download PDF</button>
+</div>
+
+<script>
+function generateReceipt() {
+  document.getElementById("r_name").innerText = name.value;
+  document.getElementById("r_amount").innerText = amount.value;
+  document.getElementById("r_purpose").innerText = purpose.value || "-";
+  document.getElementById("r_txn").innerText = txn.value;
+  document.getElementById("r_date").innerText = new Date().toLocaleString();
+
+  document.getElementById("receiptBox").style.display = "block";
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+async function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF();
+
+  const receipt = document.getElementById("receiptBox");
+  const canvas = await html2canvas(receipt);
+  const imgData = canvas.toDataURL("image/png");
+
+  pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
+  pdf.save("Donation_Receipt.pdf");
+}
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Arulmigu Narayana Swamy Temple - Donation Portal (Cloud) v3</title>
@@ -1152,6 +1237,7 @@ function closeVideo() {
 
 </body>
 </html>
+
 
 
 
