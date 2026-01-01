@@ -272,12 +272,15 @@ body { font-family: 'Inter', sans-serif; }
 </div>
 
         <div>
-  <label>Donation Purpose / Propose</label>
-  <select
-  id="purpose"
-  required
-  class="w-full p-2 border rounded-md bg-white"
-></select>
+          <label>Donation Purpose / Propose</label>
+<select id="purpose" required>
+  <option value="" disabled selected>-- Select Purpose --</option>
+  <option value="Annadhanam">Annadhanam</option>
+  <option value="Pooja">Special Pooja</option>
+  <option value="Abhishekam">Abhishekam</option>
+  <option value="Temple Maintenance">Temple Maintenance</option>
+  <option value="General Donation">General Donation</option>
+</select>
 
 </div>
 
@@ -1237,6 +1240,7 @@ function closeVideo() {
 
 </body>
 </html>
+
 
 
 
