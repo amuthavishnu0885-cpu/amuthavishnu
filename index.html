@@ -188,12 +188,20 @@ body { font-family: 'Inter', sans-serif; }
 
         <div>
   <label>Donation Purpose / Propose</label>
-  <input
+  <select
     id="purpose"
-    placeholder="Eg: Annadhanam, Temple Renovation"
-    class="w-full p-2 border rounded-md"
-  />
+    required
+    class="w-full p-2 border rounded-md bg-white"
+  >
+    <option value="">-- Select Purpose --</option>
+    <option value="Annadhanam">Annadhanam</option>
+    <option value="Temple Renovation">Temple Renovation</option>
+    <option value="Festival Special Pooja">Festival Special Pooja</option>
+    <option value="General Donation">General Donation</option>
+    <option value="Kumbabishekam Fund">Kumbabishekam Fund</option>
+  </select>
 </div>
+
 
 
       <!--  <div><label>UPI Transaction ID</label>
@@ -960,6 +968,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
