@@ -436,6 +436,26 @@ function loadTemplePhotos() {
 document.getElementById("go-to-photos-btn").addEventListener("click", () => {
   showPage("photos-page");
   loadTemplePhotos();
+
+const purposeOptions = {
+  en: [
+    "-- Select Purpose --",
+    "Annadhanam",
+    "Temple Renovation",
+    "Festival Special Pooja",
+    "General Donation",
+    "Kumbabishekam Fund"
+  ],
+  ta: [
+    "-- நோக்கத்தை தேர்வு செய்யவும் --",
+    "அன்னதானம்",
+    "கோவில் திருப்பணி",
+    "திருவிழா சிறப்பு பூஜை",
+    "பொது நன்கொடை",
+    "கும்பாபிஷேகம் நிதி"
+  ]
+};
+  
 });
 </script>
 
@@ -949,6 +969,41 @@ const langData = {
     instagramBtn: "📸 இன்ஸ்டாகிராம்"
   }
 };
+    // 🔽 Donation Purpose Options (EN + TA)
+const purposeOptions = {
+  en: [
+    "-- Select Purpose --",
+    "Annadhanam",
+    "Temple Renovation",
+    "Festival Special Pooja",
+    "General Donation",
+    "Kumbabishekam Fund"
+  ],
+  ta: [
+    "-- நோக்கத்தை தேர்வு செய்யவும் --",
+    "அன்னதானம்",
+    "கோவில் திருப்பணி",
+    "திருவிழா சிறப்பு பூஜை",
+    "பொது நன்கொடை",
+    "கும்பாபிஷேகம் நிதி"
+  ]
+};
+
+// 🔽 Dropdown load function
+function loadPurposeOptions(lang) {
+  const select = document.getElementById("purpose");
+  if (!select) return;
+
+  select.innerHTML = "";
+
+  purposeOptions[lang].forEach((text, index) => {
+    const option = document.createElement("option");
+    option.value = index === 0 ? "" : text;
+    option.textContent = text;
+    select.appendChild(option);
+  });
+}
+
 
 function applyLanguage(lang) {
   document.documentElement.lang = lang;
@@ -968,6 +1023,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
