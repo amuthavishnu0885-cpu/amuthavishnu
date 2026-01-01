@@ -412,26 +412,37 @@ const templePhotos = [
   "temple-photos/photo14.jpg",
   "temple-photos/photo15.jpg"
 ];
+let currentImages = [];
+let currentIndex = 0;
 
 function loadTemplePhotos() {
   const gallery = document.getElementById("main-gallery");
   if (!gallery) return;
-  gallery.innerHTML = "";
 
-  templePhotos.forEach(src => {
+  gallery.innerHTML = "";
+  currentImages = [];
+
+  templePhotos.forEach((src, index) => {
+    currentImages.push(src);
+
     const img = document.createElement("img");
-   img.src = src;
-img.style.cursor = "pointer";
-img.onclick = () => openImage(src);
+    img.src = src;
+    img.style.cursor = "pointer";
     img.className =
       "w-full h-56 object-contain bg-white rounded-lg shadow p-2";
+
+    // ✅ index-based open (Next / Prev support)
+    img.onclick = () => openImageByIndex(index);
+
     gallery.appendChild(img);
   });
 }
 
+// photos page open pannumbodhu load aagum
 document.getElementById("go-to-photos-btn").addEventListener("click", () => {
   showPage("photos-page");
   loadTemplePhotos();
+});
 
 const purposeOptions = {
   en: [
@@ -1036,23 +1047,79 @@ loadPurposeOptions("en"); // 🔥 THIS LINE WAS MISSING
 </div>
 
 <script>
-  function openImage(src) {
-    document.getElementById("modal-img").src = src;
-    document.getElementById("image-modal").classList.remove("hidden");
-  }
+ let currentIndex = 0;
+let currentImages = [];
 
-  function closeImage() {
-    document.getElementById("image-modal").classList.add("hidden");
-  }
+// OPEN IMAGE BY INDEX
+function openImageByIndex(index) {
+  currentIndex = index;
+  document.getElementById("modal-img").src = currentImages[currentIndex];
+  document.getElementById("image-modal").classList.remove("hidden");
+}
 
-  // ESC key close
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeImage();
-  });
+// CLOSE
+function closeImage() {
+  document.getElementById("image-modal").classList.add("hidden");
+}
+
+// NEXT
+function nextImage() {
+  currentIndex = (currentIndex + 1) % currentImages.length;
+  document.getElementById("modal-img").src = currentImages[currentIndex];
+}
+
+// PREVIOUS
+function prevImage() {
+  currentIndex =
+    (currentIndex - 1 + currentImages.length) % currentImages.length;
+  document.getElementById("modal-img").src = currentImages[currentIndex];
+}
+
+// ESC close
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeImage();
+});
+
 </script>
+<!-- IMAGE FULLSCREEN MODAL -->
+<div
+  id="image-modal"
+  class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
+>
+  <!-- PREVIOUS -->
+  <button
+    onclick="prevImage()"
+    class="absolute left-5 text-white text-4xl font-bold select-none"
+  >
+    ‹
+  </button>
+
+  <!-- IMAGE -->
+  <img
+    id="modal-img"
+    class="max-w-full max-h-full rounded-lg shadow-lg"
+  />
+
+  <!-- NEXT -->
+  <button
+    onclick="nextImage()"
+    class="absolute right-5 text-white text-4xl font-bold select-none"
+  >
+    ›
+  </button>
+
+  <!-- CLOSE -->
+  <button
+    onclick="closeImage()"
+    class="absolute top-5 right-5 text-white text-3xl font-bold"
+  >
+    ✕
+  </button>
+</div>
 
 </body>
 </html>
+
 
 
 
