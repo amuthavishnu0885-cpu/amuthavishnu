@@ -391,7 +391,10 @@ body { font-family: 'Inter', sans-serif; }
   <footer class="mt-6 text-center text-sm no-print">&copy; <span id="footer-year"></span> Arulmigu Narayana Swamy Templep<p>Created by Amuthavishnukumaran Srinivasan</p></footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
- <script>
+  <script>
+/* -------------------------------------------------------
+   GITHUB STATIC TEMPLE PHOTOS (NO FIREBASE)
+-------------------------------------------------------- */
 const templePhotos = [
   "temple-photos/photo1.jpg",
   "temple-photos/photo2.jpg",
@@ -410,30 +413,25 @@ const templePhotos = [
   "temple-photos/photo15.jpg"
 ];
 
-let currentImages = [];
-let currentIndex = 0;
-
 function loadTemplePhotos() {
   const gallery = document.getElementById("main-gallery");
   if (!gallery) return;
-
   gallery.innerHTML = "";
-  currentImages = [...templePhotos];
 
-  templePhotos.forEach((src, index) => {
+  templePhotos.forEach(src => {
     const img = document.createElement("img");
-    img.src = src;
-    img.className = "w-full h-56 object-contain bg-white rounded-lg shadow p-2 cursor-pointer";
-    img.onclick = () => openImageByIndex(index);
+   img.src = src;
+img.style.cursor = "pointer";
+img.onclick = () => openImage(src);
+    img.className =
+      "w-full h-56 object-contain bg-white rounded-lg shadow p-2";
     gallery.appendChild(img);
   });
-} 
+}
 
-// photos page open pannumbodhu load aagum
 document.getElementById("go-to-photos-btn").addEventListener("click", () => {
   showPage("photos-page");
   loadTemplePhotos();
-});
 
 const purposeOptions = {
   en: [
@@ -454,6 +452,7 @@ const purposeOptions = {
   ]
 };
   
+});
 </script>
 
 <!-- Firebase + App Logic -->
@@ -524,6 +523,7 @@ document.querySelectorAll(".back-home").forEach(btn =>
 /* -------------------------------------------------------
     EXPLORE BUTTONS
 -------------------------------------------------------- */
+document.getElementById("go-to-photos-btn").onclick = () => showPage("photos-page");
 document.getElementById("go-to-events-btn").onclick = () => showPage("events-page");
 document.getElementById("go-to-templeinfo-btn").onclick = () => showPage("templeinfo-page");
 
@@ -1029,13 +1029,30 @@ applyLanguage("en");
 loadPurposeOptions("en"); // 🔥 THIS LINE WAS MISSING
 
 </script>
+<!-- IMAGE FULLSCREEN MODAL -->
+<div id="image-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center">
+  <img id="modal-img" class="max-w-full max-h-full rounded-lg" />
+  <button onclick="closeImage()" class="absolute top-5 right-5 text-white text-3xl">✖</button>
+</div>
+
+<script>
+  function openImage(src) {
+    document.getElementById("modal-img").src = src;
+    document.getElementById("image-modal").classList.remove("hidden");
+  }
+
+  function closeImage() {
+    document.getElementById("image-modal").classList.add("hidden");
+  }
+
+  // ESC key close
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeImage();
+  });
+</script>
 
 </body>
 </html>
-
-
-
-
 
 
 
