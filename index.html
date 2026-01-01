@@ -420,7 +420,9 @@ function loadTemplePhotos() {
 
   templePhotos.forEach(src => {
     const img = document.createElement("img");
-    img.src = src;
+   img.src = src;
+img.style.cursor = "pointer";
+img.onclick = () => openImage(src);
     img.className =
       "w-full h-56 object-contain bg-white rounded-lg shadow p-2";
     gallery.appendChild(img);
@@ -1027,6 +1029,31 @@ applyLanguage("en");
 loadPurposeOptions("en"); // 🔥 THIS LINE WAS MISSING
 
 </script>
+<!-- IMAGE FULLSCREEN MODAL -->
+<div id="image-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center">
+  <img id="modal-img" class="max-w-full max-h-full rounded-lg" />
+  <button onclick="closeImage()" class="absolute top-5 right-5 text-white text-3xl">✖</button>
+</div>
+
+<script>
+  function openImage(src) {
+    document.getElementById("modal-img").src = src;
+    document.getElementById("image-modal").classList.remove("hidden");
+  }
+
+  function closeImage() {
+    document.getElementById("image-modal").classList.add("hidden");
+  }
+
+  // ESC key close
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeImage();
+  });
+</script>
+
+</body>
+</html>
+
 
 
 
