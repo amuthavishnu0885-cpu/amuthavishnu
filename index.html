@@ -240,6 +240,21 @@ body { font-family: 'Inter', sans-serif; }
     <div id="main-gallery" class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
   </div>
 </div>
+
+    <!-- VIDEOS PAGE -->
+<div id="videos-page" class="hidden">
+  <div class="glass-card">
+    <div class="flex justify-between">
+      <h2 class="text-2xl font-bold">Temple Videos</h2>
+      <button class="back-home bg-gray-500 text-white px-3 py-2 rounded">Back</button>
+    </div>
+
+    <div id="video-gallery"
+      class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    </div>
+  </div>
+</div>
+
     
 <!-- EVENTS PAGE -->
 <div id="events-page" class="hidden">
@@ -428,6 +443,72 @@ img.onclick = () => openImage(src);
     gallery.appendChild(img);
   });
 }
+
+    // ================= VIDEO LIST =================
+const templeVideos = [
+  "temple-videos/video1.mp4",
+  "temple-videos/video2.mp4",
+  "temple-videos/video3.mp4",
+  "temple-videos/video4.mp4",
+  "temple-videos/video5.mp4",
+  "temple-videos/video6.mp4",
+  "temple-videos/video7.mp4",
+  "temple-videos/video8.mp4",
+  "temple-videos/video9.mp4",
+  "temple-videos/video10.mp4"
+];
+
+let currentVideoIndex = 0;
+
+    function loadTempleVideos() {
+  const gallery = document.getElementById("video-gallery");
+  if (!gallery) return;
+
+  gallery.innerHTML = "";
+
+  templeVideos.forEach((src, index) => {
+    const video = document.createElement("video");
+    video.src = src;
+    video.controls = true;
+    video.muted = true;
+
+    video.className =
+      "w-full h-56 object-cover bg-black rounded-lg shadow p-2 cursor-pointer";
+
+    video.onclick = () => openVideoByIndex(index);
+    gallery.appendChild(video);
+  });
+}
+
+
+    /* --------------------------------
+   GITHUB STATIC TEMPLE VIDEOS
+--------------------------------- */
+const templeVideos = [
+  "temple-videos/video1.mp4"
+];
+
+let currentVideoIndex = 0;
+
+function loadTempleVideos() {
+  const gallery = document.getElementById("video-gallery");
+  if (!gallery) return;
+
+  gallery.innerHTML = "";
+
+  templeVideos.forEach((src, index) => {
+    const video = document.createElement("video");
+    video.src = src;
+    video.muted = true;
+    video.controls = true;
+    video.className =
+      "w-full h-56 object-cover bg-black rounded-lg shadow cursor-pointer";
+
+    video.onclick = () => openVideoFullscreen(index);
+    gallery.appendChild(video);
+  });
+}
+
 
 document.getElementById("go-to-photos-btn").addEventListener("click", () => {
   showPage("photos-page");
@@ -1048,11 +1129,28 @@ loadPurposeOptions("en"); // 🔥 THIS LINE WAS MISSING
   // ESC key close
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeImage();
+
+   function openVideoByIndex(index) {
+  currentVideoIndex = index;
+  const modalVideo = document.getElementById("modal-video");
+  modalVideo.src = templeVideos[currentVideoIndex];
+  modalVideo.play();
+  document.getElementById("video-modal").classList.remove("hidden");
+}
+
+function closeVideo() {
+  const modalVideo = document.getElementById("modal-video");
+  modalVideo.pause();
+  modalVideo.src = "";
+  document.getElementById("video-modal").classList.add("hidden");
+}
+ 
   });
 </script>
 
 </body>
 </html>
+
 
 
 
