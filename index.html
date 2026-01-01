@@ -490,6 +490,8 @@ document.getElementById("password-cancel-btn").onclick = () =>
 document.getElementById("password-submit").onclick = () => {
   if (document.getElementById("admin-password").value === ADMIN_PASSWORD) {
 
+    isAdminLoggedIn = true; // ✅ ADD THIS LINE
+
     document.getElementById("password-modal").classList.add("hidden");
     document.getElementById("scan-to-pay").classList.add("hidden");
     document.getElementById("home-page").classList.add("hidden");
@@ -584,12 +586,12 @@ document.getElementById("donation-form").addEventListener("submit", async (e) =>
 
   await push(ref(db, "donations"), data);
 
-  // ✅ USER SIDE RECEIPT ONLY
-  showReceipt(data);
+  // ✅ ONLY USER → show receipt
+  if (!isAdminLoggedIn) {
+    showReceipt(data);
+  }
 
-  // 🔁 STAY ON HOME PAGE
-  showPage("home-page");
-
+  showPage("home-page"); // stay in home
   e.target.reset();
 });
 
@@ -979,6 +981,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
