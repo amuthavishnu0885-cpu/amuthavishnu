@@ -215,6 +215,7 @@ body { font-family: 'Inter', sans-serif; }
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
         <button id="go-to-photos-btn" class="py-5 rounded-lg bg-orange-500 text-white text-lg" data-key="templePhotos">🖼️Temple Photos📸</button>
+        <button id="go-to-videos-btn"class="py-5 rounded-lg bg-red-500 text-white text-lg">🎥 Temple Videos</button>
         <button id="go-to-events-btn" class="py-5 rounded-lg bg-orange-500 text-white text-lg" data-key="specialDays">✨ Special Days🪔</button>
 
         <button id="go-to-templeinfo-btn" class="py-5 rounded-lg bg-pink-600 text-white text-lg" data-key="templeInfoBtn">☎ Temple Info & Contact📞</button>
@@ -471,40 +472,10 @@ let currentVideoIndex = 0;
     video.src = src;
     video.controls = true;
     video.muted = true;
-
     video.className =
       "w-full h-56 object-cover bg-black rounded-lg shadow p-2 cursor-pointer";
 
     video.onclick = () => openVideoByIndex(index);
-    gallery.appendChild(video);
-  });
-}
-
-
-    /* --------------------------------
-   GITHUB STATIC TEMPLE VIDEOS
---------------------------------- */
-const templeVideos = [
-  "temple-videos/video1.mp4"
-];
-
-let currentVideoIndex = 0;
-
-function loadTempleVideos() {
-  const gallery = document.getElementById("video-gallery");
-  if (!gallery) return;
-
-  gallery.innerHTML = "";
-
-  templeVideos.forEach((src, index) => {
-    const video = document.createElement("video");
-    video.src = src;
-    video.muted = true;
-    video.controls = true;
-    video.className =
-      "w-full h-56 object-cover bg-black rounded-lg shadow cursor-pointer";
-
-    video.onclick = () => openVideoFullscreen(index);
     gallery.appendChild(video);
   });
 }
@@ -605,6 +576,10 @@ document.querySelectorAll(".back-home").forEach(btn =>
     EXPLORE BUTTONS
 -------------------------------------------------------- */
 document.getElementById("go-to-photos-btn").onclick = () => showPage("photos-page");
+  document.getElementById("go-to-videos-btn").onclick = () => {
+  showPage("videos-page");
+  loadTempleVideos();
+};
 document.getElementById("go-to-events-btn").onclick = () => showPage("events-page");
 document.getElementById("go-to-templeinfo-btn").onclick = () => showPage("templeinfo-page");
 
@@ -1150,6 +1125,7 @@ function closeVideo() {
 
 </body>
 </html>
+
 
 
 
