@@ -361,6 +361,42 @@ body { font-family: 'Inter', sans-serif; }
 
   <div id="templeinfo-list" class="mt-4 space-y-2"></div>
 </div>
+    <!-- DONATION RECEIPT MODAL -->
+<div id="receipt-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center">
+  <div class="bg-white p-6 rounded-lg max-w-md w-full" id="receipt-content">
+
+    <h2 class="text-xl font-bold text-center mb-3">
+      Arulmigu Narayana Swamy Temple
+    </h2>
+
+    <p class="text-center font-semibold mb-4">Donation Receipt</p>
+
+    <hr class="mb-3">
+
+    <p><b>Receipt No:</b> <span id="r-no"></span></p>
+    <p><b>Name:</b> <span id="r-name"></span></p>
+    <p><b>Amount:</b> ₹<span id="r-amount"></span></p>
+    <p><b>Date:</b> <span id="r-date"></span></p>
+    <p><b>Transaction ID:</b> <span id="r-txn"></span></p>
+
+    <hr class="my-3">
+
+    <p class="text-center text-sm">
+      🙏 Thank you for your donation
+    </p>
+
+    <div class="flex gap-3 mt-4">
+      <button onclick="window.print()" class="flex-1 bg-green-600 text-white py-2 rounded">
+        Print
+      </button>
+      <button onclick="closeReceipt()" class="flex-1 bg-gray-500 text-white py-2 rounded">
+        Close
+      </button>
+    </div>
+
+  </div>
+</div>
+
 
 </main>
 
@@ -419,6 +455,23 @@ document.getElementById("go-to-photos-btn").addEventListener("click", () => {
   showPage("photos-page");
   loadTemplePhotos();
 });
+    function showReceipt(data) {
+  document.getElementById("r-no").textContent =
+    "TMT-" + Date.now();
+
+  document.getElementById("r-name").textContent = data.donorName;
+  document.getElementById("r-amount").textContent = data.amount;
+  document.getElementById("r-date").textContent = new Date().toLocaleDateString();
+  document.getElementById("r-txn").textContent = data.transactionId;
+
+  document.getElementById("receipt-modal").classList.remove("hidden");
+  document.getElementById("receipt-modal").classList.add("flex");
+}
+
+function closeReceipt() {
+  document.getElementById("receipt-modal").classList.add("hidden");
+}
+
 </script>
 
 <!-- Firebase + App Logic -->
@@ -520,17 +573,12 @@ document.getElementById("donation-form").addEventListener("submit", async (e) =>
     date: donationDate.value
   };
   await push(ref(db, "donations"), data);
-  Swal.fire({
-  title: "Thank You! 🙏",
-  text: "Your donation has been successfully submitted.",
-  imageUrl: "https://media.tenor.com/kx02y-HTwW8AAAAj/thank-you.gif",
-  imageWidth: 150,
-  imageHeight: 150,
-  confirmButtonText: "OK",
-  confirmButtonColor: "#28a745"
-});
-  e.target.reset();
-});
+
+// SHOW RECEIPT INSTEAD OF THANK YOU MESSAGE
+showReceipt(data);
+
+e.target.reset();
+
 
 /* -------------------------------------------------------
     DONOR TABLE + SORTING (FULL WORKING)
@@ -947,6 +995,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
