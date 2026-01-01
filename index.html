@@ -563,6 +563,7 @@ document.getElementById("go-to-instagram-btn").onclick = () => {
 -------------------------------------------------------- */
 document.getElementById("donation-form").addEventListener("submit", async (e) => {
   e.preventDefault();
+
   const data = {
     donorName: donorName.value,
     address: address.value,
@@ -572,13 +573,14 @@ document.getElementById("donation-form").addEventListener("submit", async (e) =>
     transactionId: transactionId.value,
     date: donationDate.value
   };
+
   await push(ref(db, "donations"), data);
 
-// SHOW RECEIPT INSTEAD OF THANK YOU MESSAGE
-showReceipt(data);
+  // ✅ call receipt properly
+  window.showReceipt(data);
 
-e.target.reset();
-
+  e.target.reset();
+});
 
 /* -------------------------------------------------------
     DONOR TABLE + SORTING (FULL WORKING)
@@ -995,6 +997,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
