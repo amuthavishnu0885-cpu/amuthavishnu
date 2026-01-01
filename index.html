@@ -639,15 +639,6 @@ document.getElementById("donation-form").addEventListener("submit", async (e) =>
 };
 
   await push(ref(db, "donations"), data);
- window.sendDonationEmail({
-  name: donorName.value,
-  amount: amount.value,
-  purpose: purpose.value,
-  transactionId: transactionId.value,
-  date: new Date().toLocaleString(),
-  email: email.value
-});
-
   Swal.fire({
   title: "Thank You! 🙏",
   text: "Your donation has been successfully submitted.",
@@ -1159,33 +1150,9 @@ function closeVideo() {
   });
 </script>
 
-  <script>
-function sendDonationEmail(donor) {
-  emailjs.send(
-    "service_mwws5nk",
-    "template_ykry8if",
-    {
-      donor_name: donor.name,
-      amount: donor.amount,
-      purpose: donor.purpose,
-      transaction_id: donor.transactionId,
-      date: donor.date,
-      email: donor.email
-    }
-  ).then(
-    () => {
-      alert("Donation receipt email sent successfully ✅");
-    },
-    (error) => {
-      alert("Email failed ❌");
-      console.error("EMAILJS ERROR:", error);
-    }
-  );
-}
-</script>
-
 </body>
 </html>
+
 
 
 
