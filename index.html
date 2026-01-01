@@ -584,8 +584,11 @@ document.getElementById("donation-form").addEventListener("submit", async (e) =>
 
   await push(ref(db, "donations"), data);
 
-  // ✅ call receipt properly
-  window.showReceipt(data);
+  // ✅ USER SIDE RECEIPT ONLY
+  showReceipt(data);
+
+  // 🔁 STAY ON HOME PAGE
+  showPage("home-page");
 
   e.target.reset();
 });
@@ -976,6 +979,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
