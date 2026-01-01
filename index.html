@@ -219,6 +219,7 @@ body { font-family: 'Inter', sans-serif; }
         <button id="go-to-events-btn" class="py-5 rounded-lg bg-orange-500 text-white text-lg" data-key="specialDays">✨ Special Days🪔</button>
 
         <button id="go-to-templeinfo-btn" class="py-5 rounded-lg bg-pink-600 text-white text-lg" data-key="templeInfoBtn">☎ Temple Info & Contact📞</button>
+        <button id="go-to-map-btn"class="py-5 rounded-lg bg-green-700 text-white text-lg">📍 Google Map</button>
         <button id="go-to-youtube-btn" class="py-5 rounded-lg bg-red-600 text-white text-lg">▶ YouTube</button>
 
         <button id="go-to-facebook-btn" class="py-5 rounded-lg bg-blue-700 text-white text-lg">📘 Facebook</button>
@@ -582,6 +583,10 @@ document.getElementById("go-to-photos-btn").onclick = () => showPage("photos-pag
 };
 document.getElementById("go-to-events-btn").onclick = () => showPage("events-page");
 document.getElementById("go-to-templeinfo-btn").onclick = () => showPage("templeinfo-page");
+
+  document.getElementById("go-to-map-btn").onclick = () => {
+  window.open("https://maps.google.com/?q=Arulmigu+Narayana+Swamy+Temple","_blank");
+};
 
 document.getElementById("go-to-youtube-btn").onclick = () => {
   window.open(latestTempleInfo.youtube || "https://youtube.com", "_blank");
@@ -1125,6 +1130,7 @@ function closeVideo() {
 
 </body>
 </html>
+
 
 
 
