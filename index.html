@@ -1040,85 +1040,10 @@ applyLanguage("en");
 loadPurposeOptions("en"); // 🔥 THIS LINE WAS MISSING
 
 </script>
-<!-- IMAGE FULLSCREEN MODAL -->
-<div id="image-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center">
-  <img id="modal-img" class="max-w-full max-h-full rounded-lg" />
-  <button onclick="closeImage()" class="absolute top-5 right-5 text-white text-3xl">✖</button>
-</div>
-
-<script>
- let currentIndex = 0;
-let currentImages = [];
-
-// OPEN IMAGE BY INDEX
-function openImageByIndex(index) {
-  currentIndex = index;
-  document.getElementById("modal-img").src = currentImages[currentIndex];
-  document.getElementById("image-modal").classList.remove("hidden");
-}
-
-// CLOSE
-function closeImage() {
-  document.getElementById("image-modal").classList.add("hidden");
-}
-
-// NEXT
-function nextImage() {
-  currentIndex = (currentIndex + 1) % currentImages.length;
-  document.getElementById("modal-img").src = currentImages[currentIndex];
-}
-
-// PREVIOUS
-function prevImage() {
-  currentIndex =
-    (currentIndex - 1 + currentImages.length) % currentImages.length;
-  document.getElementById("modal-img").src = currentImages[currentIndex];
-}
-
-// ESC close
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeImage();
-});
-
-</script>
-<!-- IMAGE FULLSCREEN MODAL -->
-<div
-  id="image-modal"
-  class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
->
-  <!-- PREVIOUS -->
-  <button
-    onclick="prevImage()"
-    class="absolute left-5 text-white text-4xl font-bold select-none"
-  >
-    ‹
-  </button>
-
-  <!-- IMAGE -->
-  <img
-    id="modal-img"
-    class="max-w-full max-h-full rounded-lg shadow-lg"
-  />
-
-  <!-- NEXT -->
-  <button
-    onclick="nextImage()"
-    class="absolute right-5 text-white text-4xl font-bold select-none"
-  >
-    ›
-  </button>
-
-  <!-- CLOSE -->
-  <button
-    onclick="closeImage()"
-    class="absolute top-5 right-5 text-white text-3xl font-bold"
-  >
-    ✕
-  </button>
-</div>
 
 </body>
 </html>
+
 
 
 
