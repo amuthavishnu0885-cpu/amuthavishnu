@@ -186,6 +186,16 @@ body { font-family: 'Inter', sans-serif; }
   <input id="transactionId" class="w-full p-2 border rounded-md" />
 </div>
 
+        <div>
+  <label>Donation Purpose / Propose</label>
+  <input
+    id="purpose"
+    placeholder="Eg: Annadhanam, Temple Renovation"
+    class="w-full p-2 border rounded-md"
+  />
+</div>
+
+
       <!--  <div><label>UPI Transaction ID</label>
           <input id="transactionId" class="w-full p-2 border rounded-md" /></div> -->
 
@@ -511,14 +521,16 @@ document.getElementById("go-to-instagram-btn").onclick = () => {
 document.getElementById("donation-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const data = {
-    donorName: donorName.value,
-    address: address.value,
-    phone: phone.value,
-    email: email.value,
-    amount: amount.value,
-    transactionId: transactionId.value,
-    date: donationDate.value
-  };
+  donorName: donorName.value,
+  address: address.value,
+  phone: phone.value,
+  email: email.value,
+  amount: amount.value,
+  transactionId: transactionId.value,
+  purpose: purpose.value, // ✅ NEW
+  date: donationDate.value
+};
+
   await push(ref(db, "donations"), data);
   Swal.fire({
   title: "Thank You! 🙏",
@@ -567,6 +579,7 @@ function renderDonorTable(list) {
       <td class="border p-2">${d.phone}</td>
       <td class="border p-2">₹${d.amount}</td>
       <td class="border p-2">${d.transactionId}</td>
+<td class="border p-2">${d.purpose || "-"}</td>
       <td class="border p-2">
         <button data-id="${d.id}" class="delete-donation bg-red-500 text-white px-2 py-1 rounded">Delete</button>
       </td>
@@ -947,6 +960,7 @@ document.getElementById("ta-lang-btn").addEventListener("click", () => applyLang
 
 applyLanguage("en");
 </script>
+
 
 
 
