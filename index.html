@@ -186,16 +186,24 @@ body { font-family: 'Inter', sans-serif; }
   <input id="transactionId" class="w-full p-2 border rounded-md" />
 </div>
 
-        <div>
-          <label>Donation Purpose / Propose</label>
-<select id="purpose" required>
-  <option value="" disabled selected>-- Select Purpose --</option>
-  <option value="Annadhanam">Annadhanam</option>
-  <option value="Pooja">Special Pooja</option>
-  <option value="Abhishekam">Abhishekam</option>
-  <option value="Temple Maintenance">Temple Maintenance</option>
-  <option value="General Donation">General Donation</option>
-</select>
+        <div class="border border-gray-300 rounded-lg p-3 bg-white shadow-sm">
+  
+  <label class="block font-medium mb-2">
+    Donation Purpose / Propose
+  </label>
+
+  <select 
+    id="purpose" 
+    required 
+    class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+  >
+    <option value="" disabled selected>-- Select Purpose --</option>
+    <option value="Annadhanam">Annadhanam</option>
+    <option value="Pooja">Special Pooja</option>
+    <option value="Abhishekam">Abhishekam</option>
+    <option value="Temple Maintenance">Temple Maintenance</option>
+    <option value="General Donation">General Donation</option>
+  </select>
 
 </div>
 
@@ -1226,6 +1234,7 @@ function downloadBill() {
 
 </body>
 </html>
+
 
 
 
