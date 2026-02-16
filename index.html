@@ -153,10 +153,15 @@ body { font-family: 'Inter', sans-serif; }
   </p>
 
   <!-- GPay / PhonePe Button -->
-  <button id="gpayButton"
-class="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold">
-💳 Pay using GPay
-</button>
+  <a
+    href="upi://pay?pa=EzE0071735@CUB&pn=Arulmigu%20Narayana%20Swamy%20Temple&cu=INR"
+    class="mt-5 inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold"
+  >
+    💳 Pay using GPay / PhonePe
+  </a>
+
+</div>
+
 
 <!-- HOME PAGE -->
 <div id="home-page">
@@ -174,8 +179,7 @@ class="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg
         <div><label data-key="address">Address</label>
           <textarea id="address" rows="2" class="w-full p-2 border rounded-md"></textarea></div>
 
-       <div>
-<label data-key="phone">Phone Number</label>
+        <div><label data-key="phone">Phone Number</label>
 <input 
   type="tel"
   id="phone"
@@ -1262,8 +1266,3 @@ window.addEventListener("load", function () {
 
 </body>
 </html>
-
-
-
-
-
