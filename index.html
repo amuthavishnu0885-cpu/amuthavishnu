@@ -153,10 +153,13 @@ body { font-family: 'Inter', sans-serif; }
   </p>
 
   <!-- GPay / PhonePe Button -->
- <a id="upi-btn"
-   class="mt-5 inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold">
-   💳 Pay using GPay / PhonePe
-</a>
+  <a
+    href="upi://pay?pa=EzE0071735@CUB&pn=Arulmigu%20Narayana%20Swamy%20Temple&cu=INR"
+    class="mt-5 inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold"
+  >
+    💳 Pay using GPay / PhonePe
+  </a>
+
 </div>
 
 
@@ -1253,36 +1256,5 @@ window.addEventListener("load", function () {
 });
 </script>
 
-  <script>
-document.getElementById("upi-btn").onclick = function() {
-
-  const amountInput = document.getElementById("amount");
-  
-  if (!amountInput.value) {
-    alert("Please enter donation amount");
-    amountInput.focus();
-    return;
-  }
-
-  const amount = amountInput.value;
-
-  const upiLink =
-    "upi://pay?pa=EzE0071735@CUB" +
-    "&pn=Arulmigu%20Narayana%20Swamy%20Temple" +
-    "&am=" + amount +
-    "&cu=INR";
-
-  window.location.href = upiLink;
-};
-</script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
