@@ -179,8 +179,17 @@ body { font-family: 'Inter', sans-serif; }
         <div><label data-key="address">Address</label>
           <textarea id="address" rows="2" class="w-full p-2 border rounded-md"></textarea></div>
 
-        <div><label data-key="phone">Phone Number</label>
-          <input id="phone" class="w-full p-2 border rounded-md" /></div>
+       <div>
+<label data-key="phone">Phone Number</label>
+<input 
+  type="tel"
+  id="phone"
+  required
+  pattern="[6-9][0-9]{9}"
+  maxlength="10"
+  class="w-full p-2 border rounded-md"
+  placeholder="Enter 10 digit mobile number"/>
+</div>
 
         <div><label data-key="email">Email</label>
           <input id="email" class="w-full p-2 border rounded-md" /></div>
@@ -1258,3 +1267,4 @@ window.addEventListener("load", function () {
 
 </body>
 </html>
+
